@@ -1,0 +1,47 @@
+# ==============================================================================
+# IQdesktop docker-compose template file
+# ==============================================================================
+
+version: '2.4'
+services:
+  IQdesktop_%USER%:
+    image: %IMAGE%
+    hostname: IQdesktop
+    shm_size: "%SHM_SIZE_GB%gb"
+    privileged: true    # Allowing mounting of other file systems (e.g. AWS S3 buckets) - for demo purposes!
+    cpus: %NR_CORES%
+    mem_limit: "%MEMORY_GB%gb"
+    ports:
+      - "%VNCPORT%:5901"
+      - "%SSHPORT%:22"
+      - "%SHINY_SERVER_PORT%:3838"
+      - "%JENKINSPORT%:8080"
+    environment:
+      - TIMEZONE=%TIMEZONE%
+
+      - USER=%USER%  
+      - PASSWORD=%PASSWORD%
+      - ALLOW_SUDO=%ALLOW_SUDO%
+      - USER_ID=%USER_ID%
+
+      - HOST_ID=%HOST_ID%
+
+      - THEME=%THEME%
+
+      - VNC_RESOLUTION=%VNC_RESOLUTION%      
+
+      - IQREPORT_LICENSE_KEY=%IQREPORT_LICENSE_KEY%
+
+      - IQRTOOLS_COMPLIANCE=%IQRTOOLS_COMPLIANCE%
+      - IQREPORT_TEMPLATE=%IQREPORT_TEMPLATE%
+
+      - NONMEM_LICENSE_KEY=%NONMEM_LICENSE_KEY%
+      - MONOLIX_LICENSE_KEY=%MONOLIX_LICENSE_KEY%
+
+      - VNC_PRIVATE_KEY=%VNC_PRIVATE_KEY%
+      - VNC_CERTIFICATE=%VNC_CERTIFICATE%
+
+      - SSH_SERVER=%SSH_SERVER%
+
+      - ALLOW_SHINY_SERVER=%ALLOW_SHINY_SERVER%
+      
