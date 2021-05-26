@@ -283,6 +283,7 @@ $MAX_MEM = 128;
         echo "<li>Click 'Connect'";
         echo "<li>Enter the password that was provided to you - for demo purposes same as the Start Password";
         echo "<li>Click 'OK'";
+        echo '<li>Note: for the purpose of this demo server the VNC connection is not encrypted. You can still <a href="https://iqdesktop.intiquan.com/book/secureconnection.html#ssh-tunneling" target="new">ensure an encrypted connection through SSH tunneling</a>';
         echo "</ul>";
         echo "<li><b>Stopping an IQdesktop container</b>";
         echo "<ul>";
