@@ -1,6 +1,13 @@
 # IQdesktop Server
 This repository contains needed scripts and material to set up a multi-user server environment for IQdesktop.
 
+* Allow your users to 
+    * Conveniently and securely start and stop their IQdesktop containers
+	* Select the version of IQdesktop 
+	* Select number of cores and amount of memory needed for their task
+* Reduce system administration effort to a bare minimum
+* Ensure 100% reproducibility of your analyses at any point in time
+ 
 ![IQdesktop Server User Page](material/interface.png "User Interface")
 
 ## Requirements
