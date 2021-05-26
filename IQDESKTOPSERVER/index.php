@@ -49,7 +49,7 @@ $MAX_MEM = 128;
         }
 
         a {
-            color: #ffffff;
+            color: #B1DFE1;
             text-decoration: none;
         }
 
@@ -211,7 +211,7 @@ $MAX_MEM = 128;
             if (trim($safety_check_required) == trim($safety_check) || empty($safety_check_required)) {
                 $command = "./iqdesktop.sh stop " . $user . " > /dev/null 2>/dev/null &";
             } else {
-                header("Location: wrongbutton.html");
+                header("Location: safetycheck.html");
             }
         }
 
@@ -221,7 +221,7 @@ $MAX_MEM = 128;
             if (trim($safety_check_required) == trim($safety_check) || empty($safety_check_required)) {
                 $command = "./iqdesktop.sh start " . $user . " " . $csvfile . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " > /dev/null 2>/dev/null &";
             } else {
-                header("Location: safetyrequired.html");
+                header("Location: safetycheck.html");
             }
         }
 
@@ -302,7 +302,8 @@ $MAX_MEM = 128;
                 if (empty($MAP)) $MAP = "Not mapped";
 
                 if ($header == 1) {
-                    echo "<tr>" . "<th>Control</th>" . "<th>" . $SAFETY_CHECK . "</th>" . "<th>" . $NAME . "</th>" . "<th class='bluebold'>" . $USER . "</th>" . "<th class='bluebold'>VNC</th>" . "<th class='bluebold'>SHINY</th>" . "<th>" . $THEME . "</th>" . "<th>" . $IMAGE . "</th>" . "<th>" . $NR_CORES . "</th>" . "<th>" . $MEMORY_GB . "</th></tr>";
+                  //echo "<tr>" . "<th>Control</th>" . "<th>" . $SAFETY_CHECK . "</th>" . "<th>" . $NAME . "</th>" . "<th class='bluebold'>" . $USER . "</th>" . "<th class='bluebold'>VNC Port</th>" . "<th class='bluebold'>SHINY Port</th>" . "<th>" . $THEME . "</th>" . "<th>" . $IMAGE .  "</th>" . "<th>" . $NR_CORES . "</th>" . "<th>" . $MEMORY_GB . "</th></tr>";
+                    echo "<tr>" . "<th>Control</th>" . "<th>    Start Password   </th>" . "<th>    Name     </th>" . "<th class='bluebold'>  Username   </th>" . "<th class='bluebold'>VNC Port</th>" . "<th class='bluebold'>Shiny Port</th>" . "<th>    Theme     </th>" . "<th>IQdesktop Image</th>" . "<th>Number Cores     </th>" . "<th>Memory [GB]       </th></tr>";
                     $header = 0;
                 } else {
                     // Check if container running
