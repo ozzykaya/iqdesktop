@@ -16,6 +16,9 @@ This repository contains needed scripts and material to set up a multi-user serv
 * Apache, PHP
 * Some additional utilities
 
+## Availability
+The contents of this repository can be freely used and modified.
+
 ## Support
-Contact info@intiquan.com for support in setting up the server.
+For support and information around support options, contact info@intiquan.com.
 
