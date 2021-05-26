@@ -228,6 +228,7 @@ $MAX_MEM = 128;
         echo '<pre>';
         $old_path = getcwd();
         chdir($path);
+        shell_exec("chmod +x iqdesktop.sh");
         shell_exec($command);
         chdir($old_path);
         echo '</pre>';
