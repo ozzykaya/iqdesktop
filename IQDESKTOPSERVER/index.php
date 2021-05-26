@@ -159,6 +159,11 @@ $MAX_MEM = 128;
             color: #315E71;
             font-weight: bold;
         }
+
+        li {
+            margin: 2px;
+            font-size: 12px;
+        }
     </style>
 </head>
 
@@ -181,23 +186,33 @@ $MAX_MEM = 128;
     $safety_check_required = $_GET["safety_check_required"];
 
     // -----------------------------------------------------------------------------
-    // Get names of available CSV files and create selector
+    // Get names of available CSV files and create selector 
+    // Selector only if multiple CSV files ... otherwise directly control area
     // -----------------------------------------------------------------------------
-    echo "<h3>Select User Group</h3>";
+    // Get all CSV files
+    $filenamesCSV = glob($path . "*.csv");
 
-    echo '<form action="/index.php" method="get" id="form1">';
-    echo '<input type="hidden" name="do" value="selectCSV">';
-    echo '<select class="style" name="csvfile">';
-    foreach (glob($path . "*.csv") as $filename) {
-        $filename = str_replace($path, "", $filename);
-        echo '  <option class="style" value="' . $filename . '"';
-        if ($csvfile == $filename) echo "selected";
-        echo '>' . $filename . '</option>';
+    // If multiple ... then show form for selection
+    if (count($filenamesCSV) > 1) {
+        echo "<h3>Select User Group</h3>";
+        echo '<form action="/index.php" method="get" id="form1">';
+        echo '<input type="hidden" name="do" value="selectCSV">';
+        echo '<select class="style" name="csvfile">';
+        foreach ($filenamesCSV as $filename) {
+            $filename = str_replace($path, "", $filename);
+            echo '  <option class="style" value="' . $filename . '"';
+            if ($csvfile == $filename) echo "selected";
+            echo '>' . $filename . '</option>';
+        }
+        echo '</select>';
+        echo '&nbsp;<button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SELECT</button>';
+        echo '</form>';
+    } else {
+        // If a single one then go to container start page
+        if ($do == "") {
+            header("Location: index.php?do=selectCSV&csvfile=" . str_replace($path, "", $filenamesCSV[0]));
+        }
     }
-    echo '</select>';
-    echo '&nbsp;<button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SELECT</button>';
-    echo '</form>';
-
 
     // -----------------------------------------------------------------------------
     // Perform control action if selected
@@ -252,8 +267,30 @@ $MAX_MEM = 128;
     // Read CSV if filename defined and build table
     // -----------------------------------------------------------------------------
     if (!empty($csvfile)) {
+        echo "<h3>Help</h3>";
+        echo "<ol>";
+        echo "<li><b>Starting an IQdesktop container</b>";
+        echo "<ul>";
+        echo "<li>Select your required settings (version of IQdesktop, number of cores, needed memory)";
+        echo "<li>You can also select a 'dark' and a 'light' theme";
+        echo "<li>To start a container you might have received a 'Start Password' - enter it. This is to avoid that someone else can start (or stop) a container under your username";
+        echo "<li>Click 'START'";
+        echo "</ul>";
+        echo "<li><b>Connecting to a container</b>";
+        echo "<ul>";
+        echo '<li><a href="https://iqdesktop.intiquan.com/book/vnc.html" target="new">Get and execute TigerVNC Viewer (explained here)</a>';
+        echo "<li>Enter: iqdesktop.intiquan.com:THE_NUMBER_IN_THE_VNC_Port column for your container";
+        echo "<li>Click 'Connect'";
+        echo "<li>Enter the password that was provided to you - for demo purposes same as the Start Password";
+        echo "<li>Click 'OK'";
+        echo "</ul>";
+        echo "<li><b>Stopping an IQdesktop container</b>";
+        echo "<ul>";
+        echo "<li>Enter your 'Start Password' - if you have received one";
+        echo "<li>Click 'STOP'";
+        echo "</ul>";
+        echo "</ol>";
         echo "<h3>Control Containers</h3>";
-
         // Add path to filename
         $fullfilename = $path . $csvfile;
 
@@ -302,8 +339,8 @@ $MAX_MEM = 128;
                 if (empty($MAP)) $MAP = "Not mapped";
 
                 if ($header == 1) {
-                  //echo "<tr>" . "<th>Control</th>" . "<th>" . $SAFETY_CHECK . "</th>" . "<th>" . $NAME . "</th>" . "<th class='bluebold'>" . $USER . "</th>" . "<th class='bluebold'>VNC Port</th>" . "<th class='bluebold'>SHINY Port</th>" . "<th>" . $THEME . "</th>" . "<th>" . $IMAGE .  "</th>" . "<th>" . $NR_CORES . "</th>" . "<th>" . $MEMORY_GB . "</th></tr>";
-                    echo "<tr>" . "<th>Control</th>" . "<th>    Start Password   </th>" . "<th>    Name     </th>" . "<th class='bluebold'>  Username   </th>" . "<th class='bluebold'>VNC Port</th>" . "<th class='bluebold'>Shiny Port</th>" . "<th>    Theme     </th>" . "<th>IQdesktop Image</th>" . "<th>Number Cores     </th>" . "<th>Memory [GB]       </th></tr>";
+                  //echo "<tr>" . "<th>Control</th>" . "<th>" . $SAFETY_CHECK . "</th>" . "<th>" . $NAME . "</th>" . "<th class='bluebold'>" . $USER . "</th>" . "<th class='bluebold'>VNC Port</th>" . "<th class='bluebold'>SSH Port</th>" . "<th class='bluebold'>SHINY Port</th>" . "<th>" . $THEME . "</th>" . "<th>" . $IMAGE .  "</th>" . "<th>" . $NR_CORES . "</th>" . "<th>" . $MEMORY_GB . "</th></tr>";
+                    echo "<tr>" . "<th>Control</th>" . "<th>    Start Password   </th>" . "<th>    Name     </th>" . "<th class='bluebold'>  Username   </th>" . "<th class='bluebold'>VNC Port</th>" . "<th class='bluebold'>SSH Port</th>" . "<th class='bluebold'>Shiny Port</th>" . "<th>    Theme     </th>" . "<th>IQdesktop Image</th>" . "<th>Number Cores     </th>" . "<th>Memory [GB]       </th></tr>";
                     $header = 0;
                 } else {
                     // Check if container running
@@ -356,7 +393,9 @@ $MAX_MEM = 128;
                     # Continue with NAME etc.
                     echo "<td>" . $NAME . "</td>" . "<td class='bluebold'>" . $USER . "</td>";
 
-                    echo "<td class='bluebold'>" . $VNCPORT . "</td>" . "<td class='bluebold'>" . $SHINY_SERVER_PORT . "</td>";
+                    echo "<td class='bluebold'>" . $VNCPORT . "</td>";
+                    echo "<td class='bluebold'>" . $SSHPORT . "</td>";
+                    echo "<td class='bluebold'>" . $SHINY_SERVER_PORT . "</td>";
 
                     // Selection of theme
                     echo '<td><select class="style" name="theme">';
