@@ -3,38 +3,39 @@
 # Starts an IDesktop container for defined input arguments 
 # ------------------------------------------------------------------------------------------------
 
+MATLAB_LICENSE_FILE=
+
 # ------------------------------------------------------------------------
 # Get input arguments
 # ------------------------------------------------------------------------
 
 USER=$1
-IMAGE=$2
-VNCPORT=$3
-SSHPORT=$4
-PASSWORD=$5
-USER_ID=$6
-ALLOW_SUDO=$7
-VOLUME_MAP=$8
-MAC=$9
-SHM_SIZE_GB=${10}
-NR_CORES=${11}
-MEMORY_GB=${12}
-SSH_SERVER=${13}
-TIMEZONE=${14}
-VNC_RESOLUTION=${15}
-IQREPORT_LICENSE_KEY=${16}
-IQRTOOLS_COMPLIANCE=${17}
-NONMEM_LICENSE_KEY=${18}
-MONOLIX_LICENSE_KEY=${19}
-VNC_PRIVATE_KEY=${20}
-VNC_CERTIFICATE=${21}
-
-# Later ones
-THEME=${22}
-IQREPORT_TEMPLATE=${23}
-ALLOW_SHINY_SERVER=${24}
-SHINY_SERVER_PORT=${25}
-JENKINSPORT=${26}
+PASSWORD=$2
+IMAGE=$3
+VOLUME_MAP=$4
+VNCPORT=$5
+SSHPORT=$6
+SHINY_SERVER_PORT=$7
+JENKINSPORT=$8
+ALLOW_SUDO=$9
+SSH_SERVER=${10}
+ALLOW_SHINY_SERVER=${11}
+USER_ID=${12}
+THEME=${13}
+MAC=${14}
+SHM_SIZE_GB=${15}
+NR_CORES=${16}
+MEMORY_GB=${17}
+TIMEZONE=${18}
+IQRTOOLS_COMPLIANCE=${19}
+IQREPORT_TEMPLATE=${20}
+IQREPORT_LICENSE_KEY=${21}
+NONMEM_LICENSE_KEY=${22}
+MONOLIX_LICENSE_KEY=${23}
+VNC_PRIVATE_KEY=${24}
+VNC_CERTIFICATE=${25}
+AWS_ACCESS_KEY_ID=${26}
+AWS_SECRET_ACCESS_KEY=${27}
 
 # ------------------------------------------------------------------------
 # Handle upper to lower case
@@ -92,6 +93,11 @@ sed -i "s#%MONOLIX_LICENSE_KEY%#$MONOLIX_LICENSE_KEY#g" $CUSTOM_YML_FILE
 
 sed -i "s#%VNC_PRIVATE_KEY%#$VNC_PRIVATE_KEY#g" $CUSTOM_YML_FILE
 sed -i "s#%VNC_CERTIFICATE%#$VNC_CERTIFICATE#g" $CUSTOM_YML_FILE
+
+sed -i "s#%AWS_ACCESS_KEY_ID%#$AWS_ACCESS_KEY_ID#g" $CUSTOM_YML_FILE
+sed -i "s#%AWS_SECRET_ACCESS_KEY%#$AWS_SECRET_ACCESS_KEY#g" $CUSTOM_YML_FILE
+
+sed -i "s#%MATLAB_LICENSE_FILE%#$MATLAB_LICENSE_FILE#g" $CUSTOM_YML_FILE
 
 # ------------------------------------------------------------------------
 # Add MAC address if desired

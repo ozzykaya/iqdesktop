@@ -66,6 +66,10 @@ td {
     padding-top: 2px;
 }
 
+td.control {
+    padding-top: 10px;
+}
+
 .buttonGreen {
     background-color: #92D050;
     /* Green */
@@ -75,7 +79,7 @@ td {
     text-decoration: none;
     font-size: 12px;
     width: 80px;
-    height: 30px;
+    height: 24px;
     border-radius: 8px;
     display: block;
     margin: auto;
@@ -90,7 +94,7 @@ td {
     text-decoration: none;
     font-size: 12px;
     width: 80px;
-    height: 30px;
+    height: 24px;
     border-radius: 8px;
     display: block;
     margin: auto;
@@ -105,7 +109,7 @@ td {
     text-decoration: none;
     font-size: 12px;
     width: 120px;
-    height: 30px;
+    height: 24px;
     border-radius: 8px;
     display: inline;
 }
@@ -129,7 +133,7 @@ td {
 }
 
 .blue {
-    color: #315E71;
+    color: #B1DFE1;
 }
 
 .bluebold {
