@@ -3,10 +3,11 @@
 // DO NOT CHANGE!
 $path = "/home/iqdocker/IQDESKTOP/IQDESKTOPSERVER/run/";
 
-// Define other things
-$MAX_CORES = 24;
-$MAX_MEM = 128;
+// Load settings (also includes max cores and max memory)
+include("settings/settings.inc");
+$INFOTEXT = file_get_contents("settings/infotext.inc");
 
+// Define displayed column names in table
 $NAME_TH_TEXT = "Name";
 $USER_TH_TEXT = "Username";
 $SAFETY_CHECK_TH_TEXT = "Start Password";
@@ -29,8 +30,6 @@ $MEMORY_GB_TH_TEXT = "Memory [GB]";
 $TIMEZONE_TH_TEXT = "Timezone";
 $IQRTOOLS_COMPLIANCE_TH_TEXT = "IQR Tools Compliance";
 $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
-
-include("settings.php")
 ?>
 
 <html>
@@ -41,8 +40,20 @@ include("settings.php")
 </head>
 
 <body>
-    <H1><?php echo "Multi-User Control Interface" ?></h1>
-    <H2><a href="https://iqdesktop.intiquan.com" target="new">More information</a> | <a href="https://www.intiquan.com" target="new">IntiQuan</a></h2>
+    <h1><?php echo "Multi-User Control Interface" ?></h1>
+    <h2>
+        <a href="https://iqdesktop.intiquan.com" target="new">More information</a> 
+        | 
+        <a href="https://www.intiquan.com" target="new">IntiQuan</a>
+        <?php 
+        if ($SHOW_ADMINLINK) {
+            ?>
+            | 
+            <a href="admin" target="admin">Admin</a>
+            <?php
+        }
+        ?>
+    </h2>
 
     <?php
     // Get passed GET variables
@@ -140,30 +151,11 @@ include("settings.php")
     // Read CSV if filename defined and build table
     // -----------------------------------------------------------------------------
     if (!empty($csvfile)) {
-        echo "<div class='help'><h3>Help</h3>";
-        echo "<ol>";
-        echo "<li><b>Starting an IQdesktop container</b>";
-        echo "<ul>";
-        echo "<li>Select your required settings (version of IQdesktop, number of cores, needed memory)";
-        echo "<li>You can also select a 'dark' and a 'light' theme";
-        echo "<li>To start a container you might have received a 'Start Password' - enter it. This is to avoid that someone else can start (or stop) a container under your username";
-        echo "<li>Click 'START'";
-        echo "</ul>";
-        echo "<li><b>Connecting to a container</b>";
-        echo "<ul>";
-        echo '<li><a href="https://iqdesktop.intiquan.com/book/vnc.html" target="new">Get and execute TigerVNC Viewer (explained here)</a>';
-        echo "<li>Enter: iqdesktop.intiquan.com:THE_NUMBER_IN_THE_VNC_Port column for your container";
-        echo "<li>Click 'Connect'";
-        echo "<li>Enter the password that was provided to you - for demo purposes same as the Start Password";
-        echo "<li>Click 'OK'";
-        echo '<li>Note: for the purpose of this demo server the VNC connection is not encrypted. You can still <a href="https://iqdesktop.intiquan.com/book/secureconnection.html#ssh-tunneling" target="new">ensure an encrypted connection through SSH tunneling</a>';
-        echo "</ul>";
-        echo "<li><b>Stopping an IQdesktop container</b>";
-        echo "<ul>";
-        echo "<li>Enter your 'Start Password' - if you have received one";
-        echo "<li>Click 'STOP'";
-        echo "</ul>";
-        echo "</ol></div>";
+        if ($SHOW_INFOTEXT) {
+            echo "<div class='help'>";
+            echo $INFOTEXT;
+            echo "</div>";
+        }
         echo "<h3>Control Containers</h3>";
         // Add path to filename
         $fullfilename = $path . $csvfile;
