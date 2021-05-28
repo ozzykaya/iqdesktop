@@ -90,6 +90,9 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
         ?>
         <ul>
             <li>For demo access, select "01_demo.csv" and click on "SELECT".</li>
+            <ul>
+                <li>For demo purposes the Start Password and VNC Password are the same as the username.</li>
+            </ul>
             <li>If you have an assigned login, select "02_assigned_demo.csv" and click on "SELECT".</li>
         </ul>
         <?php
