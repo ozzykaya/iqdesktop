@@ -91,7 +91,8 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
         if (count($filenamesCSV) > 1) {
             echo "<h3>Select User Group</h3>";
     ?>
-            Select the user group that applies to you.
+            Select the user group that applies to you.<br>
+            &nbsp;<br>
     <?php
             echo '<form action="/index.php" method="get" id="form1">';
             echo '<input type="hidden" name="do" value="selectCSV">';
