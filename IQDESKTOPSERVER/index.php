@@ -87,6 +87,12 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
     // If multiple ... then show form for selection
     if (count($filenamesCSV) > 1) {
         echo "<h3>Select User Group</h3>";
+        ?>
+        <ul>
+            <li>For demo access, select "01_demo.csv" and click on "SELECT".</li>
+            <li>If you have an assigned login, select "02_assigned_demo.csv" and click on "SELECT".</li>
+        </ul>
+        <?php
         echo '<form action="/index.php" method="get" id="form1">';
         echo '<input type="hidden" name="do" value="selectCSV">';
         echo '<select name="csvfile">';
