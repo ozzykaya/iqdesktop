@@ -1,6 +1,9 @@
 .htaccess
 .htpasswd
+.htaccessX
+.htpasswdX
 temp
 yml_custom
 settings.inc
-inotext.inc
+infotext.inc
+02_assigned.csv
