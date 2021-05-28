@@ -50,15 +50,15 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
 <body>
     <h1><?php echo "Multi-User Control Interface" ?></h1>
     <h2>
-        <a href="https://iqdesktop.intiquan.com" target="new">More information</a> 
-        | 
+        <a href="https://iqdesktop.intiquan.com" target="new">More information</a>
+        |
         <a href="https://www.intiquan.com" target="new">IntiQuan</a>
-        <?php 
+        <?php
         if ($SHOW_ADMINLINK) {
-            ?>
-            | 
+        ?>
+            |
             <a href="admin" target="admin">Admin</a>
-            <?php
+        <?php
         }
         ?>
     </h2>
@@ -77,41 +77,39 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
     $safety_check = $_GET["safety_check"];
     $safety_check_required = $_GET["safety_check_required"];
 
-    // -----------------------------------------------------------------------------
-    // Get names of available CSV files and create selector 
-    // Selector only if multiple CSV files ... otherwise directly control area
-    // -----------------------------------------------------------------------------
-    // Get all CSV files
-    $filenamesCSV = glob($path . "*.csv");
 
-    // If multiple ... then show form for selection
-    if (count($filenamesCSV) > 1) {
-        echo "<h3>Select User Group</h3>";
-        ?>
-        <ul>
-            <li>For demo access, select "01_demo.csv" and click on "SELECT".</li>
-            <ul>
-                <li>For demo purposes the Start Password and VNC Password are the same as the username.</li>
-            </ul>
-            <li>If you have an assigned login, select "02_assigned_demo.csv" and click on "SELECT".</li>
-        </ul>
-        <?php
-        echo '<form action="/index.php" method="get" id="form1">';
-        echo '<input type="hidden" name="do" value="selectCSV">';
-        echo '<select name="csvfile">';
-        foreach ($filenamesCSV as $filename) {
-            $filename = str_replace($path, "", $filename);
-            echo '  <option value="' . $filename . '"';
-            if ($csvfile == $filename) echo "selected";
-            echo '>' . $filename . '</option>';
-        }
-        echo '</select>';
-        echo '&nbsp;<button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SELECT</button>';
-        echo '</form>';
-    } else {
-        // If a single one then go to container start page
-        if ($do == "") {
-            header("Location: index.php?do=selectCSV&csvfile=" . str_replace($path, "", $filenamesCSV[0]));
+    if ($do == "") {
+
+        // -----------------------------------------------------------------------------
+        // Get names of available CSV files and create selector 
+        // Selector only if multiple CSV files ... otherwise directly control area
+        // -----------------------------------------------------------------------------
+        // Get all CSV files
+        $filenamesCSV = glob($path . "*.csv");
+
+        // If multiple ... then show form for selection
+        if (count($filenamesCSV) > 1) {
+            echo "<h3>Select User Group</h3>";
+    ?>
+            Select the user group that applies to you.
+    <?php
+            echo '<form action="/index.php" method="get" id="form1">';
+            echo '<input type="hidden" name="do" value="selectCSV">';
+            echo '<select name="csvfile">';
+            foreach ($filenamesCSV as $filename) {
+                $filename = str_replace($path, "", $filename);
+                echo '  <option value="' . $filename . '"';
+                if ($csvfile == $filename) echo "selected";
+                echo '>' . $filename . '</option>';
+            }
+            echo '</select>';
+            echo '&nbsp;<button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SELECT</button>';
+            echo '</form>';
+        } else {
+            // If a single one then go to container start page
+            if ($do == "") {
+                header("Location: index.php?do=selectCSV&csvfile=" . str_replace($path, "", $filenamesCSV[0]));
+            }
         }
     }
 
@@ -409,7 +407,7 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
                         echo '  <option value="8" ';
                         if ($MEMORY_GB == 8) echo "selected";
                         echo '>8</option>';
-                        
+
                         if ($MAX_MEM >= 12) {
                             echo '  <option value="12" ';
                             if ($MEMORY_GB == 12) echo "selected";
