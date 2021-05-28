@@ -1,10 +1,57 @@
-<?php 
+<?php
 // Get passed GET variables
 $do = $_GET["do"];
+if (empty($do)) $do = "showsettings";
+
+$set_MAX_CORES = $_GET["set_MAX_CORES"]; 
+$set_MAX_MEM = $_GET["set_MAX_MEM"]; 
+$set_SHOW_INFOTEXT = $_GET["set_SHOW_INFOTEXT"]; if($set_SHOW_INFOTEXT!="TRUE") $set_SHOW_INFOTEXT = "FALSE";
+$set_SHOW_ADMINLINK = $_GET["set_SHOW_ADMINLINK"]; if($set_SHOW_ADMINLINK!="TRUE") $set_SHOW_ADMINLINK = "FALSE";
+$set_NAME_SHOW = $_GET["set_NAME_SHOW"]; if($set_NAME_SHOW!="TRUE") $set_NAME_SHOW = "FALSE";
+$set_SAFETY_CHECK_SHOW = $_GET["set_SAFETY_CHECK_SHOW"]; if($set_SAFETY_CHECK_SHOW!="TRUE") $set_SAFETY_CHECK_SHOW = "FALSE";
+$set_USER_SHOW = $_GET["set_USER_SHOW"]; if($set_USER_SHOW!="TRUE") $set_USER_SHOW = "FALSE";
+$set_PASSWORD_SHOW = $_GET["set_PASSWORD_SHOW"]; if($set_PASSWORD_SHOW!="TRUE") $set_PASSWORD_SHOW = "FALSE";
+$set_IMAGE_SHOW = $_GET["set_IMAGE_SHOW"]; if($set_IMAGE_SHOW!="TRUE") $set_IMAGE_SHOW = "FALSE";
+$set_VOLUME_MAP_SHOW = $_GET["set_VOLUME_MAP_SHOW"]; if($set_VOLUME_MAP_SHOW!="TRUE") $set_VOLUME_MAP_SHOW = "FALSE";
+$set_VNCPORT_SHOW = $_GET["set_VNCPORT_SHOW"]; if($set_VNCPORT_SHOW!="TRUE") $set_VNCPORT_SHOW = "FALSE";
+$set_SSHPORT_SHOW = $_GET["set_SSHPORT_SHOW"]; if($set_SSHPORT_SHOW!="TRUE") $set_SSHPORT_SHOW = "FALSE";
+$set_SHINY_SERVER_PORT_SHOW = $_GET["set_SHINY_SERVER_PORT_SHOW"]; if($set_SHINY_SERVER_PORT_SHOW!="TRUE") $set_SHINY_SERVER_PORT_SHOW = "FALSE";
+$set_JENKINSPORT_SHOW = $_GET["set_JENKINSPORT_SHOW"]; if($set_JENKINSPORT_SHOW!="TRUE") $set_JENKINSPORT_SHOW = "FALSE";
+$set_ALLOW_SUDO_SHOW = $_GET["set_ALLOW_SUDO_SHOW"]; if($set_ALLOW_SUDO_SHOW!="TRUE") $set_ALLOW_SUDO_SHOW = "FALSE";
+$set_SSH_SERVER_SHOW = $_GET["set_SSH_SERVER_SHOW"]; if($set_SSH_SERVER_SHOW!="TRUE") $set_SSH_SERVER_SHOW = "FALSE";
+$set_ALLOW_SHINY_SERVER_SHOW = $_GET["set_ALLOW_SHINY_SERVER_SHOW"]; if($set_ALLOW_SHINY_SERVER_SHOW!="TRUE") $set_ALLOW_SHINY_SERVER_SHOW = "FALSE";
+$set_USER_ID_SHOW = $_GET["set_USER_ID_SHOW"]; if($set_USER_ID_SHOW!="TRUE") $set_USER_ID_SHOW = "FALSE";
+$set_THEME_SHOW = $_GET["set_THEME_SHOW"]; if($set_THEME_SHOW!="TRUE") $set_THEME_SHOW = "FALSE";
+$set_MAC_SHOW = $_GET["set_MAC_SHOW"]; if($set_MAC_SHOW!="TRUE") $set_MAC_SHOW = "FALSE";
+$set_SHM_SIZE_GB_SHOW = $_GET["set_SHM_SIZE_GB_SHOW"]; if($set_SHM_SIZE_GB_SHOW!="TRUE") $set_SHM_SIZE_GB_SHOW = "FALSE";
+$set_NR_CORES_SHOW = $_GET["set_NR_CORES_SHOW"]; if($set_NR_CORES_SHOW!="TRUE") $set_NR_CORES_SHOW = "FALSE";
+$set_MEMORY_GB_SHOW = $_GET["set_MEMORY_GB_SHOW"]; if($set_MEMORY_GB_SHOW!="TRUE") $set_MEMORY_GB_SHOW = "FALSE";
+$set_TIMEZONE_SHOW = $_GET["set_TIMEZONE_SHOW"]; if($set_TIMEZONE_SHOW!="TRUE") $set_TIMEZONE_SHOW = "FALSE";
+$set_IQRTOOLS_COMPLIANCE_SHOW = $_GET["set_IQRTOOLS_COMPLIANCE_SHOW"]; if($set_IQRTOOLS_COMPLIANCE_SHOW!="TRUE") $set_IQRTOOLS_COMPLIANCE_SHOW = "FALSE";
+$set_IQREPORT_TEMPLATE_SHOW = $_GET["set_IQREPORT_TEMPLATE_SHOW"]; if($set_IQREPORT_TEMPLATE_SHOW!="TRUE") $set_IQREPORT_TEMPLATE_SHOW = "FALSE";
+// Info Text
+$set_INFOTEXT = trim($_GET["set_INFOTEXT"]); 
 
 // Load settings (also includes max cores and max memory)
-include("../settings/settings.inc");
-$INFOTEXT = file_get_contents("../settings/infotext.inc");
+if (file_exists("../settings/settings.inc")) {
+    include("../settings/settings.inc");
+} else {
+    include("../settings/settings_default.inc");
+}
+$INFOTEXTDEFAULT = file_get_contents("../settings/infotext_default.inc");
+if (file_exists("../settings/infotext.inc")) {
+    $INFOTEXT = file_get_contents("../settings/infotext.inc");
+} else {
+    $INFOTEXT = $INFOTEXTDEFAULT;
+}
+
+// Set default info text if empty
+if (empty($INFOTEXT)) {
+    $INFOTEXT = $INFOTEXTDEFAULT;
+}
+if (empty($set_INFOTEXT)) {
+    $set_INFOTEXT = $INFOTEXTDEFAULT;
+}
 ?>
 
 <html>
@@ -12,31 +59,249 @@ $INFOTEXT = file_get_contents("../settings/infotext.inc");
 <head>
     <title>IQdesktopServer Admin</title>
     <link rel="stylesheet" href="style.css">
-</head>
+ </head>
 
 <body>
     <h1><?php echo "Multi-User Admin Interface" ?></h1>
     <h2>
-        <a href="https://iqdesktop.intiquan.com" target="new">More information</a> 
-        | 
+        <a href="https://iqdesktop.intiquan.com" target="new">More information</a>
+        |
         <a href="https://www.intiquan.com" target="new">IntiQuan</a>
     </h2>
 
     <?php
-    // Build the settings form
+    if ($do=="updateSettings") {
+        // Construct settings text
+        $settingsText = "<?php\n";
+        $settingsText .= "///////////////////////////\n";
+        $settingsText .= "// Host computer info\n";
+        $settingsText .= "///////////////////////////\n";
+        $settingsText .= "$"."MAX_CORES = " . $set_MAX_CORES . ";\n";
+        $settingsText .= "$"."MAX_MEM = " . $set_MAX_MEM . ";\n";
+        $settingsText .= "\n";
+        $settingsText .= "///////////////////////////\n";
+        $settingsText .= "// Content switches\n";
+        $settingsText .= "///////////////////////////\n";
+        $settingsText .= "$"."SHOW_INFOTEXT = " . $set_SHOW_INFOTEXT . ";\n";
+        $settingsText .= "$"."SHOW_ADMINLINK = " . $set_SHOW_ADMINLINK . ";\n";
+        $settingsText .= "\n";
+        $settingsText .= "///////////////////////////\n";
+        $settingsText .= "// Table columns selection\n";
+        $settingsText .= "///////////////////////////\n";
+        $settingsText .= "$"."NAME_SHOW = " . $set_NAME_SHOW . ";\n";
+        $settingsText .= "$"."USER_SHOW = " . $set_USER_SHOW . ";\n";
+        $settingsText .= "$"."SAFETY_CHECK_SHOW = " . $set_SAFETY_CHECK_SHOW . ";\n";
+        $settingsText .= "$"."PASSWORD_SHOW = " . $set_PASSWORD_SHOW . ";\n";
+        $settingsText .= "$"."IMAGE_SHOW = " . $set_IMAGE_SHOW . ";\n";
+        $settingsText .= "$"."VOLUME_MAP_SHOW = " . $set_VOLUME_MAP_SHOW . ";\n";
+        $settingsText .= "$"."VNCPORT_SHOW = " . $set_VNCPORT_SHOW . ";\n";
+        $settingsText .= "$"."SSHPORT_SHOW = " . $set_SSHPORT_SHOW . ";\n";
+        $settingsText .= "$"."SHINY_SERVER_PORT_SHOW = " . $set_SHINY_SERVER_PORT_SHOW . ";\n";
+        $settingsText .= "$"."JENKINSPORT_SHOW = " . $set_JENKINSPORT_SHOW . ";\n";
+        $settingsText .= "$"."ALLOW_SUDO_SHOW = " . $set_ALLOW_SUDO_SHOW . ";\n";
+        $settingsText .= "$"."SSH_SERVER_SHOW = " . $set_SSH_SERVER_SHOW . ";\n";
+        $settingsText .= "$"."ALLOW_SHINY_SERVER_SHOW = " . $set_ALLOW_SHINY_SERVER_SHOW . ";\n";
+        $settingsText .= "$"."USER_ID_SHOW = " . $set_USER_ID_SHOW . ";\n";
+        $settingsText .= "$"."THEME_SHOW = " . $set_THEME_SHOW . ";\n";
+        $settingsText .= "$"."MAC_SHOW = " . $set_MAC_SHOW . ";\n";
+        $settingsText .= "$"."SHM_SIZE_GB_SHOW = " . $set_SHM_SIZE_GB_SHOW . ";\n";
+        $settingsText .= "$"."NR_CORES_SHOW = " . $set_NR_CORES_SHOW . ";\n";
+        $settingsText .= "$"."MEMORY_GB_SHOW = " . $set_MEMORY_GB_SHOW . ";\n";
+        $settingsText .= "$"."TIMEZONE_SHOW = " . $set_TIMEZONE_SHOW . ";\n";
+        $settingsText .= "$"."IQRTOOLS_COMPLIANCE_SHOW = " . $set_IQRTOOLS_COMPLIANCE_SHOW . ";\n";
+        $settingsText .= "$"."IQREPORT_TEMPLATE_SHOW = " . $set_IQREPORT_TEMPLATE_SHOW . ";\n";
+        $settingsText .= "?>\n";
+
+        // Save settingsText to file
+        file_put_contents("../settings/settings.inc",$settingsText);
+
+        // Save set_INFOTEXT to file
+        file_put_contents("../settings/infotext.inc",$set_INFOTEXT);
+
+        ?>
+        <h3>Settings saved!</h3>
+        <a href="index.html">Reload Page (showing new settings might not show immediately due to caching)</a>
+        <?php
+    }
     ?>
-    <h3>Settings</h3>
-    <form action="index.php" method="get" id="form1">
-    <input type="hidden" name="do" value="updateSettings">
-    <button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SAVE</button>
-
-        <td><input type="text" name="safety_check" size="10"></td>
 
 
-    <button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SAVE</button>
-    </form>
 
-   
+    <?php
+    if ($do == "showsettings") {
+        // Show the settings form
+    ?>
+        <h3>Settings</h3>
+        <form action="index.php" method="get" id="form1">
+            <input type="hidden" name="do" value="updateSettings">
+            <table>
+                <tr>
+                    <td colspan="3"><button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SAVE</button></td>
+                </tr>
+                <tr>
+                    <th colspan="3">Server</th>
+                </tr>
+                <tr>
+                    <td>MAX_CORES:</td>
+                    <td><input type="text" name="set_MAX_CORES" size="10" value="<?php echo $MAX_CORES; ?>"></td>
+                    <td>[N] Set the maximum number of cores a user should be able to select</td>
+                </tr>
+                <tr>
+                    <td>MAX_MEM:</td>
+                    <td><input type="text" name="set_MAX_MEM" size="10" value="<?php echo $MAX_MEM; ?>"></td>
+                    <td>[GB] Set the maximum amount of memory a user should be able to request (8GB minimum)</td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+                <tr>
+                    <th colspan="3">User Page</th>
+                </tr>
+                <tr>
+                    <td>SHOW_INFOTEXT:</td>
+                    <td><input type="checkbox" name="set_SHOW_INFOTEXT" value="TRUE" <?php if ($SHOW_INFOTEXT) echo "checked"; ?>></td>
+                    <td>Show Info Text on user page</td>
+                </tr>
+                <tr>
+                    <td>SHOW_ADMINLINK:</td>
+                    <td><input type="checkbox" name="set_SHOW_ADMINLINK" value="TRUE" <?php if ($SHOW_ADMINLINK) echo "checked"; ?>></td>
+                    <td>Show Admin link on user page</td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+                <tr>
+                    <th colspan="3">Control Table</th>
+                </tr>
+                <tr>
+                    <td>NAME_SHOW:</td>
+                    <td><input type="checkbox" name="set_NAME_SHOW" value="TRUE" <?php if ($NAME_SHOW) echo "checked"; ?>></td>
+                    <td>Show Name column</td>
+                </tr>
+                <tr>
+                    <td>SAFETY_CHECK_SHOW:</td>
+                    <td><input type="checkbox" name="set_SAFETY_CHECK_SHOW" value="TRUE" <?php if ($SAFETY_CHECK_SHOW) echo "checked"; ?>></td>
+                    <td>Show Start Password column</td>
+                </tr>
+                <tr>
+                    <td>USER_SHOW:</td>
+                    <td><input type="checkbox" name="set_USER_SHOW" value="TRUE" <?php if ($USER_SHOW) echo "checked"; ?>></td>
+                    <td>Show User column</td>
+                </tr>
+                <tr>
+                    <td>PASSWORD_SHOW:</td>
+                    <td><input type="checkbox" name="set_PASSWORD_SHOW" value="TRUE" <?php if ($PASSWORD_SHOW) echo "checked"; ?>></td>
+                    <td>Show Password column</td>
+                </tr>
+                <tr>
+                    <td>IMAGE_SHOW:</td>
+                    <td><input type="checkbox" name="set_IMAGE_SHOW" value="TRUE" <?php if ($IMAGE_SHOW) echo "checked"; ?>></td>
+                    <td>Show IQdesktop Image version column</td>
+                </tr>
+                <tr>
+                    <td>VOLUME_MAP_SHOW:</td>
+                    <td><input type="checkbox" name="set_VOLUME_MAP_SHOW" value="TRUE" <?php if ($VOLUME_MAP_SHOW) echo "checked"; ?>></td>
+                    <td>Show Mapped Volume column</td>
+                </tr>
+                <tr>
+                    <td>VNCPORT_SHOW:</td>
+                    <td><input type="checkbox" name="set_VNCPORT_SHOW" value="TRUE" <?php if ($VNCPORT_SHOW) echo "checked"; ?>></td>
+                    <td>Show VNC Port column</td>
+                </tr>
+                <tr>
+                    <td>SSHPORT_SHOW:</td>
+                    <td><input type="checkbox" name="set_SSHPORT_SHOW" value="TRUE" <?php if ($SSHPORT_SHOW) echo "checked"; ?>></td>
+                    <td>Show SSH Port column</td>
+                </tr>
+                <tr>
+                    <td>SHINY_SERVER_PORT_SHOW:</td>
+                    <td><input type="checkbox" name="set_SHINY_SERVER_PORT_SHOW" value="TRUE" <?php if ($SHINY_SERVER_PORT_SHOW) echo "checked"; ?>></td>
+                    <td>Show Shiny Server Port column</td>
+                </tr>
+                <tr>
+                    <td>JENKINSPORT_SHOW:</td>
+                    <td><input type="checkbox" name="set_JENKINSPORT_SHOW" value="TRUE" <?php if ($JENKINSPORT_SHOW) echo "checked"; ?>></td>
+                    <td>Show Jenkins Port column</td>
+                </tr>
+                <tr>
+                    <td>ALLOW_SUDO_SHOW:</td>
+                    <td><input type="checkbox" name="set_ALLOW_SUDO_SHOW" value="TRUE" <?php if ($ALLOW_SUDO_SHOW) echo "checked"; ?>></td>
+                    <td>Show Sudo Rights column</td>
+                </tr>
+                <tr>
+                    <td>SSH_SERVER_SHOW:</td>
+                    <td><input type="checkbox" name="set_SSH_SERVER_SHOW" value="TRUE" <?php if ($SSH_SERVER_SHOW) echo "checked"; ?>></td>
+                    <td>Show SSH Server avilability column</td>
+                </tr>
+                <tr>
+                    <td>ALLOW_SHINY_SERVER_SHOW:</td>
+                    <td><input type="checkbox" name="set_ALLOW_SHINY_SERVER_SHOW" value="TRUE" <?php if ($ALLOW_SHINY_SERVER_SHOW) echo "checked"; ?>></td>
+                    <td>Show Shiny Server availability column</td>
+                </tr>
+                <tr>
+                    <td>USER_ID_SHOW:</td>
+                    <td><input type="checkbox" name="set_USER_ID_SHOW" value="TRUE" <?php if ($USER_ID_SHOW) echo "checked"; ?>></td>
+                    <td>Show User ID column</td>
+                </tr>
+                <tr>
+                    <td>THEME_SHOW:</td>
+                    <td><input type="checkbox" name="set_THEME_SHOW" value="TRUE" <?php if ($THEME_SHOW) echo "checked"; ?>></td>
+                    <td>Show Theme column</td>
+                </tr>
+                <tr>
+                    <td>MAC_SHOW:</td>
+                    <td><input type="checkbox" name="set_MAC_SHOW" value="TRUE" <?php if ($MAC_SHOW) echo "checked"; ?>></td>
+                    <td>Show MAC Address column</td>
+                </tr>
+                <tr>
+                    <td>SHM_SIZE_GB_SHOW:</td>
+                    <td><input type="checkbox" name="set_SHM_SIZE_GB_SHOW" value="TRUE" <?php if ($SHM_SIZE_GB_SHOW) echo "checked"; ?>></td>
+                    <td>Show Swap Space column</td>
+                </tr>
+                <tr>
+                    <td>NR_CORES_SHOW:</td>
+                    <td><input type="checkbox" name="set_NR_CORES_SHOW" value="TRUE" <?php if ($NR_CORES_SHOW) echo "checked"; ?>></td>
+                    <td>Show Number of Cores column</td>
+                </tr>
+                <tr>
+                    <td>MEMORY_GB_SHOW:</td>
+                    <td><input type="checkbox" name="set_MEMORY_GB_SHOW" value="TRUE" <?php if ($MEMORY_GB_SHOW) echo "checked"; ?>></td>
+                    <td>Show Memory column</td>
+                </tr>
+                <tr>
+                    <td>TIMEZONE_SHOW:</td>
+                    <td><input type="checkbox" name="set_TIMEZONE_SHOW" value="TRUE" <?php if ($TIMEZONE_SHOW) echo "checked"; ?>></td>
+                    <td>Show Timezone column</td>
+                </tr>
+                <tr>
+                    <td>IQRTOOLS_COMPLIANCE_SHOW:</td>
+                    <td><input type="checkbox" name="set_IQRTOOLS_COMPLIANCE_SHOW" value="TRUE" <?php if ($IQRTOOLS_COMPLIANCE_SHOW) echo "checked"; ?>></td>
+                    <td>Show IQR Tools Compliance column</td>
+                </tr>
+                <tr>
+                    <td>IQREPORT_TEMPLATE_SHOW:</td>
+                    <td><input type="checkbox" name="set_IQREPORT_TEMPLATE_SHOW" value="TRUE" <?php if ($IQREPORT_TEMPLATE_SHOW) echo "checked"; ?>></td>
+                    <td>Show IQReport Template selection column</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SAVE</button></td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+                <tr>
+                    <th colspan="3">Infotext on User Page (empty will revert to default)</th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                    <textarea form ="form1" name="set_INFOTEXT" rows="30" cols="150" wrap="soft"><?php echo $INFOTEXT; ?></textarea>
+                </tr>
+            </table>
+        </form>
+    <?php
+    }
+    ?>
+
 
 </body>
 

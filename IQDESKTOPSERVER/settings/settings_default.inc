@@ -2,8 +2,14 @@
 ///////////////////////////
 // Host computer info
 ///////////////////////////
-$MAX_CORES = 24;
-$MAX_MEM = 128;
+$MAX_CORES = 8;
+$MAX_MEM = 32;
+
+///////////////////////////
+// Content switches
+///////////////////////////
+$SHOW_INFOTEXT = TRUE;
+$SHOW_ADMINLINK = TRUE;
 
 ///////////////////////////
 // Table columns selection
@@ -30,10 +36,4 @@ $MEMORY_GB_SHOW = TRUE;
 $TIMEZONE_SHOW = FALSE;
 $IQRTOOLS_COMPLIANCE_SHOW = FALSE;
 $IQREPORT_TEMPLATE_SHOW = FALSE;
-
-///////////////////////////
-// Content switches
-///////////////////////////
-$SHOW_INFOTEXT = FALSE;
-$SHOW_ADMINLINK = TRUE;
 ?>

@@ -4,8 +4,16 @@
 $path = "/home/iqdocker/IQDESKTOP/IQDESKTOPSERVER/run/";
 
 // Load settings (also includes max cores and max memory)
-include("settings/settings.inc");
-$INFOTEXT = file_get_contents("settings/infotext.inc");
+if (file_exists("settings/settings.inc")) {
+    include("settings/settings.inc");
+} else {
+    include("settings/settings_default.inc");
+}
+if (file_exists("settings/infotext.inc")) {
+    $INFOTEXT = file_get_contents("settings/infotext.inc");
+} else {
+    $INFOTEXT = file_get_contents("settings/infotext_default.inc");
+}
 
 // Define displayed column names in table
 $NAME_TH_TEXT = "Name";
@@ -323,21 +331,31 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
                         echo '  <option value="1" ';
                         if ($NR_CORES == 1) echo "selected";
                         echo '>1</option>';
-                        echo '  <option value="2" ';
-                        if ($NR_CORES == 2) echo "selected";
-                        echo '>2</option>';
-                        echo '  <option value="3" ';
-                        if ($NR_CORES == 3) echo "selected";
-                        echo '>3</option>';
-                        echo '  <option value="4" ';
-                        if ($NR_CORES == 4) echo "selected";
-                        echo '>4</option>';
-                        echo '  <option value="6" ';
-                        if ($NR_CORES == 6) echo "selected";
-                        echo '>6</option>';
-                        echo '  <option value="8" ';
-                        if ($NR_CORES == 8) echo "selected";
-                        echo '>8</option>';
+                        if ($MAX_CORES >= 2) {
+                            echo '  <option value="2" ';
+                            if ($NR_CORES == 2) echo "selected";
+                            echo '>2</option>';
+                        }
+                        if ($MAX_CORES >= 3) {
+                            echo '  <option value="3" ';
+                            if ($NR_CORES == 3) echo "selected";
+                            echo '>3</option>';
+                        }
+                        if ($MAX_CORES >= 4) {
+                            echo '  <option value="4" ';
+                            if ($NR_CORES == 4) echo "selected";
+                            echo '>4</option>';
+                        }
+                        if ($MAX_CORES >= 6) {
+                            echo '  <option value="6" ';
+                            if ($NR_CORES == 6) echo "selected";
+                            echo '>6</option>';
+                        }
+                        if ($MAX_CORES >= 8) {
+                            echo '  <option value="8" ';
+                            if ($NR_CORES == 8) echo "selected";
+                            echo '>8</option>';
+                        }
                         if ($MAX_CORES >= 12) {
                             echo '  <option value="12" ';
                             if ($NR_CORES == 12) echo "selected";
@@ -382,15 +400,36 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
                         echo '  <option value="8" ';
                         if ($MEMORY_GB == 8) echo "selected";
                         echo '>8</option>';
-                        echo '  <option value="12" ';
-                        if ($MEMORY_GB == 12) echo "selected";
-                        echo '>12</option>';
-                        echo '  <option value="16" ';
-                        if ($MEMORY_GB == 16) echo "selected";
-                        echo '>16</option>';
-                        echo '  <option value="32" ';
-                        if ($MEMORY_GB == 32) echo "selected";
-                        echo '>32</option>';
+                        
+                        if ($MAX_MEM >= 12) {
+                            echo '  <option value="12" ';
+                            if ($MEMORY_GB == 12) echo "selected";
+                            echo '>12</option>';
+                        }
+
+                        if ($MAX_MEM >= 16) {
+                            echo '  <option value="16" ';
+                            if ($MEMORY_GB == 16) echo "selected";
+                            echo '>16</option>';
+                        }
+
+                        if ($MAX_MEM >= 24) {
+                            echo '  <option value="24" ';
+                            if ($MEMORY_GB == 24) echo "selected";
+                            echo '>24</option>';
+                        }
+
+                        if ($MAX_MEM >= 32) {
+                            echo '  <option value="32" ';
+                            if ($MEMORY_GB == 32) echo "selected";
+                            echo '>32</option>';
+                        }
+
+                        if ($MAX_MEM >= 48) {
+                            echo '  <option value="48" ';
+                            if ($MEMORY_GB == 48) echo "selected";
+                            echo '>48</option>';
+                        }
 
                         if ($MAX_MEM >= 64) {
                             echo '  <option value="64" ';

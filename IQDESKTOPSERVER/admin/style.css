@@ -50,8 +50,7 @@ td {
     /*background: rgba(202, 202, 202, 0.5);*/
 }
 
-td,
-th {
+td {
     font-size: 12px;
     text-align: left;
     vertical-align: middle;
@@ -60,9 +59,18 @@ th {
     padding-right: 5px;
     margin: 0;
     height: 30px;
+    padding-top: 2px;
 }
 
-td {
+th {
+    font-size: 16px;
+    text-align: left;
+    vertical-align: middle;
+    padding: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0;
+    height: 30px;
     padding-top: 2px;
 }
 
@@ -112,6 +120,7 @@ td.control {
     height: 24px;
     border-radius: 8px;
     display: inline;
+    float: right;
 }
 
 .red {
