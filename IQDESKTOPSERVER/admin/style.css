@@ -1,0 +1,175 @@
+body {
+    font-family: Verdana;
+    font-size: 16px;
+    background-image: url("images/background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0 0 0 20;
+    color: #fff;
+}
+
+h1 {
+    background: rgba(42, 42, 42, 0);
+    color: #fff;
+    padding: 20px;
+    margin: 0 0 0 -20;
+    font-weight: normal;
+    text-align: right;
+    background-image: url("images/logo.png");
+    background-repeat: no-repeat;
+    background-position: 20;
+    background-size: 300px;
+}
+
+h2 {
+    background: rgba(50, 50, 50, 0.6);
+    color: #fff;
+    padding: 5 20 5 0;
+    margin: 0 0 0 -20;
+    font-size: 18px;
+    font-weight: normal;
+    text-align: right;
+}
+
+a {
+    color: #B1DFE1;
+    text-decoration: none;
+}
+
+table {
+    margin: 0 0 0 42;
+}
+
+table,
+th,
+td {
+    border: 1px solid;
+    border-color: #19283B;
+    border-collapse: collapse;
+    background: rgba(50, 50, 50, 0.33);
+    /*background: rgba(202, 202, 202, 0.5);*/
+}
+
+td,
+th {
+    font-size: 12px;
+    text-align: left;
+    vertical-align: middle;
+    padding: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0;
+    height: 30px;
+}
+
+td {
+    padding-top: 2px;
+}
+
+td.control {
+    padding-top: 10px;
+}
+
+.buttonGreen {
+    background-color: #92D050;
+    /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    width: 80px;
+    height: 24px;
+    border-radius: 8px;
+    display: block;
+    margin: auto;
+}
+
+.buttonRed {
+    background-color: #A84A30;
+    /* Red */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    width: 80px;
+    height: 24px;
+    border-radius: 8px;
+    display: block;
+    margin: auto;
+}
+
+.buttonSelectCSV {
+    background-color: #369398;
+    /* Blue */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    width: 120px;
+    height: 24px;
+    border-radius: 8px;
+    display: inline;
+}
+
+.red {
+    color: #A84A30;
+}
+
+.redbold {
+    color: #A84A30;
+    font-weight: bold;
+}
+
+.green {
+    color: #92D050;
+}
+
+.greenbold {
+    color: #92D050;
+    font-weight: bold;
+}
+
+.blue {
+    color: #B1DFE1;
+}
+
+.bluebold {
+    color: #B1DFE1;
+    font-weight: bold;
+}
+
+li {
+    margin: 2px;
+    font-size: 12px;
+}
+
+div.help {
+    background: rgba(50, 50, 50, 0.6);
+    color: #fff;
+    padding-left: 20px;
+    margin-left: -20;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: normal;
+    text-align: left;
+}
+
+input,
+select {
+    background: rgba(50, 50, 50, 0.6);
+    color: #cccccc;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+::-moz-selection {
+    background: #369398
+}
+
+::selection {
+    background: #369398;
+}

@@ -11,7 +11,7 @@ $INFOTEXT = file_get_contents("../settings/infotext.inc");
 
 <head>
     <title>IQdesktopServer Admin</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
