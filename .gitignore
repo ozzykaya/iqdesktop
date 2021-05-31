@@ -1,10 +1,9 @@
 .htaccess
 .htpasswd
-.htaccessX
-.htpasswdX
 temp
 yml_custom
 settings.inc
 infotext.inc
-02_assigned_demo.csv
+*.csv
+!01_demo.csv
 *.pem

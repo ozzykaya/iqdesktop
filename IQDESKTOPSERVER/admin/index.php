@@ -221,9 +221,9 @@ if (empty($set_INFOTEXT)) {
         echo '<button type="submit" form="' . $form . '" value="Submit" class="' . $buttonStyle . '">' . $buttonText . '</button>' . "<br>";
         echo '</td>';
         echo "<td colspan=2>";
-        echo "Control the presence and use of VNC certificates for encryption of transfer through VNC.";
-        echo "Enabling VNC encryption will generate VNC certificates.";
-        echo "On the user page the user will be able to download the certificate file to install it in the VNC client.";
+        echo "Control the presence and use of VNC certificates for encryption of transfer through VNC. ";
+        echo "Enabling VNC encryption will generate VNC certificates. ";
+        echo "On the user page the user will be able to download the certificate file to install it in the VNC client. ";
         echo "The same certificate will be used for all users, overriding certificate setting in the CSV files.";
         if ($buttonStyle == "buttonGreen") {
         ?>
