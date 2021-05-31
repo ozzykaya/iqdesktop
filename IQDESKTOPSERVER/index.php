@@ -188,7 +188,7 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
             </ul>
             </div>
 
-    <?php
+    <?php 
         }
 
         echo "<h3>Control Containers</h3>";
