@@ -4,9 +4,10 @@
 #  test start all|username config.csv image ncores memorygb theme
 #  test stop all|username 
 #
-# config.csv file requires final line - only 1
-# Ports for Workshops: 5011-5030
-# Ports for internal use: 5911-...
+# VNC certificates can be controlled by:
+# 1) Setting in CSV files => control based on individual container
+# 2) Presence of files iqdesktop_VNC_key.pem and iqdesktop_VNC_cert.pem in run folder.
+#    In this case settings in CSV file are ignored.
 # ------------------------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------
@@ -108,6 +109,21 @@ if [[ $COMMAND == "start" ]]; then
             MONOLIX_LICENSE_KEY="$(sed s#:::#\\\\\\\\n#g <<<$MONOLIX_LICENSE_KEY)"
             # -----------------------------------------------------
 
+            # -----------------------------------------------------
+            # Handle VNC Option 2 => based on PEM files 
+            if [ -f "../admin/iqdesktop_VNC_key.pem" ]; then
+                if [ -f "../iqdesktop_VNC_cert.pem" ]; then
+                    # Read files into variables
+                    # Replace "\n" with ":"
+                    VNCKEY=$(tr '\n' ':' < ../admin/iqdesktop_VNC_key.pem)
+                    VNCCERT=$(tr '\n' ':' < ../iqdesktop_VNC_cert.pem)
+                    # Replace "&" with ":::"
+                    VNC_PRIVATE_KEY=$(sed s#:#:::#g <<<$VNCKEY)
+                    VNC_CERTIFICATE=$(sed s#:#:::#g <<<$VNCCERT)
+                fi
+            fi
+            # -----------------------------------------------------
+            
             # -----------------------------------------------------
             # Modify VNC_PRIVATE_KEY and VNC_CERTIFICATE file content 
             # \n replaced by ::: in CSV file

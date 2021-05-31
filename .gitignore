@@ -7,3 +7,4 @@ yml_custom
 settings.inc
 infotext.inc
 02_assigned_demo.csv
+*.pem

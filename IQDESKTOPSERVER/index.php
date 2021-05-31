@@ -50,6 +50,8 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
 <body>
     <h1><?php echo "Multi-User Control Interface" ?></h1>
     <h2>
+        <a href="index.html">Home</a>
+        |
         <a href="https://iqdesktop.intiquan.com" target="new">More information</a>
         |
         <a href="https://www.intiquan.com" target="new">IntiQuan</a>
@@ -93,7 +95,7 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
     ?>
             Select the user group that applies to you.<br>
             &nbsp;<br>
-    <?php
+            <?php
             echo '<form action="/index.php" method="get" id="form1">';
             echo '<input type="hidden" name="do" value="selectCSV">';
             echo '<select name="csvfile">';
@@ -170,8 +172,25 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
         if ($SHOW_INFOTEXT) {
             echo "<div class='help'>";
             echo $INFOTEXT;
-            echo "</div>";
+            echo "</div>&nbsp;<br>";
         }
+
+        # Write out information in case of general VNC certificates active
+        if (file_exists("iqdesktop_VNC_cert.pem")) {
+    ?>
+            <div class='help'>
+            <h3>VNC Certificate</h3>
+            The VNC connection is set up to be encrypted. Do the following:
+            <ul>
+                <li>Download the certificate: <a href="iqdesktop_VNC_cert.pem" target="new">iqdesktop_VNC_cert.pem</a> and store it on your system.
+                <li>Open the TigerVNC GUI and provide path to certificate in Options->Security->Path to X509 CA certificate.
+                <li>Connect to your IQdesktop container (with encryption).
+            </ul>
+            </div>
+
+    <?php
+        }
+
         echo "<h3>Control Containers</h3>";
         // Add path to filename
         $fullfilename = $path . $csvfile;

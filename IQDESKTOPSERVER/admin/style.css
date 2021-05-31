@@ -38,6 +38,7 @@ a {
 
 table {
     margin: 0 0 0 42;
+    width: 1200;
 }
 
 table,
@@ -86,7 +87,7 @@ td.control {
     text-align: center;
     text-decoration: none;
     font-size: 12px;
-    width: 80px;
+    width: 200px;
     height: 24px;
     border-radius: 8px;
     display: block;
@@ -101,7 +102,7 @@ td.control {
     text-align: center;
     text-decoration: none;
     font-size: 12px;
-    width: 80px;
+    width: 200px;
     height: 24px;
     border-radius: 8px;
     display: block;

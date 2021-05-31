@@ -2,35 +2,78 @@
 // Get passed GET variables
 $do = $_GET["do"];
 if (empty($do)) $do = "showsettings";
+$action = $_GET["action"];
 
-$set_MAX_CORES = $_GET["set_MAX_CORES"]; 
-$set_MAX_MEM = $_GET["set_MAX_MEM"]; 
-$set_SHOW_INFOTEXT = $_GET["set_SHOW_INFOTEXT"]; if($set_SHOW_INFOTEXT!="TRUE") $set_SHOW_INFOTEXT = "FALSE";
-$set_SHOW_ADMINLINK = $_GET["set_SHOW_ADMINLINK"]; if($set_SHOW_ADMINLINK!="TRUE") $set_SHOW_ADMINLINK = "FALSE";
-$set_NAME_SHOW = $_GET["set_NAME_SHOW"]; if($set_NAME_SHOW!="TRUE") $set_NAME_SHOW = "FALSE";
-$set_SAFETY_CHECK_SHOW = $_GET["set_SAFETY_CHECK_SHOW"]; if($set_SAFETY_CHECK_SHOW!="TRUE") $set_SAFETY_CHECK_SHOW = "FALSE";
-$set_USER_SHOW = $_GET["set_USER_SHOW"]; if($set_USER_SHOW!="TRUE") $set_USER_SHOW = "FALSE";
-$set_PASSWORD_SHOW = $_GET["set_PASSWORD_SHOW"]; if($set_PASSWORD_SHOW!="TRUE") $set_PASSWORD_SHOW = "FALSE";
-$set_IMAGE_SHOW = $_GET["set_IMAGE_SHOW"]; if($set_IMAGE_SHOW!="TRUE") $set_IMAGE_SHOW = "FALSE";
-$set_VOLUME_MAP_SHOW = $_GET["set_VOLUME_MAP_SHOW"]; if($set_VOLUME_MAP_SHOW!="TRUE") $set_VOLUME_MAP_SHOW = "FALSE";
-$set_VNCPORT_SHOW = $_GET["set_VNCPORT_SHOW"]; if($set_VNCPORT_SHOW!="TRUE") $set_VNCPORT_SHOW = "FALSE";
-$set_SSHPORT_SHOW = $_GET["set_SSHPORT_SHOW"]; if($set_SSHPORT_SHOW!="TRUE") $set_SSHPORT_SHOW = "FALSE";
-$set_SHINY_SERVER_PORT_SHOW = $_GET["set_SHINY_SERVER_PORT_SHOW"]; if($set_SHINY_SERVER_PORT_SHOW!="TRUE") $set_SHINY_SERVER_PORT_SHOW = "FALSE";
-$set_JENKINSPORT_SHOW = $_GET["set_JENKINSPORT_SHOW"]; if($set_JENKINSPORT_SHOW!="TRUE") $set_JENKINSPORT_SHOW = "FALSE";
-$set_ALLOW_SUDO_SHOW = $_GET["set_ALLOW_SUDO_SHOW"]; if($set_ALLOW_SUDO_SHOW!="TRUE") $set_ALLOW_SUDO_SHOW = "FALSE";
-$set_SSH_SERVER_SHOW = $_GET["set_SSH_SERVER_SHOW"]; if($set_SSH_SERVER_SHOW!="TRUE") $set_SSH_SERVER_SHOW = "FALSE";
-$set_ALLOW_SHINY_SERVER_SHOW = $_GET["set_ALLOW_SHINY_SERVER_SHOW"]; if($set_ALLOW_SHINY_SERVER_SHOW!="TRUE") $set_ALLOW_SHINY_SERVER_SHOW = "FALSE";
-$set_USER_ID_SHOW = $_GET["set_USER_ID_SHOW"]; if($set_USER_ID_SHOW!="TRUE") $set_USER_ID_SHOW = "FALSE";
-$set_THEME_SHOW = $_GET["set_THEME_SHOW"]; if($set_THEME_SHOW!="TRUE") $set_THEME_SHOW = "FALSE";
-$set_MAC_SHOW = $_GET["set_MAC_SHOW"]; if($set_MAC_SHOW!="TRUE") $set_MAC_SHOW = "FALSE";
-$set_SHM_SIZE_GB_SHOW = $_GET["set_SHM_SIZE_GB_SHOW"]; if($set_SHM_SIZE_GB_SHOW!="TRUE") $set_SHM_SIZE_GB_SHOW = "FALSE";
-$set_NR_CORES_SHOW = $_GET["set_NR_CORES_SHOW"]; if($set_NR_CORES_SHOW!="TRUE") $set_NR_CORES_SHOW = "FALSE";
-$set_MEMORY_GB_SHOW = $_GET["set_MEMORY_GB_SHOW"]; if($set_MEMORY_GB_SHOW!="TRUE") $set_MEMORY_GB_SHOW = "FALSE";
-$set_TIMEZONE_SHOW = $_GET["set_TIMEZONE_SHOW"]; if($set_TIMEZONE_SHOW!="TRUE") $set_TIMEZONE_SHOW = "FALSE";
-$set_IQRTOOLS_COMPLIANCE_SHOW = $_GET["set_IQRTOOLS_COMPLIANCE_SHOW"]; if($set_IQRTOOLS_COMPLIANCE_SHOW!="TRUE") $set_IQRTOOLS_COMPLIANCE_SHOW = "FALSE";
-$set_IQREPORT_TEMPLATE_SHOW = $_GET["set_IQREPORT_TEMPLATE_SHOW"]; if($set_IQREPORT_TEMPLATE_SHOW!="TRUE") $set_IQREPORT_TEMPLATE_SHOW = "FALSE";
+
+$C_vnccert = $_GET["C_vnccert"];
+if (empty($C_vnccert)) $C_vnccert = "CH";
+$ST_vnccert = $_GET["ST_vnccert"];
+if (empty($ST_vnccert)) $ST_vnccert = "BS";
+$L_vnccert = $_GET["L_vnccert"];
+if (empty($L_vnccert)) $L_vnccert = "Basel";
+$O_vnccert = $_GET["O_vnccert"];
+if (empty($O_vnccert)) $O_vnccert = "IntiQuan GmbH";
+$OU_vnccert = $_GET["OU_vnccert"];
+if (empty($OU_vnccert)) $OU_vnccert = "IQdesktop";
+$CN_vnccert = $_GET["CN_vnccert"];
+if (empty($CN_vnccert)) $CN_vnccert = "iqdesktop.intiquan.com";
+$BIT_vnccert = $_GET["BIT_vnccert"];
+if (empty($BIT_vnccert)) $BIT_vnccert = 2048;
+$days_vnccert = $_GET["days_vnccert"];
+if (empty($days_vnccert)) $days_vnccert = 3333;
+
+$set_MAX_CORES = $_GET["set_MAX_CORES"];
+$set_MAX_MEM = $_GET["set_MAX_MEM"];
+$set_SHOW_INFOTEXT = $_GET["set_SHOW_INFOTEXT"];
+if ($set_SHOW_INFOTEXT != "TRUE") $set_SHOW_INFOTEXT = "FALSE";
+$set_SHOW_ADMINLINK = $_GET["set_SHOW_ADMINLINK"];
+if ($set_SHOW_ADMINLINK != "TRUE") $set_SHOW_ADMINLINK = "FALSE";
+$set_NAME_SHOW = $_GET["set_NAME_SHOW"];
+if ($set_NAME_SHOW != "TRUE") $set_NAME_SHOW = "FALSE";
+$set_SAFETY_CHECK_SHOW = $_GET["set_SAFETY_CHECK_SHOW"];
+if ($set_SAFETY_CHECK_SHOW != "TRUE") $set_SAFETY_CHECK_SHOW = "FALSE";
+$set_USER_SHOW = $_GET["set_USER_SHOW"];
+if ($set_USER_SHOW != "TRUE") $set_USER_SHOW = "FALSE";
+$set_PASSWORD_SHOW = $_GET["set_PASSWORD_SHOW"];
+if ($set_PASSWORD_SHOW != "TRUE") $set_PASSWORD_SHOW = "FALSE";
+$set_IMAGE_SHOW = $_GET["set_IMAGE_SHOW"];
+if ($set_IMAGE_SHOW != "TRUE") $set_IMAGE_SHOW = "FALSE";
+$set_VOLUME_MAP_SHOW = $_GET["set_VOLUME_MAP_SHOW"];
+if ($set_VOLUME_MAP_SHOW != "TRUE") $set_VOLUME_MAP_SHOW = "FALSE";
+$set_VNCPORT_SHOW = $_GET["set_VNCPORT_SHOW"];
+if ($set_VNCPORT_SHOW != "TRUE") $set_VNCPORT_SHOW = "FALSE";
+$set_SSHPORT_SHOW = $_GET["set_SSHPORT_SHOW"];
+if ($set_SSHPORT_SHOW != "TRUE") $set_SSHPORT_SHOW = "FALSE";
+$set_SHINY_SERVER_PORT_SHOW = $_GET["set_SHINY_SERVER_PORT_SHOW"];
+if ($set_SHINY_SERVER_PORT_SHOW != "TRUE") $set_SHINY_SERVER_PORT_SHOW = "FALSE";
+$set_JENKINSPORT_SHOW = $_GET["set_JENKINSPORT_SHOW"];
+if ($set_JENKINSPORT_SHOW != "TRUE") $set_JENKINSPORT_SHOW = "FALSE";
+$set_ALLOW_SUDO_SHOW = $_GET["set_ALLOW_SUDO_SHOW"];
+if ($set_ALLOW_SUDO_SHOW != "TRUE") $set_ALLOW_SUDO_SHOW = "FALSE";
+$set_SSH_SERVER_SHOW = $_GET["set_SSH_SERVER_SHOW"];
+if ($set_SSH_SERVER_SHOW != "TRUE") $set_SSH_SERVER_SHOW = "FALSE";
+$set_ALLOW_SHINY_SERVER_SHOW = $_GET["set_ALLOW_SHINY_SERVER_SHOW"];
+if ($set_ALLOW_SHINY_SERVER_SHOW != "TRUE") $set_ALLOW_SHINY_SERVER_SHOW = "FALSE";
+$set_USER_ID_SHOW = $_GET["set_USER_ID_SHOW"];
+if ($set_USER_ID_SHOW != "TRUE") $set_USER_ID_SHOW = "FALSE";
+$set_THEME_SHOW = $_GET["set_THEME_SHOW"];
+if ($set_THEME_SHOW != "TRUE") $set_THEME_SHOW = "FALSE";
+$set_MAC_SHOW = $_GET["set_MAC_SHOW"];
+if ($set_MAC_SHOW != "TRUE") $set_MAC_SHOW = "FALSE";
+$set_SHM_SIZE_GB_SHOW = $_GET["set_SHM_SIZE_GB_SHOW"];
+if ($set_SHM_SIZE_GB_SHOW != "TRUE") $set_SHM_SIZE_GB_SHOW = "FALSE";
+$set_NR_CORES_SHOW = $_GET["set_NR_CORES_SHOW"];
+if ($set_NR_CORES_SHOW != "TRUE") $set_NR_CORES_SHOW = "FALSE";
+$set_MEMORY_GB_SHOW = $_GET["set_MEMORY_GB_SHOW"];
+if ($set_MEMORY_GB_SHOW != "TRUE") $set_MEMORY_GB_SHOW = "FALSE";
+$set_TIMEZONE_SHOW = $_GET["set_TIMEZONE_SHOW"];
+if ($set_TIMEZONE_SHOW != "TRUE") $set_TIMEZONE_SHOW = "FALSE";
+$set_IQRTOOLS_COMPLIANCE_SHOW = $_GET["set_IQRTOOLS_COMPLIANCE_SHOW"];
+if ($set_IQRTOOLS_COMPLIANCE_SHOW != "TRUE") $set_IQRTOOLS_COMPLIANCE_SHOW = "FALSE";
+$set_IQREPORT_TEMPLATE_SHOW = $_GET["set_IQREPORT_TEMPLATE_SHOW"];
+if ($set_IQREPORT_TEMPLATE_SHOW != "TRUE") $set_IQREPORT_TEMPLATE_SHOW = "FALSE";
 // Info Text
-$set_INFOTEXT = trim($_GET["set_INFOTEXT"]); 
+$set_INFOTEXT = trim($_GET["set_INFOTEXT"]);
 
 // Load settings (also includes max cores and max memory)
 if (file_exists("../settings/settings.inc")) {
@@ -59,79 +102,197 @@ if (empty($set_INFOTEXT)) {
 <head>
     <title>IQdesktopServer Admin</title>
     <link rel="stylesheet" href="style.css">
- </head>
+</head>
 
 <body>
     <h1><?php echo "Multi-User Admin Interface" ?></h1>
     <h2>
+        <a href="index.html">Home</a>
+        |
         <a href="https://iqdesktop.intiquan.com" target="new">More information</a>
         |
         <a href="https://www.intiquan.com" target="new">IntiQuan</a>
     </h2>
 
     <?php
-    if ($do=="updateSettings") {
+    if ($do == "updateSettings") {
         // Construct settings text
         $settingsText = "<?php\n";
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "// Host computer info\n";
         $settingsText .= "///////////////////////////\n";
-        $settingsText .= "$"."MAX_CORES = " . $set_MAX_CORES . ";\n";
-        $settingsText .= "$"."MAX_MEM = " . $set_MAX_MEM . ";\n";
+        $settingsText .= "$" . "MAX_CORES = " . $set_MAX_CORES . ";\n";
+        $settingsText .= "$" . "MAX_MEM = " . $set_MAX_MEM . ";\n";
         $settingsText .= "\n";
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "// Content switches\n";
         $settingsText .= "///////////////////////////\n";
-        $settingsText .= "$"."SHOW_INFOTEXT = " . $set_SHOW_INFOTEXT . ";\n";
-        $settingsText .= "$"."SHOW_ADMINLINK = " . $set_SHOW_ADMINLINK . ";\n";
+        $settingsText .= "$" . "SHOW_INFOTEXT = " . $set_SHOW_INFOTEXT . ";\n";
+        $settingsText .= "$" . "SHOW_ADMINLINK = " . $set_SHOW_ADMINLINK . ";\n";
         $settingsText .= "\n";
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "// Table columns selection\n";
         $settingsText .= "///////////////////////////\n";
-        $settingsText .= "$"."NAME_SHOW = " . $set_NAME_SHOW . ";\n";
-        $settingsText .= "$"."USER_SHOW = " . $set_USER_SHOW . ";\n";
-        $settingsText .= "$"."SAFETY_CHECK_SHOW = " . $set_SAFETY_CHECK_SHOW . ";\n";
-        $settingsText .= "$"."PASSWORD_SHOW = " . $set_PASSWORD_SHOW . ";\n";
-        $settingsText .= "$"."IMAGE_SHOW = " . $set_IMAGE_SHOW . ";\n";
-        $settingsText .= "$"."VOLUME_MAP_SHOW = " . $set_VOLUME_MAP_SHOW . ";\n";
-        $settingsText .= "$"."VNCPORT_SHOW = " . $set_VNCPORT_SHOW . ";\n";
-        $settingsText .= "$"."SSHPORT_SHOW = " . $set_SSHPORT_SHOW . ";\n";
-        $settingsText .= "$"."SHINY_SERVER_PORT_SHOW = " . $set_SHINY_SERVER_PORT_SHOW . ";\n";
-        $settingsText .= "$"."JENKINSPORT_SHOW = " . $set_JENKINSPORT_SHOW . ";\n";
-        $settingsText .= "$"."ALLOW_SUDO_SHOW = " . $set_ALLOW_SUDO_SHOW . ";\n";
-        $settingsText .= "$"."SSH_SERVER_SHOW = " . $set_SSH_SERVER_SHOW . ";\n";
-        $settingsText .= "$"."ALLOW_SHINY_SERVER_SHOW = " . $set_ALLOW_SHINY_SERVER_SHOW . ";\n";
-        $settingsText .= "$"."USER_ID_SHOW = " . $set_USER_ID_SHOW . ";\n";
-        $settingsText .= "$"."THEME_SHOW = " . $set_THEME_SHOW . ";\n";
-        $settingsText .= "$"."MAC_SHOW = " . $set_MAC_SHOW . ";\n";
-        $settingsText .= "$"."SHM_SIZE_GB_SHOW = " . $set_SHM_SIZE_GB_SHOW . ";\n";
-        $settingsText .= "$"."NR_CORES_SHOW = " . $set_NR_CORES_SHOW . ";\n";
-        $settingsText .= "$"."MEMORY_GB_SHOW = " . $set_MEMORY_GB_SHOW . ";\n";
-        $settingsText .= "$"."TIMEZONE_SHOW = " . $set_TIMEZONE_SHOW . ";\n";
-        $settingsText .= "$"."IQRTOOLS_COMPLIANCE_SHOW = " . $set_IQRTOOLS_COMPLIANCE_SHOW . ";\n";
-        $settingsText .= "$"."IQREPORT_TEMPLATE_SHOW = " . $set_IQREPORT_TEMPLATE_SHOW . ";\n";
+        $settingsText .= "$" . "NAME_SHOW = " . $set_NAME_SHOW . ";\n";
+        $settingsText .= "$" . "USER_SHOW = " . $set_USER_SHOW . ";\n";
+        $settingsText .= "$" . "SAFETY_CHECK_SHOW = " . $set_SAFETY_CHECK_SHOW . ";\n";
+        $settingsText .= "$" . "PASSWORD_SHOW = " . $set_PASSWORD_SHOW . ";\n";
+        $settingsText .= "$" . "IMAGE_SHOW = " . $set_IMAGE_SHOW . ";\n";
+        $settingsText .= "$" . "VOLUME_MAP_SHOW = " . $set_VOLUME_MAP_SHOW . ";\n";
+        $settingsText .= "$" . "VNCPORT_SHOW = " . $set_VNCPORT_SHOW . ";\n";
+        $settingsText .= "$" . "SSHPORT_SHOW = " . $set_SSHPORT_SHOW . ";\n";
+        $settingsText .= "$" . "SHINY_SERVER_PORT_SHOW = " . $set_SHINY_SERVER_PORT_SHOW . ";\n";
+        $settingsText .= "$" . "JENKINSPORT_SHOW = " . $set_JENKINSPORT_SHOW . ";\n";
+        $settingsText .= "$" . "ALLOW_SUDO_SHOW = " . $set_ALLOW_SUDO_SHOW . ";\n";
+        $settingsText .= "$" . "SSH_SERVER_SHOW = " . $set_SSH_SERVER_SHOW . ";\n";
+        $settingsText .= "$" . "ALLOW_SHINY_SERVER_SHOW = " . $set_ALLOW_SHINY_SERVER_SHOW . ";\n";
+        $settingsText .= "$" . "USER_ID_SHOW = " . $set_USER_ID_SHOW . ";\n";
+        $settingsText .= "$" . "THEME_SHOW = " . $set_THEME_SHOW . ";\n";
+        $settingsText .= "$" . "MAC_SHOW = " . $set_MAC_SHOW . ";\n";
+        $settingsText .= "$" . "SHM_SIZE_GB_SHOW = " . $set_SHM_SIZE_GB_SHOW . ";\n";
+        $settingsText .= "$" . "NR_CORES_SHOW = " . $set_NR_CORES_SHOW . ";\n";
+        $settingsText .= "$" . "MEMORY_GB_SHOW = " . $set_MEMORY_GB_SHOW . ";\n";
+        $settingsText .= "$" . "TIMEZONE_SHOW = " . $set_TIMEZONE_SHOW . ";\n";
+        $settingsText .= "$" . "IQRTOOLS_COMPLIANCE_SHOW = " . $set_IQRTOOLS_COMPLIANCE_SHOW . ";\n";
+        $settingsText .= "$" . "IQREPORT_TEMPLATE_SHOW = " . $set_IQREPORT_TEMPLATE_SHOW . ";\n";
         $settingsText .= "?>\n";
 
         // Save settingsText to file
-        file_put_contents("../settings/settings.inc",$settingsText);
+        file_put_contents("../settings/settings.inc", $settingsText);
 
         // Save set_INFOTEXT to file
-        file_put_contents("../settings/infotext.inc",$set_INFOTEXT);
+        file_put_contents("../settings/infotext.inc", $set_INFOTEXT);
 
-        ?>
+    ?>
         <h3>Settings saved!</h3>
-        <a href="index.html">Reload Page (showing new settings might not show immediately due to caching)</a>
-        <?php
+        <a href="index.html">Click to Reload Page (showing new settings might not show immediately due to caching)</a>
+    <?php
     }
     ?>
 
-
+    <?php
+    if ($do == "VNCcert") {
+        if ($action == "rmVNCcert") {
+            // Remove certificate files
+            unlink("iqdesktop_VNC_key.pem");
+            unlink("../iqdesktop_VNC_cert.pem");
+        }
+        if ($action == "genVNCcert") {
+            // Generate certificate files
+            // Key file:
+            $command = "openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:$BIT_vnccert -out iqdesktop_VNC_key.pem";
+            shell_exec($command);
+            // Cert file:
+            $command = "openssl req -key iqdesktop_VNC_key.pem -x509 -new -days $days_vnccert -out iqdesktop_VNC_cert.pem -subj \"/C=$C_vnccert/ST=$ST_vnccert/L=$L_vnccert/O=$O_vnccert/OU=$OU_vnccert/CN=$CN_vnccert\"";
+            shell_exec($command);
+            // Move cert file
+            rename("iqdesktop_VNC_cert.pem", "../iqdesktop_VNC_cert.pem");
+        }
+    ?>
+        <h3>Settings saved!</h3>
+        <a href="index.html">Click to Reload Page (showing new settings might not show immediately due to caching)</a>
+    <?php
+    }
+    ?>
 
     <?php
     if ($do == "showsettings") {
         // Show the settings form
     ?>
-        <h3>Settings</h3>
+        <h3>Security & Encryption</h3>
+        <?php
+        $pathVNCkey = "iqdesktop_VNC_key.pem";
+        $pathVNCcert = "../iqdesktop_VNC_cert.pem";
+        $buttonText = "Enable VNC Certificates";
+        $buttonStyle = "buttonRed";
+        $action = "genVNCcert";
+        if (file_exists($pathVNCkey) & file_exists($pathVNCcert)) {
+            $buttonText = "Disable VNC Certificates";
+            $buttonStyle = "buttonGreen";
+            $action = "rmVNCcert";
+        }
+        // Generate button to create or remove certificates
+        $form = "form_VNCcert";
+        echo '<form action="index.php" method="get" id="' . $form . '">';
+        echo '<input type="hidden" name="do" value="VNCcert">';
+        echo "<table>";
+        echo "<tr>" . '<td class="control">';
+        echo '<input type="hidden" name="action" value="' . $action . '">';
+        echo '<button type="submit" form="' . $form . '" value="Submit" class="' . $buttonStyle . '">' . $buttonText . '</button>' . "<br>";
+        echo '</td>';
+        echo "<td colspan=2>";
+        echo "Control the presence and use of VNC certificates for encryption of transfer through VNC.";
+        echo "Enabling VNC encryption will generate VNC certificates.";
+        echo "On the user page the user will be able to download the certificate file to install it in the VNC client.";
+        echo "The same certificate will be used for all users, overriding certificate setting in the CSV files.";
+        if ($buttonStyle == "buttonGreen") {
+        ?>
+            <br>
+            <ul>
+                <li><a href="../iqdesktop_VNC_cert.pem" target="new">Certificate File (iqdesktop_VNC_cert.pem)</a></li>
+                <li><a href="iqdesktop_VNC_key.pem" target="new">Key File (iqdesktop_VNC_key.pem)</a></li>
+            </ul>
+        <?php
+        }
+        echo "</td>";
+        if ($buttonStyle == "buttonRed") {
+            echo "</tr>";
+        ?>
+            <tr>
+                <td>/C=CH</td>
+                <td width=100><input type="text" name="C_vnccert" size="30" value="<?php echo $C_vnccert; ?>"></td>
+                </td>
+                <td>Country Name (2 letter code)</td>
+            </tr>
+            <tr>
+                <td>/ST=BS</td>
+                <td width=100><input type="text" name="ST_vnccert" size="30" value="<?php echo $ST_vnccert; ?>"></td>
+                </td>
+                <td>State or Province Name (full name)</td>
+            </tr>
+            <tr>
+                <td>/L=Basel</td>
+                <td width=100><input type="text" name="L_vnccert" size="30" value="<?php echo $L_vnccert; ?>"></td>
+                </td>
+                <td>Locality Name (eg, city)</td>
+            </tr>
+            <tr>
+                <td>/O=IntiQuan GmbH</td>
+                <td width=100><input type="text" name="O_vnccert" size="30" value="<?php echo $O_vnccert; ?>"></td>
+                </td>
+                <td>Organization Name (eg, company)</td>
+            </tr>
+            <tr>
+                <td>/OU=IQdesktop</td>
+                <td width=100><input type="text" name="OU_vnccert" size="30" value="<?php echo $OU_vnccert; ?>"></td>
+                </td>
+                <td>Organizational Unit Name (eg, section)</td>
+            </tr>
+            <tr>
+                <td>/CN=iqdesktop.intiquan.com</td>
+                <td width=100><input type="text" name="CN_vnccert" size="30" value="<?php echo $CN_vnccert; ?>"></td>
+                </td>
+                <td>Common Name (e.g. server FQDN or YOUR name)</td>
+            </tr>
+            <tr>
+                <td>rsa_keygen_bits</td>
+                <td width=100><input type="text" name="BIT_vnccert" size="30" value="<?php echo $BIT_vnccert; ?>"></td>
+                </td>
+                <td>Number of bits for the key (2048 or 4096 are good choices)</td>
+            </tr>
+            <tr>
+                <td>days</td>
+                <td width=100><input type="text" name="days_vnccert" size="30" value="<?php echo $days_vnccert; ?>"></td>
+                </td>
+                <td>Number of days until expiration</td>
+            </tr>
+        <?php
+        }
+        echo "</table>";
+        echo "</form>";
+        ?>
+
+        <h3>General Settings</h3>
         <form action="index.php" method="get" id="form1">
             <input type="hidden" name="do" value="updateSettings">
             <table>
@@ -294,7 +455,7 @@ if (empty($set_INFOTEXT)) {
                 </tr>
                 <tr>
                     <td colspan="3">
-                    <textarea form ="form1" name="set_INFOTEXT" rows="30" cols="150" wrap="soft"><?php echo $INFOTEXT; ?></textarea>
+                        <textarea form="form1" name="set_INFOTEXT" rows="30" cols="150" wrap="soft"><?php echo $INFOTEXT; ?></textarea>
                 </tr>
             </table>
         </form>
