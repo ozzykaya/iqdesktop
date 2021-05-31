@@ -112,6 +112,8 @@ if (empty($set_INFOTEXT)) {
         <a href="https://iqdesktop.intiquan.com" target="new">More information</a>
         |
         <a href="https://www.intiquan.com" target="new">IntiQuan</a>
+        |
+        <a href="/index.html">User Interface</a>
     </h2>
 
     <?php

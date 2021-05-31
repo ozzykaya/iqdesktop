@@ -1,8 +1,4 @@
 <?php
-// Define base folder name to iqdesktop.sh
-// DO NOT CHANGE!
-$path = "/home/iqdocker/IQDESKTOP/IQDESKTOPSERVER/run/";
-
 // Load settings (also includes max cores and max memory)
 if (file_exists("settings/settings.inc")) {
     include("settings/settings.inc");
@@ -38,6 +34,21 @@ $MEMORY_GB_TH_TEXT = "Memory [GB]";
 $TIMEZONE_TH_TEXT = "Timezone";
 $IQRTOOLS_COMPLIANCE_TH_TEXT = "IQR Tools Compliance";
 $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
+
+// Get passed GET variables
+$do = $_GET["do"];
+$csvfile = $_GET["csvfile"];
+$control = $_GET["control"];
+$user = $_GET["user"];
+$action = $_GET["action"];
+$image = $_GET["image"];
+$nrcores = $_GET["nrcores"];
+$memgb = $_GET["memgb"];
+$theme = $_GET["theme"];
+$safety_check = $_GET["safety_check"];
+$safety_check_required = $_GET["safety_check_required"];
+
+$path = "run/"
 ?>
 
 <html>
@@ -66,19 +77,6 @@ $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
     </h2>
 
     <?php
-    // Get passed GET variables
-    $do = $_GET["do"];
-    $csvfile = $_GET["csvfile"];
-    $control = $_GET["control"];
-    $user = $_GET["user"];
-    $action = $_GET["action"];
-    $image = $_GET["image"];
-    $nrcores = $_GET["nrcores"];
-    $memgb = $_GET["memgb"];
-    $theme = $_GET["theme"];
-    $safety_check = $_GET["safety_check"];
-    $safety_check_required = $_GET["safety_check_required"];
-
 
     if ($do == "") {
 
