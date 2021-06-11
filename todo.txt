@@ -7,6 +7,7 @@
 - OK User: Allow setting of sudo rights
 
 - Build in MOUNTing of drives
+- Setup demo login home server!
 
 - Admin: Show output of docker stats in a reasonable form
 - Admin: Allow upload image file
