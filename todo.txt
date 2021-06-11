@@ -1,4 +1,3 @@
-
 - OK Remove Jenkins Port
 - OK Admin: Set "privileged" mode (allows or disallows mounting external file systems)
 - OK Admin: Define if sudo can be selected to be allowed (or if OFF by default)
@@ -6,13 +5,11 @@
 - OK User: Allow setting of sudo rights
 - OK Admin: Set "MOUNT_BASENAME" (changes how folders are mounted inside)
 - OK Implement MOUNT_BASENAME mode in config file (for all users)
-
-- Add Mounting information for drives
-- Convert uyuni to new web interface solution - with mounted drives (transfer, consulting, consulting_blinded, projects, IQSHINYWEB)
-
+- OK Add Mounting information for drives
 
 Later
 =====
+- Convert uyuni to new web interface solution - with mounted drives (transfer, consulting, consulting_blinded, projects, IQSHINYWEB)
 - Admin: Show output of docker stats in a reasonable form
 - Allow to purge containers
 - Allow to stop all containers
