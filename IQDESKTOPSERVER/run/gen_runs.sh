@@ -36,6 +36,7 @@ VNC_CERTIFICATE=${24}
 AWS_ACCESS_KEY_ID=${25}
 AWS_SECRET_ACCESS_KEY=${26}
 PRIVILEGED=${27}
+MOUNTBASENAME=${28}
 
 # ------------------------------------------------------------------------
 # Handle upper to lower case
@@ -46,6 +47,7 @@ SSH_SERVER=${SSH_SERVER,,}
 IQRTOOLS_COMPLIANCE=${IQRTOOLS_COMPLIANCE,,}
 ALLOW_SHINY_SERVER=${ALLOW_SHINY_SERVER,,}
 PRIVILEGED=${PRIVILEGED,,}
+MOUNTBASENAME=${MOUNTBASENAME,,}
 
 # ------------------------------------------------------------------------
 # Copy template docker-compose.yml file 
@@ -62,6 +64,7 @@ cp docker-compose_template.yml $CUSTOM_YML_FILE
 # ------------------------------------------------------------------------
 
 sed -i "s#%PRIVILEGED%#$PRIVILEGED#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_BASENAME%#$MOUNTBASENAME#g" $CUSTOM_YML_FILE
 
 sed -i "s#%USER%#$USER#g" $CUSTOM_YML_FILE
 sed -i "s#%IMAGE%#$IMAGE#g" $CUSTOM_YML_FILE

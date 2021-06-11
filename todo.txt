@@ -1,23 +1,20 @@
 
 - OK Remove Jenkins Port
 
-- OK Admin: Set "privileged" mode (allows or disallows mounting external file systems
+- OK Admin: Set "privileged" mode (allows or disallows mounting external file systems)
 - OK Admin: Define if sudo can be selected to be allowed (or if OFF by default)
 - OK Implement privileged mode in config file
 - OK User: Allow setting of sudo rights
+- OK Admin: Set "MOUNT_BASENAME" (changes how folders are mounted inside)
+- OK Implement MOUNT_BASENAME mode in config file (for all users)
 
 - Build in MOUNTing of drives
 - Setup demo login home server!
 
 - Admin: Show output of docker stats in a reasonable form
-- Admin: Allow upload image file
-
-
-LATER:
-	- Allow to purge containers
-	- Allow to stop all containers
-	- Allow the swappoff and on
-	- Allow upload of new image file
-	- Allow deletion of selected image
-	- Remove selected yml files
+- Allow to purge containers
+- Allow to stop all containers
+- Allow the swappoff and on
+- Remove selected yml files
 	
+

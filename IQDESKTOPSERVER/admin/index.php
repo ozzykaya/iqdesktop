@@ -30,6 +30,8 @@ $set_PRIVILEGED = $_GET["set_PRIVILEGED"];
 if ($set_PRIVILEGED != "TRUE") $set_PRIVILEGED = "FALSE";
 $set_ALLOW_SUDO_CHOICE = $_GET["set_ALLOW_SUDO_CHOICE"];
 if ($set_ALLOW_SUDO_CHOICE != "TRUE") $set_ALLOW_SUDO_CHOICE = "FALSE";
+$set_MOUNT_BASENAME = $_GET["set_MOUNT_BASENAME"];
+if ($set_MOUNT_BASENAME != "TRUE") $set_MOUNT_BASENAME = "FALSE";
 
 $set_SHOW_INFOTEXT = $_GET["set_SHOW_INFOTEXT"];
 if ($set_SHOW_INFOTEXT != "TRUE") $set_SHOW_INFOTEXT = "FALSE";
@@ -132,6 +134,7 @@ if (empty($set_INFOTEXT)) {
         $settingsText .= "$" . "MAX_MEM = " . $set_MAX_MEM . ";\n";
         $settingsText .= "$" . "PRIVILEGED = " . $set_PRIVILEGED . ";\n";
         $settingsText .= "$" . "ALLOW_SUDO_CHOICE = " . $set_ALLOW_SUDO_CHOICE . ";\n";
+        $settingsText .= "$" . "MOUNT_BASENAME = " . $set_MOUNT_BASENAME . ";\n";
         $settingsText .= "\n";
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "// Content switches\n";
@@ -350,7 +353,12 @@ if (empty($set_INFOTEXT)) {
                 <tr>
                     <td>ALLOW_SUDO_CHOICE:</td>
                     <td><input type="checkbox" name="set_ALLOW_SUDO_CHOICE" value="TRUE" <?php if ($ALLOW_SUDO_CHOICE) echo "checked"; ?>></td>
-                    <td>If checked, users can define themselves in the control table if they want sudo rights or not. Default setting is as defined for this user in the CSV file.</td>
+                    <td>If checked, users can define themselves in the control table if they want sudo rights or not. Default setting is as defined for this user in the CSV file (only when choice allowed). If choice not allowed then no user can have sudo rights - even if defind in CSV file.</td>
+                </tr>
+                <tr>
+                    <td>MOUNT_BASENAME:</td>
+                    <td><input type="checkbox" name="set_MOUNT_BASENAME" value="TRUE" <?php if ($MOUNT_BASENAME) echo "checked"; ?>></td>
+                    <td>If checked, external folders are mounted to /IQDESKTOP/MOUNT/"basename of file server folder". Otherwise, instead of the basename the full path on the file server is used.</td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>

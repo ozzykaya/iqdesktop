@@ -6,6 +6,7 @@ $MAX_CORES = 8;
 $MAX_MEM = 32;
 $PRIVILEGED = TRUE;
 $ALLOW_SUDO_CHOICE = TRUE;
+$MOUNT_BASENAME = TRUE;
 
 ///////////////////////////
 // Content switches

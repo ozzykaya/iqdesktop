@@ -18,10 +18,10 @@
 NARGS=$#
 
 # Require correct number of input arguments
-if [[ $NARGS -lt 2 ]] || [[ $NARGS -gt 9 ]] || [[ $NARGS == 4 ]] || [[ $NARGS == 5 ]] || [[ $NARGS == 6 ]] || [[ $NARGS == 7 ]] || [[ $NARGS == 8 ]]; then 
+if [[ $NARGS != 2 ]] && [[ $NARGS != 3 ]] && [[ $NARGS != 10 ]]; then
     echo "Usage:"
     echo "        iqdesktop start all|username config.csv"
-    echo "        iqdesktop start all|username config.csv image ncores memorygb theme sudo privileged"
+    echo "        iqdesktop start all|username config.csv image ncores memorygb theme sudo privileged mount_basename"
     echo "        iqdesktop stop all|username"
     echo ""
     echo "     sudo:       FALSE or TRUE"
@@ -42,7 +42,7 @@ if [[ $COMMAND == "stop" ]];  then
 fi
 
 if [[ $COMMAND == "start" ]]; then
-    if [[ $NARGS < 3 ]] || [[ $NARGS -gt 9 ]] || [[ $NARGS == 4 ]] || [[ $NARGS == 5 ]] || [[ $NARGS == 6 ]] || [[ $NARGS == 7 ]] || [[ $NARGS == 8 ]]; then 
+    if [[ $NARGS != 3 ]] && [[ $NARGS != 10 ]]; then
         echo "start command requires 3 or 9 input arguments"
         exit 0
     fi
@@ -73,6 +73,7 @@ ARGMEM=$6
 ARGTHEME=$7
 ARGSUDO=$8
 ARGPRIVILEGED=$9
+ARGMOUNTBASENAME=${10}
 
 # ------------------------------------------------------------------------
 # Ensure gen_runs.sh is executable
@@ -110,6 +111,13 @@ if [[ $COMMAND == "start" ]]; then
                 PRIVILEGED=$ARGPRIVILEGED
             else
                 PRIVILEGED=FALSE
+            fi
+
+            # Handle arguments not predefined in the CSV file
+            if [[ -n $ARGMOUNTBASENAME ]]; then
+                MOUNTBASENAME=$ARGMOUNTBASENAME
+            else
+                MOUNTBASENAME=TRUE
             fi
 
             # -----------------------------------------------------
@@ -157,7 +165,7 @@ if [[ $COMMAND == "start" ]]; then
                     "$ALLOW_SUDO" "$SSH_SERVER" "$ALLOW_SHINY_SERVER" "$USER_ID" "$THEME" "$MAC" "$SHM_SIZE_GB" "$NR_CORES" \
                     "$MEMORY_GB" "$TIMEZONE" "$IQRTOOLS_COMPLIANCE" "$IQREPORT_TEMPLATE" "$IQREPORT_LICENSE_KEY" "$NONMEM_LICENSE_KEY" \
                     "$MONOLIX_LICENSE_KEY" "$VNC_PRIVATE_KEY" "$VNC_CERTIFICATE" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" \
-                    "$PRIVILEGED"
+                    "$PRIVILEGED" "$MOUNTBASENAME"
             else
                 if [[ $USERS == $USER ]]; then 
                     # Start only for selected user
@@ -166,7 +174,7 @@ if [[ $COMMAND == "start" ]]; then
                         "$ALLOW_SUDO" "$SSH_SERVER" "$ALLOW_SHINY_SERVER" "$USER_ID" "$THEME" "$MAC" "$SHM_SIZE_GB" "$NR_CORES" \
                         "$MEMORY_GB" "$TIMEZONE" "$IQRTOOLS_COMPLIANCE" "$IQREPORT_TEMPLATE" "$IQREPORT_LICENSE_KEY" "$NONMEM_LICENSE_KEY" \
                         "$MONOLIX_LICENSE_KEY" "$VNC_PRIVATE_KEY" "$VNC_CERTIFICATE" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" \
-                        "$PRIVILEGED"
+                        "$PRIVILEGED" "$MOUNTBASENAME"
                 fi
             fi
 

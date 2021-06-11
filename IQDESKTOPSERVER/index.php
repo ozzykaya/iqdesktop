@@ -16,6 +16,10 @@ $privileged = "FALSE";
 if ($PRIVILEGED) {
     $privileged = "TRUE";
 }
+$mountbasename = "FALSE";
+if ($MOUNT_BASENAME) {
+    $mountbasename = "TRUE";
+}
 
 // Define displayed column names in table
 $NAME_TH_TEXT = "Name";
@@ -50,7 +54,15 @@ $image = $_GET["image"];
 $nrcores = $_GET["nrcores"];
 $memgb = $_GET["memgb"];
 $theme = $_GET["theme"];
-$allow_sudo = $_GET["allow_sudo"];
+if ($ALLOW_SUDO_CHOICE) {
+    $allow_sudo = $_GET["allow_sudo"];
+} else {
+    # If sudo choice not allowed then override anything with FALSE!
+    # Otherwise its a security risk. So in this web interface the 
+    # Setting of the CSV file is only taken as default if choice allowed.
+    # And its always FALSE is choice not allowed!
+    $allow_sudo = "FALSE";
+}
 
 $safety_check = $_GET["safety_check"];
 $safety_check_required = $_GET["safety_check_required"];
@@ -142,8 +154,8 @@ $path = "run/"
         if ($action == "start") {
             if (trim($safety_check_required) == trim($safety_check) || empty($safety_check_required)) {
                 $sudo = "false";
-                $command = "./iqdesktop.sh start " . $user . " " . $csvfile . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " " . $allow_sudo . " " . $privileged . " > /dev/null 2>/dev/null &";
-                // echo $command."<br>";
+                $command = "./iqdesktop.sh start " . $user . " " . $csvfile . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " " . $allow_sudo . " " . $privileged . " " . $mountbasename . " > /dev/null 2>/dev/null &";
+                echo $command."<br>";
             } else {
                 header("Location: safetycheck.html");
             }
@@ -233,6 +245,12 @@ $path = "run/"
             $SSHPORT = $value[7];
             $SHINY_SERVER_PORT = $value[8];
             $ALLOW_SUDO = $value[9];
+            if (!$ALLOW_SUDO_CHOICE) {
+                # If choice is not allowed then simply disable it. 
+                # Otherwise it would be possible to start a container with sudo rights 
+                # even if choice is disabled.
+                $ALLOW_SUDO = "FALSE"; 
+            } 
             $SSH_SERVER = $value[10];
             $ALLOW_SHINY_SERVER = $value[11];
             $USER_ID = $value[12];
