@@ -16,6 +16,6 @@ Later
 - Admin: Show output of docker stats in a reasonable form
 - Allow to purge containers
 - Allow to stop all containers
-- Remove selected yml files
+- Remove selected yml files 
 	
 
