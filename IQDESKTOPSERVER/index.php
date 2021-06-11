@@ -11,6 +11,12 @@ if (file_exists("settings/infotext.inc")) {
     $INFOTEXT = file_get_contents("settings/infotext_default.inc");
 }
 
+// Handle setting flags
+$privileged = "FALSE";
+if ($PRIVILEGED) {
+    $privileged = "TRUE";
+}
+
 // Define displayed column names in table
 $NAME_TH_TEXT = "Name";
 $USER_TH_TEXT = "Username";
@@ -21,7 +27,6 @@ $VOLUME_MAP_TH_TEXT = "Mapped Drive";
 $VNCPORT_TH_TEXT = "VNC Port";
 $SSHPORT_TH_TEXT = "SSH Port";
 $SHINY_SERVER_PORT_TH_TEXT = "Shiny Server Port";
-$JENKINSPORT_TH_TEXT = "Jenkins Port";
 $ALLOW_SUDO_TH_TEXT = "Sudo Rights";
 $SSH_SERVER_TH_TEXT = "SSH Server";
 $ALLOW_SHINY_SERVER_TH_TEXT = "Shiny Server";
@@ -45,6 +50,8 @@ $image = $_GET["image"];
 $nrcores = $_GET["nrcores"];
 $memgb = $_GET["memgb"];
 $theme = $_GET["theme"];
+$allow_sudo = $_GET["allow_sudo"];
+
 $safety_check = $_GET["safety_check"];
 $safety_check_required = $_GET["safety_check_required"];
 
@@ -104,7 +111,7 @@ $path = "run/"
                 echo '>' . $filename . '</option>';
             }
             echo '</select>';
-            echo '&nbsp;<button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SELECT</button>';
+            echo '&nbsp;<button type="submit" form="form1" value="Submit" class="buttonSelectCSV"><span>SELECT</span></button>';
             echo '</form>';
         } else {
             // If a single one then go to container start page
@@ -134,7 +141,9 @@ $path = "run/"
         # Safety check entry is a component to ensure that only the person with the safety check password can start a container
         if ($action == "start") {
             if (trim($safety_check_required) == trim($safety_check) || empty($safety_check_required)) {
-                $command = "./iqdesktop.sh start " . $user . " " . $csvfile . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " > /dev/null 2>/dev/null &";
+                $sudo = "false";
+                $command = "./iqdesktop.sh start " . $user . " " . $csvfile . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " " . $allow_sudo . " " . $privileged . " > /dev/null 2>/dev/null &";
+                // echo $command."<br>";
             } else {
                 header("Location: safetycheck.html");
             }
@@ -223,19 +232,18 @@ $path = "run/"
             $VNCPORT = $value[6];
             $SSHPORT = $value[7];
             $SHINY_SERVER_PORT = $value[8];
-            $JENKINSPORT = $value[9];
-            $ALLOW_SUDO = $value[10];
-            $SSH_SERVER = $value[11];
-            $ALLOW_SHINY_SERVER = $value[12];
-            $USER_ID = $value[13];
-            $THEME = $value[14];
-            $MAC = $value[15];
-            $SHM_SIZE_GB = $value[16];
-            $NR_CORES = $value[17];
-            $MEMORY_GB = $value[18];
-            $TIMEZONE = $value[19];
-            $IQRTOOLS_COMPLIANCE = $value[20];
-            $IQREPORT_TEMPLATE = $value[21];
+            $ALLOW_SUDO = $value[9];
+            $SSH_SERVER = $value[10];
+            $ALLOW_SHINY_SERVER = $value[11];
+            $USER_ID = $value[12];
+            $THEME = $value[13];
+            $MAC = $value[14];
+            $SHM_SIZE_GB = $value[15];
+            $NR_CORES = $value[16];
+            $MEMORY_GB = $value[17];
+            $TIMEZONE = $value[18];
+            $IQRTOOLS_COMPLIANCE = $value[19];
+            $IQREPORT_TEMPLATE = $value[20];
 
             if (!empty($USER)) {
 
@@ -252,14 +260,13 @@ $path = "run/"
                     if ($VNCPORT_SHOW) echo "<th>" . $VNCPORT_TH_TEXT . "</th>";
                     if ($SSHPORT_SHOW) echo "<th>" . $SSHPORT_TH_TEXT . "</th>";
                     if ($SHINY_SERVER_PORT_SHOW) echo "<th>" . $SHINY_SERVER_PORT_TH_TEXT . "</th>";
-                    if ($JENKINSPORT_SHOW) echo "<th>" . $JENKINSPORT_TH_TEXT . "</th>";
                     if ($IMAGE_SHOW) echo "<th>" . $IMAGE_TH_TEXT . "</th>";
                     if ($THEME_SHOW) echo "<th>" . $THEME_TH_TEXT . "</th>";
                     if ($NR_CORES_SHOW) echo "<th>" . $NR_CORES_TH_TEXT . "</th>";
                     if ($MEMORY_GB_SHOW) echo "<th>" . $MEMORY_GB_TH_TEXT . "</th>";
+                    if ($ALLOW_SUDO_SHOW) echo "<th>" . $ALLOW_SUDO_TH_TEXT . "</th>";
                     if ($SHM_SIZE_GB_SHOW) echo "<th>" . $SHM_SIZE_GB_TH_TEXT . "</th>";
                     if ($VOLUME_MAP_SHOW) echo "<th>" . $VOLUME_MAP_TH_TEXT . "</th>";
-                    if ($ALLOW_SUDO_SHOW) echo "<th>" . $ALLOW_SUDO_TH_TEXT . "</th>";
                     if ($SSH_SERVER_SHOW) echo "<th>" . $SSH_SERVER_TH_TEXT . "</th>";
                     if ($ALLOW_SHINY_SERVER_SHOW) echo "<th>" . $ALLOW_SHINY_SERVER_TH_TEXT . "</th>";
                     if ($USER_ID_SHOW) echo "<th>" . $USER_ID_TH_TEXT . "</th>";
@@ -292,6 +299,13 @@ $path = "run/"
                         } else {
                             $THEME = $THEME;
                         }
+                        // Parse allow_sudo information
+                        preg_match_all('/ALLOW_SUDO=(["a-zA-z0-9]+)/', $content, $m);
+                        if ($m[1][0] != "") {
+                            $ALLOW_SUDO = strtoupper($m[1][0]);
+                        } else {
+                            $ALLOW_SUDO = $ALLOW_SUDO;
+                        }
                     }
 
                     echo "<tr>" . '<td class="control">';
@@ -312,7 +326,7 @@ $path = "run/"
                     }
                     echo '<input type="hidden" name="user" value="' . $USER . '">';
                     echo '<input type="hidden" name="action" value="' . $action . '">';
-                    echo '<button type="submit" form="' . $form . '" value="Submit" class="' . $buttonStyle . '">' . $buttonText . '</button></td>';
+                    echo '<button type="submit" form="' . $form . '" value="Submit" class="' . $buttonStyle . '"><span>' . $buttonText . '</span></button></td>';
 
                     ///////////////////////////////////////////////////////////////////////////////////
                     // Start table cells
@@ -325,7 +339,6 @@ $path = "run/"
                     if ($VNCPORT_SHOW) echo "<td class='blue'>" . $VNCPORT . "</td>";
                     if ($SSHPORT_SHOW) echo "<td class='blue'>" . $SSHPORT . "</td>";
                     if ($SHINY_SERVER_PORT_SHOW) echo "<td class='blue'>" . $SHINY_SERVER_PORT . "</td>";
-                    if ($JENKINSPORT_SHOW) echo "<td class='blue'>" . $JENKINSPORT . "</td>";
 
                     // Selection of image
                     if ($IMAGE_SHOW) {
@@ -483,9 +496,26 @@ $path = "run/"
                         echo '</select></td>';
                     }
 
+                    if ($ALLOW_SUDO_SHOW) {
+                        if (!$ALLOW_SUDO_CHOICE) {
+                            echo "<td class='blue'>" . $ALLOW_SUDO . "</td>";
+                            echo '<input type="hidden" name="allow_sudo" value="' . $ALLOW_SUDO . '">';
+                        } else {
+                            // Selection of theme
+                            echo '<td><select name="allow_sudo">';
+                            echo '  <option value="FALSE" ';
+                            if ($ALLOW_SUDO == "FALSE") echo "selected";
+                            echo '>FALSE</option>';
+                            echo '  <option value="TRUE" ';
+                            if ($ALLOW_SUDO == "TRUE") echo "selected";
+                            echo '>TRUE</option>';
+                            echo '</select></td>';
+                        }
+                    }
+
                     if ($SHM_SIZE_GB_SHOW) echo "<td class='blue'>" . $SHM_SIZE_GB . "</td>";
                     if ($VOLUME_MAP_SHOW) echo "<td class='blue'>" . $VOLUME_MAP . "</td>";
-                    if ($ALLOW_SUDO_SHOW) echo "<td class='blue'>" . $ALLOW_SUDO . "</td>";
+                    
                     if ($SSH_SERVER_SHOW) echo "<td class='blue'>" . $SSH_SERVER . "</td>";
                     if ($ALLOW_SHINY_SERVER_SHOW) echo "<td class='blue'>" . $ALLOW_SHINY_SERVER . "</td>";
                     if ($USER_ID_SHOW) echo "<td class='blue'>" . $USER_ID . "</td>";

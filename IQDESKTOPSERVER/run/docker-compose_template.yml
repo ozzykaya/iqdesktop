@@ -8,14 +8,13 @@ services:
     image: %IMAGE%
     hostname: IQdesktop
     shm_size: "%SHM_SIZE_GB%gb"
-    privileged: true    # Allowing mounting of other file systems (e.g. AWS S3 buckets) - for demo purposes!
+    privileged: %PRIVILEGED%
     cpus: %NR_CORES%
     mem_limit: "%MEMORY_GB%gb"
     ports:
       - "%VNCPORT%:5901"
       - "%SSHPORT%:22"
       - "%SHINY_SERVER_PORT%:3838"
-      - "%JENKINSPORT%:8080"
     environment:
       - TIMEZONE=%TIMEZONE%
       - USER=%USER%  
@@ -23,6 +22,7 @@ services:
       - ALLOW_SUDO=%ALLOW_SUDO%
       - USER_ID=%USER_ID%
       - HOST_ID=%HOST_ID%
+      - HOST_OS=linux # Keep as is ... the multi user environment is for Linux!
       - THEME=%THEME%
       - IQREPORT_LICENSE_KEY=%IQREPORT_LICENSE_KEY%
       - IQRTOOLS_COMPLIANCE=%IQRTOOLS_COMPLIANCE%
@@ -36,3 +36,23 @@ services:
       - ALLOW_SHINY_SERVER=%ALLOW_SHINY_SERVER%
       - AWS_ACCESS_KEY_ID=%AWS_ACCESS_KEY_ID%
       - AWS_SECRET_ACCESS_KEY=%AWS_SECRET_ACCESS_KEY%
+      - MOUNT_1_LABEL=%MOUNT_1_LABEL%
+      - MOUNT_1_SERVER_IP=%MOUNT_1_SERVER_IP%
+      - MOUNT_1_SERVER_FOLDER=%MOUNT_1_SERVER_FOLDER%
+      - MOUNT_1_OPTIONS=%MOUNT_1_OPTIONS%
+      - MOUNT_2_LABEL=%MOUNT_2_LABEL%
+      - MOUNT_2_SERVER_IP=%MOUNT_2_SERVER_IP%
+      - MOUNT_2_SERVER_FOLDER=%MOUNT_2_SERVER_FOLDER%
+      - MOUNT_2_OPTIONS=%MOUNT_2_OPTIONS%
+      - MOUNT_3_LABEL=%MOUNT_3_LABEL%
+      - MOUNT_3_SERVER_IP=%MOUNT_3_SERVER_IP%
+      - MOUNT_3_SERVER_FOLDER=%MOUNT_3_SERVER_FOLDER%
+      - MOUNT_3_OPTIONS=%MOUNT_3_OPTIONS%
+      - MOUNT_4_LABEL=%MOUNT_4_LABEL%
+      - MOUNT_4_SERVER_IP=%MOUNT_4_SERVER_IP%
+      - MOUNT_4_SERVER_FOLDER=%MOUNT_4_SERVER_FOLDER%
+      - MOUNT_4_OPTIONS=%MOUNT_4_OPTIONS%
+      - MOUNT_5_LABEL=%MOUNT_5_LABEL%
+      - MOUNT_5_SERVER_IP=%MOUNT_5_SERVER_IP%
+      - MOUNT_5_SERVER_FOLDER=%MOUNT_5_SERVER_FOLDER%
+      - MOUNT_5_OPTIONS=%MOUNT_5_OPTIONS%

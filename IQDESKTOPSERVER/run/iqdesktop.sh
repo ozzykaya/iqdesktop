@@ -18,11 +18,14 @@
 NARGS=$#
 
 # Require correct number of input arguments
-if [[ $NARGS -lt 2 ]] || [[ $NARGS -gt 7 ]] || [[ $NARGS == 4 ]] || [[ $NARGS == 5 ]] || [[ $NARGS == 6 ]]; then 
+if [[ $NARGS -lt 2 ]] || [[ $NARGS -gt 9 ]] || [[ $NARGS == 4 ]] || [[ $NARGS == 5 ]] || [[ $NARGS == 6 ]] || [[ $NARGS == 7 ]] || [[ $NARGS == 8 ]]; then 
     echo "Usage:"
     echo "        iqdesktop start all|username config.csv"
-    echo "        iqdesktop start all|username config.csv image ncores memorygb theme"
+    echo "        iqdesktop start all|username config.csv image ncores memorygb theme sudo privileged"
     echo "        iqdesktop stop all|username"
+    echo ""
+    echo "     sudo:       FALSE or TRUE"
+    echo "     privileged: FALSE or TRUE"
     exit 0
 fi
 
@@ -39,8 +42,8 @@ if [[ $COMMAND == "stop" ]];  then
 fi
 
 if [[ $COMMAND == "start" ]]; then
-    if [[ $NARGS < 3 ]] || [[ $NARGS -gt 7 ]] || [[ $NARGS == 4 ]] || [[ $NARGS == 5 ]] || [[ $NARGS == 6 ]]; then 
-        echo "start command requires 3 or 7 input arguments"
+    if [[ $NARGS < 3 ]] || [[ $NARGS -gt 9 ]] || [[ $NARGS == 4 ]] || [[ $NARGS == 5 ]] || [[ $NARGS == 6 ]] || [[ $NARGS == 7 ]] || [[ $NARGS == 8 ]]; then 
+        echo "start command requires 3 or 9 input arguments"
         exit 0
     fi
 fi
@@ -68,6 +71,8 @@ ARGIMAGE=$4
 ARGNCORES=$5
 ARGMEM=$6
 ARGTHEME=$7
+ARGSUDO=$8
+ARGPRIVILEGED=$9
 
 # ------------------------------------------------------------------------
 # Ensure gen_runs.sh is executable
@@ -84,19 +89,27 @@ chmod +x gen_runs.sh
 if [[ $COMMAND == "start" ]]; then 
     OLDIFS=$IFS
     IFS=','
-    while read NAME USER SAFETY_CHECK PASSWORD IMAGE VOLUME_MAP VNCPORT SSHPORT SHINY_SERVER_PORT JENKINSPORT ALLOW_SUDO SSH_SERVER ALLOW_SHINY_SERVER USER_ID THEME MAC SHM_SIZE_GB NR_CORES MEMORY_GB TIMEZONE IQRTOOLS_COMPLIANCE IQREPORT_TEMPLATE IQREPORT_LICENSE_KEY NONMEM_LICENSE_KEY MONOLIX_LICENSE_KEY VNC_PRIVATE_KEY VNC_CERTIFICATE AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
+    while read NAME USER SAFETY_CHECK PASSWORD IMAGE VOLUME_MAP VNCPORT SSHPORT SHINY_SERVER_PORT ALLOW_SUDO SSH_SERVER ALLOW_SHINY_SERVER USER_ID THEME MAC SHM_SIZE_GB NR_CORES MEMORY_GB TIMEZONE IQRTOOLS_COMPLIANCE IQREPORT_TEMPLATE IQREPORT_LICENSE_KEY NONMEM_LICENSE_KEY MONOLIX_LICENSE_KEY VNC_PRIVATE_KEY VNC_CERTIFICATE AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
     do
         # Do not handle header row ("USER" in "USER" column)
         if [[ $USER == "USER" ]]; then 
             continue
         else
 
-            # Handle optional IMAGE, NCORE, MEMORY arguments by replacing what is in the CSV file
+            # Handle optional IMAGE, NCORE, MEMORY, THEME, SUDO arguments by replacing what is in the CSV file
             if [[ -n $ARGIMAGE ]]; then
                 IMAGE=$ARGIMAGE
                 NR_CORES=$ARGNCORES
                 MEMORY_GB=$ARGMEM
                 THEME=$ARGTHEME
+                ALLOW_SUDO=$ARGSUDO
+            fi
+
+            # Handle arguments not predefined in the CSV file
+            if [[ -n $ARGPRIVILEGED ]]; then
+                PRIVILEGED=$ARGPRIVILEGED
+            else
+                PRIVILEGED=FALSE
             fi
 
             # -----------------------------------------------------
@@ -140,14 +153,23 @@ if [[ $COMMAND == "start" ]]; then
             if [[ $USERS == "all" ]]; then 
                 # Start for everyone
                 echo "Handling setup for: $NAME"
-                ./gen_runs.sh "$USER" "$PASSWORD" "$IMAGE" "$VOLUME_MAP" "$VNCPORT" "$SSHPORT" "$SHINY_SERVER_PORT" "$JENKINSPORT" "$ALLOW_SUDO" "$SSH_SERVER" "$ALLOW_SHINY_SERVER" "$USER_ID" "$THEME" "$MAC" "$SHM_SIZE_GB" "$NR_CORES" "$MEMORY_GB" "$TIMEZONE" "$IQRTOOLS_COMPLIANCE" "$IQREPORT_TEMPLATE" "$IQREPORT_LICENSE_KEY" "$NONMEM_LICENSE_KEY" "$MONOLIX_LICENSE_KEY" "$VNC_PRIVATE_KEY" "$VNC_CERTIFICATE" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY"
+                ./gen_runs.sh "$USER" "$PASSWORD" "$IMAGE" "$VOLUME_MAP" "$VNCPORT" "$SSHPORT" "$SHINY_SERVER_PORT" \
+                    "$ALLOW_SUDO" "$SSH_SERVER" "$ALLOW_SHINY_SERVER" "$USER_ID" "$THEME" "$MAC" "$SHM_SIZE_GB" "$NR_CORES" \
+                    "$MEMORY_GB" "$TIMEZONE" "$IQRTOOLS_COMPLIANCE" "$IQREPORT_TEMPLATE" "$IQREPORT_LICENSE_KEY" "$NONMEM_LICENSE_KEY" \
+                    "$MONOLIX_LICENSE_KEY" "$VNC_PRIVATE_KEY" "$VNC_CERTIFICATE" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" \
+                    "$PRIVILEGED"
             else
                 if [[ $USERS == $USER ]]; then 
                     # Start only for selected user
                     echo "Handling setup for: $NAME"
-                    ./gen_runs.sh "$USER" "$PASSWORD" "$IMAGE" "$VOLUME_MAP" "$VNCPORT" "$SSHPORT" "$SHINY_SERVER_PORT" "$JENKINSPORT" "$ALLOW_SUDO" "$SSH_SERVER" "$ALLOW_SHINY_SERVER" "$USER_ID" "$THEME" "$MAC" "$SHM_SIZE_GB" "$NR_CORES" "$MEMORY_GB" "$TIMEZONE" "$IQRTOOLS_COMPLIANCE" "$IQREPORT_TEMPLATE" "$IQREPORT_LICENSE_KEY" "$NONMEM_LICENSE_KEY" "$MONOLIX_LICENSE_KEY" "$VNC_PRIVATE_KEY" "$VNC_CERTIFICATE" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY"
+                    ./gen_runs.sh "$USER" "$PASSWORD" "$IMAGE" "$VOLUME_MAP" "$VNCPORT" "$SSHPORT" "$SHINY_SERVER_PORT" \
+                        "$ALLOW_SUDO" "$SSH_SERVER" "$ALLOW_SHINY_SERVER" "$USER_ID" "$THEME" "$MAC" "$SHM_SIZE_GB" "$NR_CORES" \
+                        "$MEMORY_GB" "$TIMEZONE" "$IQRTOOLS_COMPLIANCE" "$IQREPORT_TEMPLATE" "$IQREPORT_LICENSE_KEY" "$NONMEM_LICENSE_KEY" \
+                        "$MONOLIX_LICENSE_KEY" "$VNC_PRIVATE_KEY" "$VNC_CERTIFICATE" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" \
+                        "$PRIVILEGED"
                 fi
             fi
+
         fi 
     done < $CSVFILE
     IFS=$OLDIFS

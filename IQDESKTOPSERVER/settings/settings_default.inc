@@ -1,9 +1,11 @@
 <?php
 ///////////////////////////
-// Host computer info
+// Container settings
 ///////////////////////////
 $MAX_CORES = 8;
 $MAX_MEM = 32;
+$PRIVILEGED = TRUE;
+$ALLOW_SUDO_CHOICE = TRUE;
 
 ///////////////////////////
 // Content switches
@@ -23,7 +25,6 @@ $VOLUME_MAP_SHOW = TRUE;
 $VNCPORT_SHOW = TRUE;
 $SSHPORT_SHOW = TRUE;
 $SHINY_SERVER_PORT_SHOW = TRUE;
-$JENKINSPORT_SHOW = FALSE;
 $ALLOW_SUDO_SHOW = FALSE;
 $SSH_SERVER_SHOW = FALSE;
 $ALLOW_SHINY_SERVER_SHOW = FALSE;

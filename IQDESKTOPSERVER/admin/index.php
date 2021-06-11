@@ -1,4 +1,5 @@
 <?php
+
 // Get passed GET variables
 $do = $_GET["do"];
 if (empty($do)) $do = "showsettings";
@@ -24,6 +25,12 @@ if (empty($days_vnccert)) $days_vnccert = 3333;
 
 $set_MAX_CORES = $_GET["set_MAX_CORES"];
 $set_MAX_MEM = $_GET["set_MAX_MEM"];
+
+$set_PRIVILEGED = $_GET["set_PRIVILEGED"];
+if ($set_PRIVILEGED != "TRUE") $set_PRIVILEGED = "FALSE";
+$set_ALLOW_SUDO_CHOICE = $_GET["set_ALLOW_SUDO_CHOICE"];
+if ($set_ALLOW_SUDO_CHOICE != "TRUE") $set_ALLOW_SUDO_CHOICE = "FALSE";
+
 $set_SHOW_INFOTEXT = $_GET["set_SHOW_INFOTEXT"];
 if ($set_SHOW_INFOTEXT != "TRUE") $set_SHOW_INFOTEXT = "FALSE";
 $set_SHOW_ADMINLINK = $_GET["set_SHOW_ADMINLINK"];
@@ -46,8 +53,6 @@ $set_SSHPORT_SHOW = $_GET["set_SSHPORT_SHOW"];
 if ($set_SSHPORT_SHOW != "TRUE") $set_SSHPORT_SHOW = "FALSE";
 $set_SHINY_SERVER_PORT_SHOW = $_GET["set_SHINY_SERVER_PORT_SHOW"];
 if ($set_SHINY_SERVER_PORT_SHOW != "TRUE") $set_SHINY_SERVER_PORT_SHOW = "FALSE";
-$set_JENKINSPORT_SHOW = $_GET["set_JENKINSPORT_SHOW"];
-if ($set_JENKINSPORT_SHOW != "TRUE") $set_JENKINSPORT_SHOW = "FALSE";
 $set_ALLOW_SUDO_SHOW = $_GET["set_ALLOW_SUDO_SHOW"];
 if ($set_ALLOW_SUDO_SHOW != "TRUE") $set_ALLOW_SUDO_SHOW = "FALSE";
 $set_SSH_SERVER_SHOW = $_GET["set_SSH_SERVER_SHOW"];
@@ -121,10 +126,12 @@ if (empty($set_INFOTEXT)) {
         // Construct settings text
         $settingsText = "<?php\n";
         $settingsText .= "///////////////////////////\n";
-        $settingsText .= "// Host computer info\n";
+        $settingsText .= "// Container settings\n";
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "$" . "MAX_CORES = " . $set_MAX_CORES . ";\n";
         $settingsText .= "$" . "MAX_MEM = " . $set_MAX_MEM . ";\n";
+        $settingsText .= "$" . "PRIVILEGED = " . $set_PRIVILEGED . ";\n";
+        $settingsText .= "$" . "ALLOW_SUDO_CHOICE = " . $set_ALLOW_SUDO_CHOICE . ";\n";
         $settingsText .= "\n";
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "// Content switches\n";
@@ -144,7 +151,6 @@ if (empty($set_INFOTEXT)) {
         $settingsText .= "$" . "VNCPORT_SHOW = " . $set_VNCPORT_SHOW . ";\n";
         $settingsText .= "$" . "SSHPORT_SHOW = " . $set_SSHPORT_SHOW . ";\n";
         $settingsText .= "$" . "SHINY_SERVER_PORT_SHOW = " . $set_SHINY_SERVER_PORT_SHOW . ";\n";
-        $settingsText .= "$" . "JENKINSPORT_SHOW = " . $set_JENKINSPORT_SHOW . ";\n";
         $settingsText .= "$" . "ALLOW_SUDO_SHOW = " . $set_ALLOW_SUDO_SHOW . ";\n";
         $settingsText .= "$" . "SSH_SERVER_SHOW = " . $set_SSH_SERVER_SHOW . ";\n";
         $settingsText .= "$" . "ALLOW_SHINY_SERVER_SHOW = " . $set_ALLOW_SHINY_SERVER_SHOW . ";\n";
@@ -301,22 +307,9 @@ if (empty($set_INFOTEXT)) {
                 <tr>
                     <td colspan="3"><button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SAVE</button></td>
                 </tr>
-                <tr>
-                    <th colspan="3">Server</th>
-                </tr>
-                <tr>
-                    <td>MAX_CORES:</td>
-                    <td><input type="text" name="set_MAX_CORES" size="10" value="<?php echo $MAX_CORES; ?>"></td>
-                    <td>[N] Set the maximum number of cores a user should be able to select</td>
-                </tr>
-                <tr>
-                    <td>MAX_MEM:</td>
-                    <td><input type="text" name="set_MAX_MEM" size="10" value="<?php echo $MAX_MEM; ?>"></td>
-                    <td>[GB] Set the maximum amount of memory a user should be able to request (8GB minimum)</td>
-                </tr>
-                <tr>
-                    <td colspan="3"></td>
-                </tr>
+                <!------------------------------------------------------------------
+                  User Page
+                ------------------------------------------------------------------->
                 <tr>
                     <th colspan="3">User Page</th>
                 </tr>
@@ -333,6 +326,38 @@ if (empty($set_INFOTEXT)) {
                 <tr>
                     <td colspan="3"></td>
                 </tr>
+                <!------------------------------------------------------------------
+                  Container Settings
+                ------------------------------------------------------------------->
+                <tr>
+                    <th colspan="3">Container Settings</th>
+                </tr>
+                <tr>
+                    <td>MAX_CORES:</td>
+                    <td><input type="text" name="set_MAX_CORES" size="10" value="<?php echo $MAX_CORES; ?>"></td>
+                    <td>[N] Set the maximum number of cores a user should be able to select</td>
+                </tr>
+                <tr>
+                    <td>MAX_MEM:</td>
+                    <td><input type="text" name="set_MAX_MEM" size="10" value="<?php echo $MAX_MEM; ?>"></td>
+                    <td>[GB] Set the maximum amount of memory a user should be able to request (8GB minimum)</td>
+                </tr>
+                <tr>
+                    <td>PRIVILEGED:</td>
+                    <td><input type="checkbox" name="set_PRIVILEGED" value="TRUE" <?php if ($PRIVILEGED) echo "checked"; ?>></td>
+                    <td>If checked, containers are run in <a href="https://docs.docker.com/engine/reference/run/" target="new">privileged mode</a>. This allows mounting of external file systems (AWS S3, CIFS/SMB). If unchecked containers will run without privileged rights and external filesystems cannot be mounted (except: Docker volumes).</td>
+                </tr>
+                <tr>
+                    <td>ALLOW_SUDO_CHOICE:</td>
+                    <td><input type="checkbox" name="set_ALLOW_SUDO_CHOICE" value="TRUE" <?php if ($ALLOW_SUDO_CHOICE) echo "checked"; ?>></td>
+                    <td>If checked, users can define themselves in the control table if they want sudo rights or not. Default setting is as defined for this user in the CSV file.</td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+                <!------------------------------------------------------------------
+                  CONTROL TABLE 
+                ------------------------------------------------------------------->
                 <tr>
                     <th colspan="3">Control Table</th>
                 </tr>
@@ -380,11 +405,6 @@ if (empty($set_INFOTEXT)) {
                     <td>SHINY_SERVER_PORT_SHOW:</td>
                     <td><input type="checkbox" name="set_SHINY_SERVER_PORT_SHOW" value="TRUE" <?php if ($SHINY_SERVER_PORT_SHOW) echo "checked"; ?>></td>
                     <td>Show Shiny Server Port column</td>
-                </tr>
-                <tr>
-                    <td>JENKINSPORT_SHOW:</td>
-                    <td><input type="checkbox" name="set_JENKINSPORT_SHOW" value="TRUE" <?php if ($JENKINSPORT_SHOW) echo "checked"; ?>></td>
-                    <td>Show Jenkins Port column</td>
                 </tr>
                 <tr>
                     <td>ALLOW_SUDO_SHOW:</td>
@@ -452,6 +472,9 @@ if (empty($set_INFOTEXT)) {
                 <tr>
                     <td colspan="3"></td>
                 </tr>
+                <!------------------------------------------------------------------
+                  INFOTEXT
+                ------------------------------------------------------------------->
                 <tr>
                     <th colspan="3">Infotext on User Page (empty will revert to default)</th>
                 </tr>

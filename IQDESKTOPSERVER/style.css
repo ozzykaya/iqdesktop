@@ -70,50 +70,6 @@ td.control {
     padding-top: 10px;
 }
 
-.buttonGreen {
-    background-color: #92D050;
-    /* Green */
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 12px;
-    width: 80px;
-    height: 24px;
-    border-radius: 8px;
-    display: block;
-    margin: auto;
-}
-
-.buttonRed {
-    background-color: #A84A30;
-    /* Red */
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 12px;
-    width: 80px;
-    height: 24px;
-    border-radius: 8px;
-    display: block;
-    margin: auto;
-}
-
-.buttonSelectCSV {
-    background-color: #369398;
-    /* Blue */
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 12px;
-    width: 120px;
-    height: 24px;
-    border-radius: 8px;
-    display: inline;
-}
-
 .red {
     color: #A84A30;
 }
@@ -172,4 +128,127 @@ select {
 
 ::selection {
     background: #369398;
+}
+
+.buttonGreen {
+    background-color: #68a824;
+    /* Green */
+    border-radius: 4px;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 12px;
+    width: 120px;
+    height: 24px;
+    padding: 0px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.buttonGreen span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.buttonGreen span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.buttonGreen:hover span {
+    padding-right: 10px;
+}
+
+.buttonGreen:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.buttonSelectCSV {
+    background-color: #369398;
+    /* Blue */
+    border-radius: 4px;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 12px;
+    width: 120px;
+    height: 24px;
+    padding: 0px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.buttonSelectCSV span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.buttonSelectCSV span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.buttonSelectCSV:hover span {
+    padding-right: 10px;
+}
+
+.buttonSelectCSV:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.buttonRed {
+    /* Red */
+    background-color: #f4511e;
+    border-radius: 4px;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 12px;
+    width: 120px;
+    height: 24px;
+    padding: 0px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.buttonRed span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.buttonRed span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.buttonRed:hover span {
+    padding-right: 10px;
+}
+
+.buttonRed:hover span:after {
+    opacity: 1;
+    right: 0;
 }
