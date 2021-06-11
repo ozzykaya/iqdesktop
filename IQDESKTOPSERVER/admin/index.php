@@ -79,6 +79,9 @@ $set_IQRTOOLS_COMPLIANCE_SHOW = $_GET["set_IQRTOOLS_COMPLIANCE_SHOW"];
 if ($set_IQRTOOLS_COMPLIANCE_SHOW != "TRUE") $set_IQRTOOLS_COMPLIANCE_SHOW = "FALSE";
 $set_IQREPORT_TEMPLATE_SHOW = $_GET["set_IQREPORT_TEMPLATE_SHOW"];
 if ($set_IQREPORT_TEMPLATE_SHOW != "TRUE") $set_IQREPORT_TEMPLATE_SHOW = "FALSE";
+$set_MOUNT_SHOW = $_GET["set_MOUNT_SHOW"];
+if ($set_MOUNT_SHOW != "TRUE") $set_MOUNT_SHOW = "FALSE";
+
 // Info Text
 $set_INFOTEXT = trim($_GET["set_INFOTEXT"]);
 
@@ -166,6 +169,7 @@ if (empty($set_INFOTEXT)) {
         $settingsText .= "$" . "TIMEZONE_SHOW = " . $set_TIMEZONE_SHOW . ";\n";
         $settingsText .= "$" . "IQRTOOLS_COMPLIANCE_SHOW = " . $set_IQRTOOLS_COMPLIANCE_SHOW . ";\n";
         $settingsText .= "$" . "IQREPORT_TEMPLATE_SHOW = " . $set_IQREPORT_TEMPLATE_SHOW . ";\n";
+        $settingsText .= "$" . "MOUNT_SHOW = " . $set_MOUNT_SHOW . ";\n";
         $settingsText .= "?>\n";
 
         // Save settingsText to file
@@ -473,6 +477,11 @@ if (empty($set_INFOTEXT)) {
                     <td>IQREPORT_TEMPLATE_SHOW:</td>
                     <td><input type="checkbox" name="set_IQREPORT_TEMPLATE_SHOW" value="TRUE" <?php if ($IQREPORT_TEMPLATE_SHOW) echo "checked"; ?>></td>
                     <td>Show IQReport Template selection column</td>
+                </tr>
+                <tr>
+                    <td>MOUNT_SHOW:</td>
+                    <td><input type="checkbox" name="set_MOUNT_SHOW" value="TRUE" <?php if ($MOUNT_SHOW) echo "checked"; ?>></td>
+                    <td>Show server mount information</td>
                 </tr>
                 <tr>
                     <td colspan="3"><button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SAVE</button></td>
