@@ -223,10 +223,12 @@ $path = "run/"
             while (($data = fgetcsv($h, 1000, ",")) !== FALSE) {
                 // Each individual array is being pushed into the nested array
                 $csvinfo[] = $data;
+                //print_r($data);
             }
             // Close the file
             fclose($h);
         }
+        //print_r($csvinfo);
 
         // Build a table with form
         echo "<table>";
@@ -263,6 +265,32 @@ $path = "run/"
             $IQRTOOLS_COMPLIANCE = $value[19];
             $IQREPORT_TEMPLATE = $value[20];
 
+            $MOUNT_1_LABEL = $value[29];
+            $$MOUNT_1_SERVER_IP = $value[30];
+            $MOUNT_1_SERVER_FOLDER = $value[31]; 
+            $MOUNT_1_OPTIONS = $value[32];
+            
+            $MOUNT_2_LABEL = $value[33]; 
+            $MOUNT_2_SERVER_IP = $value[34]; 
+            $MOUNT_2_SERVER_FOLDER = $value[35]; 
+            $MOUNT_2_OPTIONS = $value[36]; 
+            
+            $MOUNT_3_LABEL = $value[37];  
+            $MOUNT_3_SERVER_IP = $value[38];  
+            $MOUNT_3_SERVER_FOLDER = $value[39];  
+            $MOUNT_3_OPTIONS = $value[40]; 
+            
+            $MOUNT_4_LABEL = $value[41]; 
+            $MOUNT_4_SERVER_IP = $value[42];  
+            $MOUNT_4_SERVER_FOLDER = $value[43];  
+            $MOUNT_4_OPTIONS = $value[44]; 
+            
+            $MOUNT_5_LABEL = $value[45];  
+            $MOUNT_5_SERVER_IP = $value[46];  
+            $MOUNT_5_SERVER_FOLDER = $value[47];  
+            $MOUNT_5_OPTIONS = $value[48]; 
+
+
             if (!empty($USER)) {
 
                 if (empty($VOLUME_MAP)) $VOLUME_MAP = "Not mapped";
@@ -292,6 +320,13 @@ $path = "run/"
                     if ($TIMEZONE_SHOW) echo "<th>" . $TIMEZONE_TH_TEXT . "</th>";
                     if ($IQRTOOLS_COMPLIANCE_SHOW) echo "<th>" . $IQRTOOLS_COMPLIANCE_TH_TEXT . "</th>";
                     if ($IQREPORT_TEMPLATE_SHOW) echo "<th>" . $IQREPORT_TEMPLATE_TH_TEXT . "</th>";
+                    
+                    echo "<th>Mount 1</th>";
+                    echo "<th>Mount 2</th>";
+                    echo "<th>Mount 3</th>";
+                    echo "<th>Mount 4</th>";
+                    echo "<th>Mount 5</th>";
+
                     echo "</tr>";
                     $header = 0;
                 } else {
@@ -543,6 +578,12 @@ $path = "run/"
                     if ($TIMEZONE_SHOW) echo "<td class='blue'>" . $TIMEZONE . "</td>";
                     if ($IQRTOOLS_COMPLIANCE_SHOW) echo "<td class='blue'>" . $IQRTOOLS_COMPLIANCE . "</td>";
                     if ($IQREPORT_TEMPLATE_SHOW) echo "<td class='blue'>" . $IQREPORT_TEMPLATE . "</td>";
+
+                    echo "<td>" . $MOUNT_1_LABEL . "<br>" . $MOUNT_1_SERVER_IP . "<br>" . $MOUNT_1_SERVER_FOLDER . "<br>" . $MOUNT_1_OPTIONS . "</td>";
+                    echo "<td>" . $MOUNT_2_LABEL . "<br>" . $MOUNT_2_SERVER_IP . "<br>" . $MOUNT_2_SERVER_FOLDER . "<br>" . $MOUNT_2_OPTIONS . "</td>";
+                    echo "<td>" . $MOUNT_3_LABEL . "<br>" . $MOUNT_3_SERVER_IP . "<br>" . $MOUNT_3_SERVER_FOLDER . "<br>" . $MOUNT_3_OPTIONS . "</td>";
+                    echo "<td>" . $MOUNT_4_LABEL . "<br>" . $MOUNT_4_SERVER_IP . "<br>" . $MOUNT_4_SERVER_FOLDER . "<br>" . $MOUNT_4_OPTIONS . "</td>";
+                    echo "<td>" . $MOUNT_5_LABEL . "<br>" . $MOUNT_5_SERVER_IP . "<br>" . $MOUNT_5_SERVER_FOLDER . "<br>" . $MOUNT_5_OPTIONS . "</td>";
 
                     echo "</tr></form>";
                 }

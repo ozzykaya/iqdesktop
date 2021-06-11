@@ -38,6 +38,41 @@ AWS_SECRET_ACCESS_KEY=${26}
 PRIVILEGED=${27}
 MOUNTBASENAME=${28}
 
+MOUNT_1_LABEL=${29}
+MOUNT_1_SERVER_IP=${30}
+MOUNT_1_SERVER_FOLDER=${31} 
+MOUNT_1_OPTIONS=${32}
+
+MOUNT_2_LABEL=${33} 
+MOUNT_2_SERVER_IP=${34} 
+MOUNT_2_SERVER_FOLDER=${35} 
+MOUNT_2_OPTIONS=${36} 
+
+MOUNT_3_LABEL=${37}  
+MOUNT_3_SERVER_IP=${38}  
+MOUNT_3_SERVER_FOLDER=${39}  
+MOUNT_3_OPTIONS=${40} 
+
+MOUNT_4_LABEL=${41} 
+MOUNT_4_SERVER_IP=${42}  
+MOUNT_4_SERVER_FOLDER=${43}  
+MOUNT_4_OPTIONS=${44} 
+
+MOUNT_5_LABEL=${45}  
+MOUNT_5_SERVER_IP=${46}  
+MOUNT_5_SERVER_FOLDER=${47}  
+MOUNT_5_OPTIONS=${48} 
+
+# ------------------------------------------------------------------------
+# Fix MOUNT_n_OPTIONS Replace ::: by ,
+# ------------------------------------------------------------------------
+
+MOUNT_1_OPTIONS="$(sed s#:::#,#g <<<$MOUNT_1_OPTIONS)"
+MOUNT_2_OPTIONS="$(sed s#:::#,#g <<<$MOUNT_2_OPTIONS)"
+MOUNT_3_OPTIONS="$(sed s#:::#,#g <<<$MOUNT_3_OPTIONS)"
+MOUNT_4_OPTIONS="$(sed s#:::#,#g <<<$MOUNT_4_OPTIONS)"
+MOUNT_5_OPTIONS="$(sed s#:::#,#g <<<$MOUNT_5_OPTIONS)"
+
 # ------------------------------------------------------------------------
 # Handle upper to lower case
 # ------------------------------------------------------------------------
@@ -103,6 +138,32 @@ sed -i "s#%AWS_ACCESS_KEY_ID%#$AWS_ACCESS_KEY_ID#g" $CUSTOM_YML_FILE
 sed -i "s#%AWS_SECRET_ACCESS_KEY%#$AWS_SECRET_ACCESS_KEY#g" $CUSTOM_YML_FILE
 
 sed -i "s#%MATLAB_LICENSE_FILE%#$MATLAB_LICENSE_FILE#g" $CUSTOM_YML_FILE
+
+sed -i "s#%MOUNT_1_LABEL%#$MOUNT_1_LABEL#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_1_SERVER_IP%#$MOUNT_1_SERVER_IP#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_1_SERVER_FOLDER%#$MOUNT_1_SERVER_FOLDER#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_1_OPTIONS%#$MOUNT_1_OPTIONS#g" $CUSTOM_YML_FILE
+
+sed -i "s#%MOUNT_2_LABEL%#$MOUNT_2_LABEL#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_2_SERVER_IP%#$MOUNT_2_SERVER_IP#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_2_SERVER_FOLDER%#$MOUNT_2_SERVER_FOLDER#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_2_OPTIONS%#$MOUNT_2_OPTIONS#g" $CUSTOM_YML_FILE
+
+sed -i "s#%MOUNT_3_LABEL%#$MOUNT_3_LABEL#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_3_SERVER_IP%#$MOUNT_3_SERVER_IP#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_3_SERVER_FOLDER%#$MOUNT_3_SERVER_FOLDER#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_3_OPTIONS%#$MOUNT_3_OPTIONS#g" $CUSTOM_YML_FILE
+
+sed -i "s#%MOUNT_4_LABEL%#$MOUNT_4_LABEL#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_4_SERVER_IP%#$MOUNT_4_SERVER_IP#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_4_SERVER_FOLDER%#$MOUNT_4_SERVER_FOLDER#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_4_OPTIONS%#$MOUNT_4_OPTIONS#g" $CUSTOM_YML_FILE
+
+sed -i "s#%MOUNT_5_LABEL%#$MOUNT_5_LABEL#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_5_SERVER_IP%#$MOUNT_5_SERVER_IP#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_5_SERVER_FOLDER%#$MOUNT_5_SERVER_FOLDER#g" $CUSTOM_YML_FILE
+sed -i "s#%MOUNT_5_OPTIONS%#$MOUNT_5_OPTIONS#g" $CUSTOM_YML_FILE
+
 
 # ------------------------------------------------------------------------
 # Add MAC address if desired
