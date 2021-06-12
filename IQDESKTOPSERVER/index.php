@@ -155,7 +155,7 @@ $path = "run/"
             if (trim($safety_check_required) == trim($safety_check) || empty($safety_check_required)) {
                 $sudo = "false";
                 $command = "./iqdesktop.sh start " . $user . " " . $csvfile . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " " . $allow_sudo . " " . $privileged . " " . $mountbasename . " > /dev/null 2>/dev/null &";
-                echo $command."<br>";
+                #echo $command."<br>";
             } else {
                 header("Location: safetycheck.html");
             }
