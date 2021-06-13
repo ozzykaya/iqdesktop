@@ -81,7 +81,7 @@ $path = "run/"
 </head>
 
 <body>
-    <h1><?php echo "Multi-User Control Interface - ".$SERVER_NAME." (".$SERVER_ADDRESS.")" ?></h1>
+    <h1><?php echo $SERVER_NAME." (".$SERVER_ADDRESS.")" ?></h1>
     <h2>
         <a href="index.php">Home</a>
         |
