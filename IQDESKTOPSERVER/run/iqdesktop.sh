@@ -1,9 +1,15 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------------------------
 #  test start all|username config.csv
-#  test start all|username config.csv image ncores memorygb theme
+#  test start all|username config.csv image ncores memorygb theme sudo privileged mount_basename
 #  test stop all|username 
 # ------------------------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------
+# Create the network - if not present yet
+# ------------------------------------------------------------------------
+
+./create_network.sh
 
 # ------------------------------------------------------------------------
 # Input argument checks
@@ -226,9 +232,10 @@ if [[ $COMMAND = "stop" ]]; then
         echo "==> Removing $USERS's IQdesktop"
         docker container rm $X
 
-        # Remove all custom networks
-        echo -e "\n==> Removing $USERS's custom networks"
-        docker network prune -f
+        ## Disable removal of networks as same network is going to be used
+        # # Remove all custom networks
+        # echo -e "\n==> Removing $USERS's custom networks"
+        # docker network prune -f
 
         # Remove the custom yml folder
         echo -e "\n==> Removing $USERS's custom yml files"
