@@ -1,0 +1,18 @@
+Pretty straight forward - care needs to be taken with the following:
+
+[VNC certificate and key]
+- Stored in variables: VNC_PRIVATE_KEY=... and VNC_PRIVATE_KEY=... as is.
+- Cert files are taken "as-is" with following modifications:
+    \n => ::: 
+  this allows to code the key and cert in single lines.
+  IMPORTANT: the string has to be quoted in the CSV file. 
+  => When using excel this might need to be done manually afterwards - or in excel directly.
+  => Better: not providing VNC cert and key in the CSV files but via the server.
+
+[MONOLIX License File]
+- Stored in variable: MONOLIX_LICENSE_KEY=...
+- Only license file can be provided here! Activation key not!
+- License file is taken "as-is" with following modifications:
+    \n => ::: and " => &&& 
+  this allows to code the file in a single line.
+

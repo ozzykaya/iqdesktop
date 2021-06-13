@@ -1,4 +1,3 @@
-.htaccess
 .htpasswd
 temp
 yml_custom
@@ -7,3 +6,4 @@ infotext.inc
 *.csv
 !01_demo.csv
 *.pem
+*.log

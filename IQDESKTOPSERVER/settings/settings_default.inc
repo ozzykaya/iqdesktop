@@ -1,18 +1,21 @@
 <?php
 ///////////////////////////
+// Server Settings
+///////////////////////////
+$SERVER_NAME = "IQdesktopServer Demo";
+$SERVER_ADDRESS = "iqdesktop.intiquan.com";
+$SHOW_INFOTEXT = TRUE;
+$SHOW_ADMINLINK = TRUE;
+$START_PASSWORD_HIDDEN = TRUE;
+
+///////////////////////////
 // Container settings
 ///////////////////////////
 $MAX_CORES = 8;
 $MAX_MEM = 32;
 $PRIVILEGED = TRUE;
-$ALLOW_SUDO_CHOICE = TRUE;
+$ALLOW_SUDO_CHOICE = FALSE;
 $MOUNT_BASENAME = TRUE;
-
-///////////////////////////
-// Content switches
-///////////////////////////
-$SHOW_INFOTEXT = TRUE;
-$SHOW_ADMINLINK = TRUE;
 
 ///////////////////////////
 // Table columns selection
@@ -25,7 +28,7 @@ $IMAGE_SHOW = TRUE;
 $VOLUME_MAP_SHOW = TRUE;
 $VNCPORT_SHOW = TRUE;
 $SSHPORT_SHOW = TRUE;
-$SHINY_SERVER_PORT_SHOW = TRUE;
+$SHINY_SERVER_PORT_SHOW = FALSE;
 $ALLOW_SUDO_SHOW = FALSE;
 $SSH_SERVER_SHOW = FALSE;
 $ALLOW_SHINY_SERVER_SHOW = FALSE;

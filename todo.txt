@@ -6,10 +6,30 @@
 - OK Admin: Set "MOUNT_BASENAME" (changes how folders are mounted inside)
 - OK Implement MOUNT_BASENAME mode in config file (for all users)
 - OK Add Mounting information for drives
+- OK Allow switch between text and password input for start password
+- OK Log all button clicks (user and admin)
+- OK Add more help when VNC certificate is active (commandline call to VNC)
+- OK Test mounting
+- OK Define CSV file contents for the people
+
+- Set network information on multi user systems!
+    Start webinar net network prior to webinar container creation!
+    docker network create webinarnet --subnet 172.24.24.0/24
+    Add: 
+    networks:
+    default:
+        external: 
+        name: webinarnet
+    to YML file ... 
+
+- Show safety passwords in admin console ... and maybe allow to edit them
+- Commit and pull on Ueli - Test if all works as intended!
+- Show disk memory on admin page ...
+- Show CPU load on admin page
+- Show Swap Load on admin page
 
 Later
 =====
-- Convert uyuni to new web interface solution - with mounted drives (transfer, consulting, consulting_blinded, projects, IQSHINYWEB)
 - Admin: Show output of docker stats in a reasonable form
 - Allow to purge containers
 - Allow to stop all containers

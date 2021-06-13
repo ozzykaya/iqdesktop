@@ -3,11 +3,6 @@
 #  test start all|username config.csv
 #  test start all|username config.csv image ncores memorygb theme
 #  test stop all|username 
-#
-# VNC certificates can be controlled by:
-# 1) Setting in CSV files => control based on individual container
-# 2) Presence of files iqdesktop_VNC_key.pem and iqdesktop_VNC_cert.pem in run folder.
-#    In this case settings in CSV file are ignored.
 # ------------------------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------
@@ -123,12 +118,10 @@ if [[ $COMMAND == "start" ]]; then
 
             # -----------------------------------------------------
             # Modify Monolix Server License key file content 
-            # Excel duplicates " and adds " around
-            # \n replaced by ::: in CSV file
-            MONOLIX_LICENSE_KEY="$(sed s#\"\"#\"#g <<<$MONOLIX_LICENSE_KEY)"
-            MONOLIX_LICENSE_KEY="$(sed s#\"LICENSE#LICENSE#g <<<$MONOLIX_LICENSE_KEY)"
-            MONOLIX_LICENSE_KEY="$(sed s#\"\"##g <<<$MONOLIX_LICENSE_KEY)"
-            MONOLIX_LICENSE_KEY="$(sed s#:::#\\\\\\\\n#g <<<$MONOLIX_LICENSE_KEY)"
+            # \n replaced by ::: in CSV file => setting to " " is OK
+            # " replaced by &&& in CSV file
+            MONOLIX_LICENSE_KEY="$(sed s!:::!\ !g <<<$MONOLIX_LICENSE_KEY)"
+            MONOLIX_LICENSE_KEY="$(sed s!\&\&\&!\\\\\\\"!g <<<$MONOLIX_LICENSE_KEY)"
             # -----------------------------------------------------
 
             # -----------------------------------------------------

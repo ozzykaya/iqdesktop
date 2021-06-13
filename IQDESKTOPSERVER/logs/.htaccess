@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Restricted access"
+Order Deny,Allow
+Deny from all

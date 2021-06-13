@@ -1,0 +1,5 @@
+Generate .htpasswd file with command:
+
+htpasswd -c .htpasswd iqdesktopadmin 
+
+Where "iqdesktopadmin" could be a username for the admin page.
