@@ -109,6 +109,11 @@ $path = "run/"
         // Get all CSV files
         $filenamesCSV = glob($path . "*.csv");
 
+        if ($IGNORE_DEMO_CSV) {
+            # Important! 01_demo.csv is assumed to be the first entry!!!
+            $filenamesCSV = array_splice($filenamesCSV, 1, count($filenamesCSV));
+        }
+
         // If multiple ... then show form for selection
         if (count($filenamesCSV) > 1) {
             echo "<h3>Select User Group</h3>";

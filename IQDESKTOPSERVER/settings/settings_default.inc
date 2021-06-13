@@ -7,6 +7,7 @@ $SERVER_ADDRESS = "iqdesktop.intiquan.com";
 $SHOW_INFOTEXT = TRUE;
 $SHOW_ADMINLINK = TRUE;
 $START_PASSWORD_HIDDEN = TRUE;
+$IGNORE_DEMO_CSV = FALSE;
 
 ///////////////////////////
 // Container settings

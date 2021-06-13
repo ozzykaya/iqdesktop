@@ -1,5 +1,3 @@
-- OK Set network to unique default network
-    
 - Show start/stop passwords in admin console ... and maybe allow to edit them
 - Show disk memory on admin page ...
 - Show CPU load on admin page

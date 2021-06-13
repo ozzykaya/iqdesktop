@@ -34,6 +34,8 @@ $set_SHOW_ADMINLINK = $_GET["set_SHOW_ADMINLINK"];
 if ($set_SHOW_ADMINLINK != "TRUE") $set_SHOW_ADMINLINK = "FALSE";
 $set_START_PASSWORD_HIDDEN = $_GET["set_START_PASSWORD_HIDDEN"];
 if ($set_START_PASSWORD_HIDDEN != "TRUE") $set_START_PASSWORD_HIDDEN = "FALSE";
+$set_IGNORE_DEMO_CSV = $_GET["set_IGNORE_DEMO_CSV"];
+if ($set_IGNORE_DEMO_CSV != "TRUE") $set_IGNORE_DEMO_CSV = "FALSE";
 
 
 $set_MAX_CORES = $_GET["set_MAX_CORES"];
@@ -147,6 +149,7 @@ if (empty($set_INFOTEXT)) {
         $settingsText .= "$" . "SHOW_INFOTEXT = " . $set_SHOW_INFOTEXT . ";\n";
         $settingsText .= "$" . "SHOW_ADMINLINK = " . $set_SHOW_ADMINLINK . ";\n";
         $settingsText .= "$" . "START_PASSWORD_HIDDEN = " . $set_START_PASSWORD_HIDDEN . ";\n";
+        $settingsText .= "$" . "IGNORE_DEMO_CSV = " . $set_IGNORE_DEMO_CSV . ";\n";
         $settingsText .= "\n";
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "// Container settings\n";
@@ -356,6 +359,11 @@ if (empty($set_INFOTEXT)) {
                     <td>START_PASSWORD_HIDDEN:</td>
                     <td><input type="checkbox" name="set_START_PASSWORD_HIDDEN" value="TRUE" <?php if ($START_PASSWORD_HIDDEN) echo "checked"; ?>></td>
                     <td>Hide entry of Start Password</td>
+                </tr>
+                <tr>
+                    <td>IGNORE_DEMO_CSV:</td>
+                    <td><input type="checkbox" name="set_IGNORE_DEMO_CSV" value="TRUE" <?php if ($IGNORE_DEMO_CSV) echo "checked"; ?>></td>
+                    <td>Allows to ignore the presence of a 01_demo.csv file. Works is alphanumerically 01_demo.csv is the first!</td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>
