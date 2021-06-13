@@ -3,6 +3,9 @@
 #  test start all|username config.csv
 #  test start all|username config.csv image ncores memorygb theme sudo privileged mount_basename
 #  test stop all|username 
+#
+# If VNC cert and key present in / and /admin then these override the CSV definitions.
+# Essentially the CSV definitions are outdated ... and deprecated!
 # ------------------------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------
