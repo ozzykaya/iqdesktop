@@ -50,7 +50,8 @@ $theme = $_GET["theme"];
 $safety_check = $_GET["safety_check"];
 $safety_check_required = $_GET["safety_check_required"];
 
-$path = "run/"
+$path = "run/";
+$pathCSV = "settings/";
 ?>
 
 <html>
@@ -87,7 +88,7 @@ $path = "run/"
         // Selector only if multiple CSV files ... otherwise directly control area
         // -----------------------------------------------------------------------------
         // Get all CSV files
-        $filenamesCSV = glob($path . "*.csv");
+        $filenamesCSV = glob($pathCSV . "*.csv");
 
         if ($IGNORE_DEMO_CSV) {
             # Important! 01_demo.csv is assumed to be the first entry!!!
@@ -105,7 +106,7 @@ $path = "run/"
             echo '<input type="hidden" name="do" value="selectCSV">';
             echo '<select name="csvfile">';
             foreach ($filenamesCSV as $filename) {
-                $filename = str_replace($path, "", $filename);
+                $filename = str_replace($pathCSV, "", $filename);
                 echo '  <option value="' . $filename . '"';
                 if ($csvfile == $filename) echo "selected";
                 echo '>' . $filename . '</option>';
@@ -116,7 +117,7 @@ $path = "run/"
         } else {
             // If a single one then go to container start page
             if ($do == "") {
-                header("Location: main.php?do=selectCSV&csvfile=" . str_replace($path, "", $filenamesCSV[0]));
+                header("Location: main.php?do=selectCSV&csvfile=" . str_replace($pathCSV, "", $filenamesCSV[0]));
             }
         }
     }
@@ -146,6 +147,7 @@ $path = "run/"
                 $mountbasename = "FALSE"; if ($MOUNT_BASENAME) $mountbasename = "TRUE";
                 $iqrtoolscompliance = "FALSE"; if ($IQRTOOLS_COMPLIANCE) $iqrtoolscompliance = "TRUE";
                 $sshserver = "FALSE"; if ($SSH_SERVER) $sshserver = "TRUE";
+                $csvfilepath = "../".$pathCSV.$csvfile;
 
                 // echo $user."user<br>";
                 // echo $csvfile."csvfile<br>";
@@ -165,13 +167,13 @@ $path = "run/"
                 // echo $MONOLIX_LICENSE_KEY."MONOLIX_LICENSE_KEY<br>";
       
                 # Construct iqdesktop.sh call
-                $command = "./iqdesktop.sh start " . $user . " " . $csvfile . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " " . $SHM_SIZE_GB . " ";
+                $command = "./iqdesktop.sh start " . $user . " " . $csvfilepath . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " " . $SHM_SIZE_GB . " ";
                 $command .= $ALLOW_SUDO . " " . $PRIVILEGED . " " . $MOUNT_BASENAME . " ";
                 $command .= $IQRTOOLS_COMPLIANCE . " " . $SSH_SERVER . " " . $ALLOW_SHINY_SERVER . " " . $MAC_ADDRESS . " " . $TIMEZONE . " " . $IQREPORT_TEMPLATE . " ";
                 $command .= $NONMEM_LICENSE_KEY . " \"" . $MONOLIX_LICENSE_KEY . "\" ";
-                $command .= " > iqdesktop.log &";
+                $command .= " 1>> ../logs/iqdesktop.log 2>>../logs/iqdesktop_error.log &";
 
-				//echo $command."<br>";
+				#echo $command."<br>";
             } else {
                 header("Location: safetycheck.html");
             }
@@ -236,7 +238,7 @@ $path = "run/"
 
         echo "<h3>Control Containers</h3>";
         // Add path to filename
-        $fullfilename = $path . $csvfile;
+        $fullfilename = $pathCSV . $csvfile;
 
         // Read the CSV file contents into an array
         $csvinfo = [];
