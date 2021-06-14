@@ -17,6 +17,13 @@ $MAX_MEM = 32;
 $PRIVILEGED = TRUE;
 $ALLOW_SUDO_CHOICE = FALSE;
 $MOUNT_BASENAME = TRUE;
+$MAC_ADDRESS = "00:00:28:06:19:71"; 
+$TIMEZONE = "Europe/Zurich"; 
+$IQREPORT_TEMPLATE="Default"; 
+$IQRTOOLS_COMPLIANCE=FALSE;
+$SSH_SERVER=FALSE; 
+$NONMEM_LICENSE_KEY="Undefined"; 
+$MONOLIX_LICENSE_KEY="Undefined"; 
 
 ///////////////////////////
 // Table columns selection

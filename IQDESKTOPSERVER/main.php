@@ -14,16 +14,6 @@ if (file_exists("settings/infotext.inc")) {
 // Log all activity on user page
 include("logs/log_userpage.php");
 
-// Handle setting flags
-$privileged = "FALSE";
-if ($PRIVILEGED) {
-    $privileged = "TRUE";
-}
-$mountbasename = "FALSE";
-if ($MOUNT_BASENAME) {
-    $mountbasename = "TRUE";
-}
-
 // Define displayed column names in table
 $NAME_TH_TEXT = "Name";
 $USER_TH_TEXT = "Username";
@@ -161,12 +151,25 @@ $path = "run/"
         # Safety check entry is a component to ensure that only the person with the safety check password can start a container
         if ($action == "start") {
             if (trim($safety_check_required) == trim($safety_check) || empty($safety_check_required)) {
-                $sudo = "false";
-                $command = "./iqdesktop.sh start " . $user . " " . $csvfile . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " " . $allow_sudo . " " . $privileged . " " . $mountbasename . " > /dev/null 2>/dev/null &";
-                // echo $allow_sudo."AS<br>";
-                // echo $privileged."PR<br>";
-                // echo $mountbasename."MB<br>";
-				// echo $command."<br>";
+                // Handle setting flags that do override CSV
+                $privileged = "FALSE"; if ($PRIVILEGED) $privileged = "TRUE";
+                $mountbasename = "FALSE"; if ($MOUNT_BASENAME) $mountbasename = "TRUE";
+                $iqrtoolscompliance = "FALSE"; if ($IQRTOOLS_COMPLIANCE) $mountbasename = "TRUE";
+                $sshserver = "FALSE"; if ($SSH_SERVER) $mountbasename = "TRUE";
+                $macaddress = $MAC_ADDRESS;
+                $timezone = $TIMEZONE;
+                $iqreporttemplate = $IQREPORT_TEMPLATE;
+                $nonmemlicensekey = $NONMEM_LICENSE_KEY;
+                $monolixlicensekey = $MONOLIX_LICENSE_KEY;
+
+                # Construct iqdesktop.sh call
+                $command = "./iqdesktop.sh start " . $user . " " . $csvfile . " " . $image . " " . $nrcores . " " . $memgb . " ";
+                $command .= $theme . " " . $allow_sudo . " " . $privileged . " " . $mountbasename . " ";
+                $command .= $iqrtoolscompliance . " " . $sshserver . " " . $macaddress . " " . $timezone . " " . $iqreporttemplate . " ";
+                $command .= $nonmemlicensekey . " \"" . $monolixlicensekey . "\" ";
+                $command .= " &> iqdesktop.log &";
+
+//				echo $command."<br>";
             } else {
                 header("Location: safetycheck.html");
             }

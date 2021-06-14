@@ -48,6 +48,26 @@ if ($set_ALLOW_SUDO_CHOICE != "TRUE") $set_ALLOW_SUDO_CHOICE = "FALSE";
 $set_MOUNT_BASENAME = $_GET["set_MOUNT_BASENAME"];
 if ($set_MOUNT_BASENAME != "TRUE") $set_MOUNT_BASENAME = "FALSE";
 
+
+$set_MAC_ADDRESS = $_GET["set_MAC_ADDRESS"]; # Overrides CSV
+$set_TIMEZONE = $_GET["set_TIMEZONE"]; # Overrides CSV
+$set_IQREPORT_TEMPLATE = $_GET["set_IQREPORT_TEMPLATE"]; # Overrides CSV
+$set_IQRTOOLS_COMPLIANCE = $_GET["set_IQRTOOLS_COMPLIANCE"]; # Overrides CSV
+if ($set_IQRTOOLS_COMPLIANCE != "TRUE") $set_IQRTOOLS_COMPLIANCE = "FALSE";
+$set_SSH_SERVER = $_GET["set_SSH_SERVER"]; # Overrides CSV
+if ($set_SSH_SERVER != "TRUE") $set_SSH_SERVER = "FALSE";
+$set_NONMEM_LICENSE_KEY = $_GET["set_NONMEM_LICENSE_KEY"]; # Overrides CSV
+$set_MONOLIX_LICENSE_KEY = $_GET["set_MONOLIX_LICENSE_KEY"]; # Overrides CSV
+
+// Process the license keys
+$set_NONMEM_LICENSE_KEY = trim($set_NONMEM_LICENSE_KEY);
+$set_MONOLIX_LICENSE_KEY = trim($set_MONOLIX_LICENSE_KEY);
+if ($set_NONMEM_LICENSE_KEY=="") $set_NONMEM_LICENSE_KEY = "Undefined";
+if ($set_MONOLIX_LICENSE_KEY=="") $set_MONOLIX_LICENSE_KEY = "Undefined";
+$set_MONOLIX_LICENSE_KEY = str_replace("\r","",$set_MONOLIX_LICENSE_KEY);
+$set_MONOLIX_LICENSE_KEY = str_replace("\n",":::",$set_MONOLIX_LICENSE_KEY);
+$set_MONOLIX_LICENSE_KEY = str_replace("\"","&&&",$set_MONOLIX_LICENSE_KEY);
+
 $set_NAME_SHOW = $_GET["set_NAME_SHOW"];
 if ($set_NAME_SHOW != "TRUE") $set_NAME_SHOW = "FALSE";
 $set_SAFETY_CHECK_SHOW = $_GET["set_SAFETY_CHECK_SHOW"];
@@ -159,6 +179,13 @@ if (empty($set_INFOTEXT)) {
         $settingsText .= "$" . "PRIVILEGED = " . $set_PRIVILEGED . ";\n";
         $settingsText .= "$" . "ALLOW_SUDO_CHOICE = " . $set_ALLOW_SUDO_CHOICE . ";\n";
         $settingsText .= "$" . "MOUNT_BASENAME = " . $set_MOUNT_BASENAME . ";\n";
+        $settingsText .= "$" . "MAC_ADDRESS = \"" . $set_MAC_ADDRESS . "\"; # Overrides CSV\n";
+        $settingsText .= "$" . "TIMEZONE = \"" . $set_TIMEZONE . "\"; # Overrides CSV\n";
+        $settingsText .= "$" . "IQREPORT_TEMPLATE = \"" . $set_IQREPORT_TEMPLATE . "\"; # Overrides CSV\n";
+        $settingsText .= "$" . "IQRTOOLS_COMPLIANCE = " . $set_IQRTOOLS_COMPLIANCE . "; # Overrides CSV\n";
+        $settingsText .= "$" . "SSH_SERVER = " . $set_SSH_SERVER . "; # Overrides CSV\n";
+        $settingsText .= "$" . "NONMEM_LICENSE_KEY = \"" . $set_NONMEM_LICENSE_KEY . "\"; # Overrides CSV\n";
+        $settingsText .= "$" . "MONOLIX_LICENSE_KEY = \"" . $set_MONOLIX_LICENSE_KEY . "\"; # Overrides CSV\n";
         $settingsText .= "\n";
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "// Table columns selection\n";
@@ -398,6 +425,41 @@ if (empty($set_INFOTEXT)) {
                     <td>MOUNT_BASENAME:</td>
                     <td><input type="checkbox" name="set_MOUNT_BASENAME" value="TRUE" <?php if ($MOUNT_BASENAME) echo "checked"; ?>></td>
                     <td>If checked, external folders are mounted to /IQDESKTOP/MOUNT/"basename of file server folder". Otherwise, instead of the basename the full path on the file server is used.</td>
+                </tr>
+                <tr>
+                    <td>MAC_ADDRESS:</td>
+                    <td><input type="text" name="set_MAC_ADDRESS" size="20" value="<?php echo $MAC_ADDRESS; ?>"></td>
+                    <td>Definition of MAC address for all containers. Overriding the CSV file settings.</td>
+                </tr>
+                <tr>
+                    <td>TIMEZONE:</td>
+                    <td><input type="text" name="set_TIMEZONE" size="20" value="<?php echo $TIMEZONE; ?>"></td>
+                    <td>Define time zone (<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="tz">see here</a>).</td>
+                </tr>
+                <tr>
+                    <td>IQREPORT_TEMPLATE:</td>
+                    <td><input type="text" name="set_IQREPORT_TEMPLATE" size="20" value="<?php echo $IQREPORT_TEMPLATE; ?>"></td>
+                    <td>Define the IQReport templates to be installed (set to "Default" in default case).</td>
+                </tr>
+                <tr>
+                    <td>SSH_SERVER:</td>
+                    <td><input type="checkbox" name="set_SSH_SERVER" value="TRUE" <?php if ($SSH_SERVER) echo "checked"; ?>></td>
+                    <td>If checked, all containers have the SSH server enabled, otherwise FALSE. This setting always overrides information in the CSV file.</td>
+                </tr>
+                <tr>
+                    <td>IQRTOOLS_COMPLIANCE:</td>
+                    <td><input type="checkbox" name="set_IQRTOOLS_COMPLIANCE" value="TRUE" <?php if ($IQRTOOLS_COMPLIANCE) echo "checked"; ?>></td>
+                    <td>If checked, all containers use compliance mode in IQR Tools, otherwise FALSE. This setting always overrides information in the CSV file.</td>
+                </tr>
+                <tr>
+                    <td>NONMEM_LICENSE_KEY:</td>
+                    <td><input type="text" name="set_NONMEM_LICENSE_KEY" size="30" value="<?php echo $NONMEM_LICENSE_KEY; ?>"></td>
+                    <td>Sets the NONMEM license key for all containers.</td>
+                </tr>
+                <tr>
+                    <td>MONOLIX_LICENSE_KEY:</td>
+                    <td><textarea form="form1" name="set_MONOLIX_LICENSE_KEY" rows="5" cols="30" wrap="soft"><?php echo $MONOLIX_LICENSE_KEY; ?></textarea></td>
+                    <td>Sets the MONOLIX license key for all containers. Copy the true license file. \n will be exchanged to ::: and " to &&&</td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>

@@ -22,10 +22,10 @@
 NARGS=$#
 
 # Require correct number of input arguments
-if [[ $NARGS != 2 ]] && [[ $NARGS != 3 ]] && [[ $NARGS != 10 ]]; then
+if [[ $NARGS != 2 ]] && [[ $NARGS != 3 ]] && [[ $NARGS != 17 ]]; then
     echo "Usage:"
     echo "        iqdesktop start all|username config.csv"
-    echo "        iqdesktop start all|username config.csv image ncores memorygb theme sudo privileged mount_basename"
+    echo "        iqdesktop start all|username config.csv image ncores memorygb theme sudo privileged mount_basename iqrtoolscompliance sshserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey"
     echo "        iqdesktop stop all|username"
     echo ""
     echo "     sudo:       FALSE or TRUE"
@@ -46,8 +46,8 @@ if [[ $COMMAND == "stop" ]];  then
 fi
 
 if [[ $COMMAND == "start" ]]; then
-    if [[ $NARGS != 3 ]] && [[ $NARGS != 10 ]]; then
-        echo "start command requires 3 or 9 input arguments"
+    if [[ $NARGS != 3 ]] && [[ $NARGS != 17 ]]; then
+        echo "start command requires 3 or 17 input arguments"
         exit 0
     fi
 fi
@@ -78,6 +78,14 @@ ARGTHEME=$7
 ARGSUDO=$8
 ARGPRIVILEGED=$9
 ARGMOUNTBASENAME=${10}
+ARGiqrtoolscompliance=${11}
+ARGsshserver=${12}
+ARGmacaddress=${13}
+ARGtimezone=${14}
+ARGiqreporttemplate=${15}
+ARGnonmemlicensekey=${16}
+ARGmonolixlicensekey=${17}
+
 
 # ------------------------------------------------------------------------
 # Ensure gen_runs.sh is executable
@@ -109,6 +117,13 @@ if [[ $COMMAND == "start" ]]; then
                 MEMORY_GB=$ARGMEM
                 THEME=$ARGTHEME
                 ALLOW_SUDO=$ARGSUDO
+                MAC=$ARGmacaddress
+                TIMEZONE=$ARGtimezone
+                IQRTOOLS_COMPLIANCE=$ARGiqrtoolscompliance 
+                IQREPORT_TEMPLATE=$ARGiqreporttemplate
+                NONMEM_LICENSE_KEY=$ARGnonmemlicensekey
+                MONOLIX_LICENSE_KEY=$ARGmonolixlicensekey
+                SSH_SERVER=$ARGsshserver
             fi
 
             # Handle arguments not predefined in the CSV file
