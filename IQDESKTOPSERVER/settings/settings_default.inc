@@ -11,19 +11,25 @@ $IGNORE_DEMO_CSV = FALSE;
 
 ///////////////////////////
 // Container settings
+// - logicals in "" on purpose
 ///////////////////////////
 $MAX_CORES = 8;
 $MAX_MEM = 32;
-$PRIVILEGED = TRUE;
-$ALLOW_SUDO_CHOICE = FALSE;
-$MOUNT_BASENAME = TRUE;
+$PRIVILEGED = "TRUE";
+$MOUNT_BASENAME = "TRUE";
 $MAC_ADDRESS = "00:00:28:06:19:71"; 
 $TIMEZONE = "Europe/Zurich"; 
-$IQREPORT_TEMPLATE="Default"; 
-$IQRTOOLS_COMPLIANCE=FALSE;
-$SSH_SERVER=FALSE; 
-$NONMEM_LICENSE_KEY="Undefined"; 
-$MONOLIX_LICENSE_KEY="Undefined"; 
+$IQREPORT_TEMPLATE = "default"; 
+$IQRTOOLS_COMPLIANCE = "FALSE";
+$NONMEM_LICENSE_KEY = "Undefined"; 
+$MONOLIX_LICENSE_KEY = "Undefined"; 
+$ALLOW_SUDO = "FALSE";
+$SSH_SERVER = "FALSE";
+$ALLOW_SHINY_SERVER = "FALSE";
+$THEME = "dark";
+$SHM_SIZE_GB = 2;
+$NR_CORES = 2;
+$MEMORY_GB = 8;
 
 ///////////////////////////
 // Table columns selection

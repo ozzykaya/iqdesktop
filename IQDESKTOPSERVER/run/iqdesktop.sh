@@ -1,11 +1,7 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------------------------
-#  test start all|username config.csv
-#  test start all|username config.csv image ncores memorygb theme sudo privileged mount_basename
+#  iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey
 #  test stop all|username 
-#
-# If VNC cert and key present in / and /admin then these override the CSV definitions.
-# Essentially the CSV definitions are outdated ... and deprecated!
 # ------------------------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------
@@ -22,14 +18,10 @@
 NARGS=$#
 
 # Require correct number of input arguments
-if [[ $NARGS != 2 ]] && [[ $NARGS != 3 ]] && [[ $NARGS != 17 ]]; then
+if [[ $NARGS != 2 ]] && [[ $NARGS != 19 ]]; then
     echo "Usage:"
-    echo "        iqdesktop start all|username config.csv"
-    echo "        iqdesktop start all|username config.csv image ncores memorygb theme sudo privileged mount_basename iqrtoolscompliance sshserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey"
+    echo "        iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey"
     echo "        iqdesktop stop all|username"
-    echo ""
-    echo "     sudo:       FALSE or TRUE"
-    echo "     privileged: FALSE or TRUE"
     exit 0
 fi
 
@@ -46,8 +38,8 @@ if [[ $COMMAND == "stop" ]];  then
 fi
 
 if [[ $COMMAND == "start" ]]; then
-    if [[ $NARGS != 3 ]] && [[ $NARGS != 17 ]]; then
-        echo "start command requires 3 or 17 input arguments"
+    if [[ $NARGS != 19 ]]; then
+        echo "start command requires 19 input arguments - not useful for command line ..."
         exit 0
     fi
 fi
@@ -75,17 +67,42 @@ ARGIMAGE=$4
 ARGNCORES=$5
 ARGMEM=$6
 ARGTHEME=$7
-ARGSUDO=$8
-ARGPRIVILEGED=$9
-ARGMOUNTBASENAME=${10}
-ARGiqrtoolscompliance=${11}
-ARGsshserver=${12}
-ARGmacaddress=${13}
-ARGtimezone=${14}
-ARGiqreporttemplate=${15}
-ARGnonmemlicensekey=${16}
-ARGmonolixlicensekey=${17}
+ARGSWAP=$8
+ARGSUDO=$9
+ARGPRIVILEGED=${10}
+ARGMOUNTBASENAME=${11}
+ARGiqrtoolscompliance=${12}
+ARGsshserver=${13}
+ARGshinyserver=${14}
+ARGmacaddress=${15}
+ARGtimezone=${16}
+ARGiqreporttemplate=${17}
+ARGnonmemlicensekey=${18}
+ARGmonolixlicensekey=${19}
 
+if [[ $ARGiqreporttemplate == "default" ]]; then
+    ARGiqreporttemplate=
+fi
+
+# COMMAND=start
+# USERS=demo2
+# CSVFILE=01_demo.csv
+# ARGIMAGE=intiquan/iqdesktop:2.2.0
+# ARGNCORES=4
+# ARGMEM=8
+# ARGTHEME=light
+# ARGSWAP=5
+# ARGSUDO=TRUE
+# ARGPRIVILEGED=TRUE
+# ARGMOUNTBASENAME=TRUE
+# ARGiqrtoolscompliance=TRUE
+# ARGsshserver=TRUE
+# ARGshinyserver=TRUE
+# ARGmacaddress=00:00:28:06:19:71
+# ARGtimezone=efwegf
+# ARGiqreporttemplate=all
+# ARGnonmemlicensekey=qefde
+# ARGmonolixlicensekey=qefqe
 
 # ------------------------------------------------------------------------
 # Ensure gen_runs.sh is executable
@@ -97,49 +114,18 @@ chmod +x gen_runs.sh
 # Handle "start" of iqdesktop
 # ------------------------------------------------------------------------
 
-# Basically, read the CSV file and either start all users or just the one 
-# that is defined as $USERS
+# Basically, read the CSV file and search the user to start
 if [[ $COMMAND == "start" ]]; then 
     OLDIFS=$IFS
     IFS=','
-    while read NAME USER SAFETY_CHECK PASSWORD IMAGE VOLUME_MAP VNCPORT SSHPORT SHINY_SERVER_PORT ALLOW_SUDO SSH_SERVER ALLOW_SHINY_SERVER USER_ID THEME MAC SHM_SIZE_GB NR_CORES MEMORY_GB TIMEZONE IQRTOOLS_COMPLIANCE IQREPORT_TEMPLATE IQREPORT_LICENSE_KEY NONMEM_LICENSE_KEY MONOLIX_LICENSE_KEY VNC_PRIVATE_KEY VNC_CERTIFICATE AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY MOUNT_1_LABEL MOUNT_1_SERVER_IP MOUNT_1_SERVER_FOLDER MOUNT_1_OPTIONS MOUNT_2_LABEL MOUNT_2_SERVER_IP MOUNT_2_SERVER_FOLDER MOUNT_2_OPTIONS MOUNT_3_LABEL MOUNT_3_SERVER_IP MOUNT_3_SERVER_FOLDER MOUNT_3_OPTIONS MOUNT_4_LABEL MOUNT_4_SERVER_IP MOUNT_4_SERVER_FOLDER MOUNT_4_OPTIONS MOUNT_5_LABEL MOUNT_5_SERVER_IP MOUNT_5_SERVER_FOLDER MOUNT_5_OPTIONS 
-        
+    while read NAME USER SAFETY_CHECK PASSWORD VOLUME_MAP VNCPORT SSHPORT SHINY_SERVER_PORT USER_ID IQREPORT_LICENSE_KEY AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY MOUNT_1_LABEL MOUNT_1_SERVER_IP MOUNT_1_SERVER_FOLDER MOUNT_1_OPTIONS MOUNT_2_LABEL MOUNT_2_SERVER_IP MOUNT_2_SERVER_FOLDER MOUNT_2_OPTIONS MOUNT_3_LABEL MOUNT_3_SERVER_IP MOUNT_3_SERVER_FOLDER MOUNT_3_OPTIONS MOUNT_4_LABEL MOUNT_4_SERVER_IP MOUNT_4_SERVER_FOLDER MOUNT_4_OPTIONS MOUNT_5_LABEL MOUNT_5_SERVER_IP MOUNT_5_SERVER_FOLDER MOUNT_5_OPTIONS
+     
     do
         # Do not handle header row ("USER" in "USER" column)
         if [[ $USER == "USER" ]]; then 
             continue
         else
-
-            # Handle optional IMAGE, NCORE, MEMORY, THEME, SUDO arguments by replacing what is in the CSV file
-            if [[ -n $ARGIMAGE ]]; then
-                IMAGE=$ARGIMAGE
-                NR_CORES=$ARGNCORES
-                MEMORY_GB=$ARGMEM
-                THEME=$ARGTHEME
-                ALLOW_SUDO=$ARGSUDO
-                MAC=$ARGmacaddress
-                TIMEZONE=$ARGtimezone
-                IQRTOOLS_COMPLIANCE=$ARGiqrtoolscompliance 
-                IQREPORT_TEMPLATE=$ARGiqreporttemplate
-                NONMEM_LICENSE_KEY=$ARGnonmemlicensekey
-                MONOLIX_LICENSE_KEY=$ARGmonolixlicensekey
-                SSH_SERVER=$ARGsshserver
-            fi
-
-            # Handle arguments not predefined in the CSV file
-            if [[ -n $ARGPRIVILEGED ]]; then
-                PRIVILEGED=$ARGPRIVILEGED
-            else
-                PRIVILEGED=FALSE
-            fi
-
-            # Handle arguments not predefined in the CSV file
-            if [[ -n $ARGMOUNTBASENAME ]]; then
-                MOUNTBASENAME=$ARGMOUNTBASENAME
-            else
-                MOUNTBASENAME=TRUE
-            fi
-
+          
             # -----------------------------------------------------
             # Modify Monolix Server License key file content 
             # \n replaced by ::: in CSV file => setting to " " is OK
@@ -149,7 +135,7 @@ if [[ $COMMAND == "start" ]]; then
             # -----------------------------------------------------
 
             # -----------------------------------------------------
-            # Handle VNC Option 2 => based on PEM files 
+            # Handle VNC based on present files on the server
             if [ -f "../admin/iqdesktop_VNC_key.pem" ]; then
                 if [ -f "../iqdesktop_VNC_cert.pem" ]; then
                     # Read files into variables
@@ -170,42 +156,20 @@ if [[ $COMMAND == "start" ]]; then
             VNC_CERTIFICATE="$(sed s#:::#\\\\\\\\n#g <<<$VNC_CERTIFICATE)"
             # -----------------------------------------------------
 
-            # -----------------------------------------------------
-            # Modify IQRTOOLS_LICENSE_KEY file content 
-            # \n replaced by ::: in CSV file
-            IQRTOOLS_LICENSE_KEY="$(sed s#:::#\\\\\\\\n#g <<<$IQRTOOLS_LICENSE_KEY)"
-            # -----------------------------------------------------
-
-            if [[ $USERS == "all" ]]; then 
-                # Start for everyone
+            if [[ $USERS == $USER ]]; then 
+                # Start only for selected user
                 echo "Handling setup for: $NAME"
-                ./gen_runs.sh "$USER" "$PASSWORD" "$IMAGE" "$VOLUME_MAP" "$VNCPORT" "$SSHPORT" "$SHINY_SERVER_PORT" \
-                    "$ALLOW_SUDO" "$SSH_SERVER" "$ALLOW_SHINY_SERVER" "$USER_ID" "$THEME" "$MAC" "$SHM_SIZE_GB" "$NR_CORES" \
-                    "$MEMORY_GB" "$TIMEZONE" "$IQRTOOLS_COMPLIANCE" "$IQREPORT_TEMPLATE" "$IQREPORT_LICENSE_KEY" "$NONMEM_LICENSE_KEY" \
-                    "$MONOLIX_LICENSE_KEY" "$VNC_PRIVATE_KEY" "$VNC_CERTIFICATE" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" \
-                    "$PRIVILEGED" "$MOUNTBASENAME" \
+                ./gen_runs.sh "$USER" "$PASSWORD" "$ARGIMAGE" "$VOLUME_MAP" "$VNCPORT" "$SSHPORT" "$SHINY_SERVER_PORT" \
+                    "$ARGSUDO" "$ARGsshserver" "$ARGshinyserver" "$USER_ID" "$ARGTHEME" "$ARGmacaddress" "$ARGSWAP" "$ARGNCORES" \
+                    "$ARGMEM" "$ARGtimezone" "$ARGiqrtoolscompliance" "$ARGiqreporttemplate" "$IQREPORT_LICENSE_KEY" "$ARGnonmemlicensekey" \
+                    "$ARGmonolixlicensekey" "$VNC_PRIVATE_KEY" "$VNC_CERTIFICATE" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" \
+                    "$ARGPRIVILEGED" "$ARGMOUNTBASENAME" \
                     "$MOUNT_1_LABEL" "$MOUNT_1_SERVER_IP" "$MOUNT_1_SERVER_FOLDER" "$MOUNT_1_OPTIONS" \
                     "$MOUNT_2_LABEL" "$MOUNT_2_SERVER_IP" "$MOUNT_2_SERVER_FOLDER" "$MOUNT_2_OPTIONS" \
                     "$MOUNT_3_LABEL" "$MOUNT_3_SERVER_IP" "$MOUNT_3_SERVER_FOLDER" "$MOUNT_3_OPTIONS" \
                     "$MOUNT_4_LABEL" "$MOUNT_4_SERVER_IP" "$MOUNT_4_SERVER_FOLDER" "$MOUNT_4_OPTIONS" \
                     "$MOUNT_5_LABEL" "$MOUNT_5_SERVER_IP" "$MOUNT_5_SERVER_FOLDER" "$MOUNT_5_OPTIONS" 
-            else
-                if [[ $USERS == $USER ]]; then 
-                    # Start only for selected user
-                    echo "Handling setup for: $NAME"
-                    ./gen_runs.sh "$USER" "$PASSWORD" "$IMAGE" "$VOLUME_MAP" "$VNCPORT" "$SSHPORT" "$SHINY_SERVER_PORT" \
-                        "$ALLOW_SUDO" "$SSH_SERVER" "$ALLOW_SHINY_SERVER" "$USER_ID" "$THEME" "$MAC" "$SHM_SIZE_GB" "$NR_CORES" \
-                        "$MEMORY_GB" "$TIMEZONE" "$IQRTOOLS_COMPLIANCE" "$IQREPORT_TEMPLATE" "$IQREPORT_LICENSE_KEY" "$NONMEM_LICENSE_KEY" \
-                        "$MONOLIX_LICENSE_KEY" "$VNC_PRIVATE_KEY" "$VNC_CERTIFICATE" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" \
-                        "$PRIVILEGED" "$MOUNTBASENAME" \
-                        "$MOUNT_1_LABEL" "$MOUNT_1_SERVER_IP" "$MOUNT_1_SERVER_FOLDER" "$MOUNT_1_OPTIONS" \
-                        "$MOUNT_2_LABEL" "$MOUNT_2_SERVER_IP" "$MOUNT_2_SERVER_FOLDER" "$MOUNT_2_OPTIONS" \
-                        "$MOUNT_3_LABEL" "$MOUNT_3_SERVER_IP" "$MOUNT_3_SERVER_FOLDER" "$MOUNT_3_OPTIONS" \
-                        "$MOUNT_4_LABEL" "$MOUNT_4_SERVER_IP" "$MOUNT_4_SERVER_FOLDER" "$MOUNT_4_OPTIONS" \
-                        "$MOUNT_5_LABEL" "$MOUNT_5_SERVER_IP" "$MOUNT_5_SERVER_FOLDER" "$MOUNT_5_OPTIONS" 
-                fi
             fi
-
         fi 
     done < $CSVFILE
     IFS=$OLDIFS

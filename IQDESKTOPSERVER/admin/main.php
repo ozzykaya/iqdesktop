@@ -3,115 +3,74 @@
 include("../logs/log_adminpage.php");
 
 // Get passed GET variables
-$do = $_GET["do"];
-if (empty($do)) $do = "showsettings";
+$do = $_GET["do"]; if (empty($do)) $do = "showsettings";
 $action = $_GET["action"];
 
 
-$C_vnccert = $_GET["C_vnccert"];
-if (empty($C_vnccert)) $C_vnccert = "CH";
-$ST_vnccert = $_GET["ST_vnccert"];
-if (empty($ST_vnccert)) $ST_vnccert = "BS";
-$L_vnccert = $_GET["L_vnccert"];
-if (empty($L_vnccert)) $L_vnccert = "Basel";
-$O_vnccert = $_GET["O_vnccert"];
-if (empty($O_vnccert)) $O_vnccert = "IntiQuan GmbH";
-$OU_vnccert = $_GET["OU_vnccert"];
-if (empty($OU_vnccert)) $OU_vnccert = "IQdesktop";
-$CN_vnccert = $_GET["CN_vnccert"];
-if (empty($CN_vnccert)) $CN_vnccert = "iqdesktop.intiquan.com";
-$BIT_vnccert = $_GET["BIT_vnccert"];
-if (empty($BIT_vnccert)) $BIT_vnccert = 2048;
-$days_vnccert = $_GET["days_vnccert"];
-if (empty($days_vnccert)) $days_vnccert = 3333;
-
+$C_vnccert = $_GET["C_vnccert"]; if (empty($C_vnccert)) $C_vnccert = "CH";
+$ST_vnccert = $_GET["ST_vnccert"]; if (empty($ST_vnccert)) $ST_vnccert = "BS";
+$L_vnccert = $_GET["L_vnccert"]; if (empty($L_vnccert)) $L_vnccert = "Basel";
+$O_vnccert = $_GET["O_vnccert"]; if (empty($O_vnccert)) $O_vnccert = "IntiQuan GmbH";
+$OU_vnccert = $_GET["OU_vnccert"]; if (empty($OU_vnccert)) $OU_vnccert = "IQdesktop";
+$CN_vnccert = $_GET["CN_vnccert"]; if (empty($CN_vnccert)) $CN_vnccert = "iqdesktop.intiquan.com";
+$BIT_vnccert = $_GET["BIT_vnccert"]; if (empty($BIT_vnccert)) $BIT_vnccert = 2048;
+$days_vnccert = $_GET["days_vnccert"]; if (empty($days_vnccert)) $days_vnccert = 3333;
 
 $set_SERVER_NAME = $_GET["set_SERVER_NAME"];
 $set_SERVER_ADDRESS = $_GET["set_SERVER_ADDRESS"];
-$set_SHOW_INFOTEXT = $_GET["set_SHOW_INFOTEXT"];
-if ($set_SHOW_INFOTEXT != "TRUE") $set_SHOW_INFOTEXT = "FALSE";
-$set_SHOW_ADMINLINK = $_GET["set_SHOW_ADMINLINK"];
-if ($set_SHOW_ADMINLINK != "TRUE") $set_SHOW_ADMINLINK = "FALSE";
-$set_START_PASSWORD_HIDDEN = $_GET["set_START_PASSWORD_HIDDEN"];
-if ($set_START_PASSWORD_HIDDEN != "TRUE") $set_START_PASSWORD_HIDDEN = "FALSE";
-$set_IGNORE_DEMO_CSV = $_GET["set_IGNORE_DEMO_CSV"];
-if ($set_IGNORE_DEMO_CSV != "TRUE") $set_IGNORE_DEMO_CSV = "FALSE";
-
+$set_SHOW_INFOTEXT = $_GET["set_SHOW_INFOTEXT"]; if ($set_SHOW_INFOTEXT != "TRUE") $set_SHOW_INFOTEXT = "FALSE";
+$set_SHOW_ADMINLINK = $_GET["set_SHOW_ADMINLINK"]; if ($set_SHOW_ADMINLINK != "TRUE") $set_SHOW_ADMINLINK = "FALSE";
+$set_START_PASSWORD_HIDDEN = $_GET["set_START_PASSWORD_HIDDEN"]; if ($set_START_PASSWORD_HIDDEN != "TRUE") $set_START_PASSWORD_HIDDEN = "FALSE";
+$set_IGNORE_DEMO_CSV = $_GET["set_IGNORE_DEMO_CSV"]; if ($set_IGNORE_DEMO_CSV != "TRUE") $set_IGNORE_DEMO_CSV = "FALSE";
 
 $set_MAX_CORES = $_GET["set_MAX_CORES"];
 $set_MAX_MEM = $_GET["set_MAX_MEM"];
+$set_PRIVILEGED = $_GET["set_PRIVILEGED"]; if ($set_PRIVILEGED != "TRUE") $set_PRIVILEGED = "FALSE";
+$set_MOUNT_BASENAME = $_GET["set_MOUNT_BASENAME"]; if ($set_MOUNT_BASENAME != "TRUE") $set_MOUNT_BASENAME = "FALSE";
+$set_MAC_ADDRESS = $_GET["set_MAC_ADDRESS"];
+$set_TIMEZONE = $_GET["set_TIMEZONE"];
+$set_IQREPORT_TEMPLATE = $_GET["set_IQREPORT_TEMPLATE"];
+$set_IQRTOOLS_COMPLIANCE = $_GET["set_IQRTOOLS_COMPLIANCE"]; if ($set_IQRTOOLS_COMPLIANCE != "TRUE") $set_IQRTOOLS_COMPLIANCE = "FALSE";
+$set_NONMEM_LICENSE_KEY = $_GET["set_NONMEM_LICENSE_KEY"];
+$set_MONOLIX_LICENSE_KEY = $_GET["set_MONOLIX_LICENSE_KEY"];
 
-$set_PRIVILEGED = $_GET["set_PRIVILEGED"];
-if ($set_PRIVILEGED != "TRUE") $set_PRIVILEGED = "FALSE";
-$set_ALLOW_SUDO_CHOICE = $_GET["set_ALLOW_SUDO_CHOICE"];
-if ($set_ALLOW_SUDO_CHOICE != "TRUE") $set_ALLOW_SUDO_CHOICE = "FALSE";
-$set_MOUNT_BASENAME = $_GET["set_MOUNT_BASENAME"];
-if ($set_MOUNT_BASENAME != "TRUE") $set_MOUNT_BASENAME = "FALSE";
-
-
-$set_MAC_ADDRESS = $_GET["set_MAC_ADDRESS"]; # Overrides CSV
-$set_TIMEZONE = $_GET["set_TIMEZONE"]; # Overrides CSV
-$set_IQREPORT_TEMPLATE = $_GET["set_IQREPORT_TEMPLATE"]; # Overrides CSV
-$set_IQRTOOLS_COMPLIANCE = $_GET["set_IQRTOOLS_COMPLIANCE"]; # Overrides CSV
-if ($set_IQRTOOLS_COMPLIANCE != "TRUE") $set_IQRTOOLS_COMPLIANCE = "FALSE";
-$set_SSH_SERVER = $_GET["set_SSH_SERVER"]; # Overrides CSV
-if ($set_SSH_SERVER != "TRUE") $set_SSH_SERVER = "FALSE";
-$set_NONMEM_LICENSE_KEY = $_GET["set_NONMEM_LICENSE_KEY"]; # Overrides CSV
-$set_MONOLIX_LICENSE_KEY = $_GET["set_MONOLIX_LICENSE_KEY"]; # Overrides CSV
+$set_ALLOW_SUDO = $_GET["set_ALLOW_SUDO"]; if ($set_ALLOW_SUDO != "TRUE") $set_ALLOW_SUDO = "FALSE";
+$set_SSH_SERVER = $_GET["set_SSH_SERVER"]; if ($set_SSH_SERVER != "TRUE") $set_SSH_SERVER = "FALSE";
+$set_ALLOW_SHINY_SERVER = $_GET["set_ALLOW_SHINY_SERVER"]; if ($set_ALLOW_SHINY_SERVER != "TRUE") $set_ALLOW_SHINY_SERVER = "FALSE";
+$set_THEME = $_GET["set_THEME"];
+$set_SHM_SIZE_GB = $_GET["set_SHM_SIZE_GB"];
+$set_NR_CORES = $_GET["set_NR_CORES"];
+$set_MEMORY_GB = $_GET["set_MEMORY_GB"];
 
 // Process the license keys
-$set_NONMEM_LICENSE_KEY = trim($set_NONMEM_LICENSE_KEY);
-$set_MONOLIX_LICENSE_KEY = trim($set_MONOLIX_LICENSE_KEY);
-if ($set_NONMEM_LICENSE_KEY=="") $set_NONMEM_LICENSE_KEY = "Undefined";
-if ($set_MONOLIX_LICENSE_KEY=="") $set_MONOLIX_LICENSE_KEY = "Undefined";
+$set_NONMEM_LICENSE_KEY = trim($set_NONMEM_LICENSE_KEY); if ($set_NONMEM_LICENSE_KEY=="") $set_NONMEM_LICENSE_KEY = "Undefined";
+$set_MONOLIX_LICENSE_KEY = trim($set_MONOLIX_LICENSE_KEY); if ($set_MONOLIX_LICENSE_KEY=="") $set_MONOLIX_LICENSE_KEY = "Undefined";
 $set_MONOLIX_LICENSE_KEY = str_replace("\r","",$set_MONOLIX_LICENSE_KEY);
 $set_MONOLIX_LICENSE_KEY = str_replace("\n",":::",$set_MONOLIX_LICENSE_KEY);
 $set_MONOLIX_LICENSE_KEY = str_replace("\"","&&&",$set_MONOLIX_LICENSE_KEY);
 
-$set_NAME_SHOW = $_GET["set_NAME_SHOW"];
-if ($set_NAME_SHOW != "TRUE") $set_NAME_SHOW = "FALSE";
-$set_SAFETY_CHECK_SHOW = $_GET["set_SAFETY_CHECK_SHOW"];
-if ($set_SAFETY_CHECK_SHOW != "TRUE") $set_SAFETY_CHECK_SHOW = "FALSE";
-$set_USER_SHOW = $_GET["set_USER_SHOW"];
-if ($set_USER_SHOW != "TRUE") $set_USER_SHOW = "FALSE";
-$set_PASSWORD_SHOW = $_GET["set_PASSWORD_SHOW"];
-if ($set_PASSWORD_SHOW != "TRUE") $set_PASSWORD_SHOW = "FALSE";
-$set_IMAGE_SHOW = $_GET["set_IMAGE_SHOW"];
-if ($set_IMAGE_SHOW != "TRUE") $set_IMAGE_SHOW = "FALSE";
-$set_VOLUME_MAP_SHOW = $_GET["set_VOLUME_MAP_SHOW"];
-if ($set_VOLUME_MAP_SHOW != "TRUE") $set_VOLUME_MAP_SHOW = "FALSE";
-$set_VNCPORT_SHOW = $_GET["set_VNCPORT_SHOW"];
-if ($set_VNCPORT_SHOW != "TRUE") $set_VNCPORT_SHOW = "FALSE";
-$set_SSHPORT_SHOW = $_GET["set_SSHPORT_SHOW"];
-if ($set_SSHPORT_SHOW != "TRUE") $set_SSHPORT_SHOW = "FALSE";
-$set_SHINY_SERVER_PORT_SHOW = $_GET["set_SHINY_SERVER_PORT_SHOW"];
-if ($set_SHINY_SERVER_PORT_SHOW != "TRUE") $set_SHINY_SERVER_PORT_SHOW = "FALSE";
-$set_ALLOW_SUDO_SHOW = $_GET["set_ALLOW_SUDO_SHOW"];
-if ($set_ALLOW_SUDO_SHOW != "TRUE") $set_ALLOW_SUDO_SHOW = "FALSE";
-$set_SSH_SERVER_SHOW = $_GET["set_SSH_SERVER_SHOW"];
-if ($set_SSH_SERVER_SHOW != "TRUE") $set_SSH_SERVER_SHOW = "FALSE";
-$set_ALLOW_SHINY_SERVER_SHOW = $_GET["set_ALLOW_SHINY_SERVER_SHOW"];
-if ($set_ALLOW_SHINY_SERVER_SHOW != "TRUE") $set_ALLOW_SHINY_SERVER_SHOW = "FALSE";
-$set_USER_ID_SHOW = $_GET["set_USER_ID_SHOW"];
-if ($set_USER_ID_SHOW != "TRUE") $set_USER_ID_SHOW = "FALSE";
-$set_THEME_SHOW = $_GET["set_THEME_SHOW"];
-if ($set_THEME_SHOW != "TRUE") $set_THEME_SHOW = "FALSE";
-$set_MAC_SHOW = $_GET["set_MAC_SHOW"];
-if ($set_MAC_SHOW != "TRUE") $set_MAC_SHOW = "FALSE";
-$set_SHM_SIZE_GB_SHOW = $_GET["set_SHM_SIZE_GB_SHOW"];
-if ($set_SHM_SIZE_GB_SHOW != "TRUE") $set_SHM_SIZE_GB_SHOW = "FALSE";
-$set_NR_CORES_SHOW = $_GET["set_NR_CORES_SHOW"];
-if ($set_NR_CORES_SHOW != "TRUE") $set_NR_CORES_SHOW = "FALSE";
-$set_MEMORY_GB_SHOW = $_GET["set_MEMORY_GB_SHOW"];
-if ($set_MEMORY_GB_SHOW != "TRUE") $set_MEMORY_GB_SHOW = "FALSE";
-$set_TIMEZONE_SHOW = $_GET["set_TIMEZONE_SHOW"];
-if ($set_TIMEZONE_SHOW != "TRUE") $set_TIMEZONE_SHOW = "FALSE";
-$set_IQRTOOLS_COMPLIANCE_SHOW = $_GET["set_IQRTOOLS_COMPLIANCE_SHOW"];
-if ($set_IQRTOOLS_COMPLIANCE_SHOW != "TRUE") $set_IQRTOOLS_COMPLIANCE_SHOW = "FALSE";
-$set_IQREPORT_TEMPLATE_SHOW = $_GET["set_IQREPORT_TEMPLATE_SHOW"];
-if ($set_IQREPORT_TEMPLATE_SHOW != "TRUE") $set_IQREPORT_TEMPLATE_SHOW = "FALSE";
-$set_MOUNT_SHOW = $_GET["set_MOUNT_SHOW"];
-if ($set_MOUNT_SHOW != "TRUE") $set_MOUNT_SHOW = "FALSE";
+$set_NAME_SHOW = $_GET["set_NAME_SHOW"]; if ($set_NAME_SHOW != "TRUE") $set_NAME_SHOW = "FALSE";
+$set_SAFETY_CHECK_SHOW = $_GET["set_SAFETY_CHECK_SHOW"]; if ($set_SAFETY_CHECK_SHOW != "TRUE") $set_SAFETY_CHECK_SHOW = "FALSE";
+$set_USER_SHOW = $_GET["set_USER_SHOW"]; if ($set_USER_SHOW != "TRUE") $set_USER_SHOW = "FALSE";
+$set_PASSWORD_SHOW = $_GET["set_PASSWORD_SHOW"]; if ($set_PASSWORD_SHOW != "TRUE") $set_PASSWORD_SHOW = "FALSE";
+$set_IMAGE_SHOW = $_GET["set_IMAGE_SHOW"]; if ($set_IMAGE_SHOW != "TRUE") $set_IMAGE_SHOW = "FALSE";
+$set_VOLUME_MAP_SHOW = $_GET["set_VOLUME_MAP_SHOW"]; if ($set_VOLUME_MAP_SHOW != "TRUE") $set_VOLUME_MAP_SHOW = "FALSE";
+$set_VNCPORT_SHOW = $_GET["set_VNCPORT_SHOW"]; if ($set_VNCPORT_SHOW != "TRUE") $set_VNCPORT_SHOW = "FALSE";
+$set_SSHPORT_SHOW = $_GET["set_SSHPORT_SHOW"]; if ($set_SSHPORT_SHOW != "TRUE") $set_SSHPORT_SHOW = "FALSE";
+$set_SHINY_SERVER_PORT_SHOW = $_GET["set_SHINY_SERVER_PORT_SHOW"]; if ($set_SHINY_SERVER_PORT_SHOW != "TRUE") $set_SHINY_SERVER_PORT_SHOW = "FALSE";
+$set_ALLOW_SUDO_SHOW = $_GET["set_ALLOW_SUDO_SHOW"]; if ($set_ALLOW_SUDO_SHOW != "TRUE") $set_ALLOW_SUDO_SHOW = "FALSE";
+$set_SSH_SERVER_SHOW = $_GET["set_SSH_SERVER_SHOW"]; if ($set_SSH_SERVER_SHOW != "TRUE") $set_SSH_SERVER_SHOW = "FALSE";
+$set_ALLOW_SHINY_SERVER_SHOW = $_GET["set_ALLOW_SHINY_SERVER_SHOW"]; if ($set_ALLOW_SHINY_SERVER_SHOW != "TRUE") $set_ALLOW_SHINY_SERVER_SHOW = "FALSE";
+$set_USER_ID_SHOW = $_GET["set_USER_ID_SHOW"]; if ($set_USER_ID_SHOW != "TRUE") $set_USER_ID_SHOW = "FALSE";
+$set_THEME_SHOW = $_GET["set_THEME_SHOW"]; if ($set_THEME_SHOW != "TRUE") $set_THEME_SHOW = "FALSE";
+$set_MAC_SHOW = $_GET["set_MAC_SHOW"]; if ($set_MAC_SHOW != "TRUE") $set_MAC_SHOW = "FALSE";
+$set_SHM_SIZE_GB_SHOW = $_GET["set_SHM_SIZE_GB_SHOW"]; if ($set_SHM_SIZE_GB_SHOW != "TRUE") $set_SHM_SIZE_GB_SHOW = "FALSE";
+$set_NR_CORES_SHOW = $_GET["set_NR_CORES_SHOW"]; if ($set_NR_CORES_SHOW != "TRUE") $set_NR_CORES_SHOW = "FALSE";
+$set_MEMORY_GB_SHOW = $_GET["set_MEMORY_GB_SHOW"]; if ($set_MEMORY_GB_SHOW != "TRUE") $set_MEMORY_GB_SHOW = "FALSE";
+$set_TIMEZONE_SHOW = $_GET["set_TIMEZONE_SHOW"]; if ($set_TIMEZONE_SHOW != "TRUE") $set_TIMEZONE_SHOW = "FALSE";
+$set_IQRTOOLS_COMPLIANCE_SHOW = $_GET["set_IQRTOOLS_COMPLIANCE_SHOW"]; if ($set_IQRTOOLS_COMPLIANCE_SHOW != "TRUE") $set_IQRTOOLS_COMPLIANCE_SHOW = "FALSE";
+$set_IQREPORT_TEMPLATE_SHOW = $_GET["set_IQREPORT_TEMPLATE_SHOW"]; if ($set_IQREPORT_TEMPLATE_SHOW != "TRUE") $set_IQREPORT_TEMPLATE_SHOW = "FALSE";
+$set_MOUNT_SHOW = $_GET["set_MOUNT_SHOW"]; if ($set_MOUNT_SHOW != "TRUE") $set_MOUNT_SHOW = "FALSE";
 
 // Info Text
 $set_INFOTEXT = trim($_GET["set_INFOTEXT"]);
@@ -173,19 +132,25 @@ if (empty($set_INFOTEXT)) {
         $settingsText .= "\n";
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "// Container settings\n";
+        $settingsText .= "// - logicals in on purpose\n";
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "$" . "MAX_CORES = " . $set_MAX_CORES . ";\n";
         $settingsText .= "$" . "MAX_MEM = " . $set_MAX_MEM . ";\n";
-        $settingsText .= "$" . "PRIVILEGED = " . $set_PRIVILEGED . ";\n";
-        $settingsText .= "$" . "ALLOW_SUDO_CHOICE = " . $set_ALLOW_SUDO_CHOICE . ";\n";
-        $settingsText .= "$" . "MOUNT_BASENAME = " . $set_MOUNT_BASENAME . ";\n";
-        $settingsText .= "$" . "MAC_ADDRESS = \"" . $set_MAC_ADDRESS . "\"; # Overrides CSV\n";
-        $settingsText .= "$" . "TIMEZONE = \"" . $set_TIMEZONE . "\"; # Overrides CSV\n";
-        $settingsText .= "$" . "IQREPORT_TEMPLATE = \"" . $set_IQREPORT_TEMPLATE . "\"; # Overrides CSV\n";
-        $settingsText .= "$" . "IQRTOOLS_COMPLIANCE = " . $set_IQRTOOLS_COMPLIANCE . "; # Overrides CSV\n";
-        $settingsText .= "$" . "SSH_SERVER = " . $set_SSH_SERVER . "; # Overrides CSV\n";
-        $settingsText .= "$" . "NONMEM_LICENSE_KEY = \"" . $set_NONMEM_LICENSE_KEY . "\"; # Overrides CSV\n";
-        $settingsText .= "$" . "MONOLIX_LICENSE_KEY = \"" . $set_MONOLIX_LICENSE_KEY . "\"; # Overrides CSV\n";
+        $settingsText .= "$" . "PRIVILEGED = \"" . $set_PRIVILEGED . "\";\n";
+        $settingsText .= "$" . "MOUNT_BASENAME = \"" . $set_MOUNT_BASENAME . "\";\n";
+        $settingsText .= "$" . "MAC_ADDRESS = \"" . $set_MAC_ADDRESS . "\";\n";
+        $settingsText .= "$" . "TIMEZONE = \"" . $set_TIMEZONE . "\";\n";
+        $settingsText .= "$" . "IQREPORT_TEMPLATE = \"" . $set_IQREPORT_TEMPLATE . "\";\n";
+        $settingsText .= "$" . "IQRTOOLS_COMPLIANCE = \"" . $set_IQRTOOLS_COMPLIANCE . "\";\n";
+        $settingsText .= "$" . "NONMEM_LICENSE_KEY = \"" . $set_NONMEM_LICENSE_KEY . "\";\n";
+        $settingsText .= "$" . "MONOLIX_LICENSE_KEY = \"" . $set_MONOLIX_LICENSE_KEY . "\";\n";
+        $settingsText .= "$" . "ALLOW_SUDO = \"" . $set_ALLOW_SUDO . "\";\n";
+        $settingsText .= "$" . "SSH_SERVER = \"" . $set_SSH_SERVER . "\";\n";
+        $settingsText .= "$" . "ALLOW_SHINY_SERVER = \"" . $set_ALLOW_SHINY_SERVER . "\";\n";
+        $settingsText .= "$" . "THEME = \"" . $set_THEME . "\";\n";
+        $settingsText .= "$" . "SHM_SIZE_GB = " . $set_SHM_SIZE_GB . ";\n";
+        $settingsText .= "$" . "NR_CORES = " . $set_NR_CORES . ";\n";
+        $settingsText .= "$" . "MEMORY_GB = " . $set_MEMORY_GB . ";\n";
         $settingsText .= "\n";
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "// Table columns selection\n";
@@ -281,7 +246,6 @@ if (empty($set_INFOTEXT)) {
         echo "Control the presence and use of VNC certificates for encryption of transfer through VNC. ";
         echo "Enabling VNC encryption will generate VNC certificates. ";
         echo "On the user page the user will be able to download the certificate file to install it in the VNC client. ";
-        echo "The same certificate will be used for all users, overriding certificate setting in the CSV files.";
         if ($buttonStyle == "buttonGreen") {
         ?>
             <br>
@@ -413,23 +377,18 @@ if (empty($set_INFOTEXT)) {
                 </tr>
                 <tr>
                     <td>PRIVILEGED:</td>
-                    <td><input type="checkbox" name="set_PRIVILEGED" value="TRUE" <?php if ($PRIVILEGED) echo "checked"; ?>></td>
+                    <td><input type="checkbox" name="set_PRIVILEGED" value="TRUE" <?php if ($PRIVILEGED=="TRUE") echo "checked"; ?>></td>
                     <td>If checked, containers are run in <a href="https://docs.docker.com/engine/reference/run/" target="new">privileged mode</a>. This allows mounting of external file systems (AWS S3, CIFS/SMB). If unchecked containers will run without privileged rights and external filesystems cannot be mounted (except: Docker volumes).</td>
                 </tr>
                 <tr>
-                    <td>ALLOW_SUDO_CHOICE:</td>
-                    <td><input type="checkbox" name="set_ALLOW_SUDO_CHOICE" value="TRUE" <?php if ($ALLOW_SUDO_CHOICE) echo "checked"; ?>></td>
-                    <td>If checked, users can define themselves in the control table if they want sudo rights or not. Default setting is as defined for this user in the CSV file (only when choice allowed). If choice not allowed then no user can have sudo rights - even if defind in CSV file.</td>
-                </tr>
-                <tr>
                     <td>MOUNT_BASENAME:</td>
-                    <td><input type="checkbox" name="set_MOUNT_BASENAME" value="TRUE" <?php if ($MOUNT_BASENAME) echo "checked"; ?>></td>
+                    <td><input type="checkbox" name="set_MOUNT_BASENAME" value="TRUE" <?php if ($MOUNT_BASENAME=="TRUE") echo "checked"; ?>></td>
                     <td>If checked, external folders are mounted to /IQDESKTOP/MOUNT/"basename of file server folder". Otherwise, instead of the basename the full path on the file server is used.</td>
                 </tr>
                 <tr>
                     <td>MAC_ADDRESS:</td>
                     <td><input type="text" name="set_MAC_ADDRESS" size="20" value="<?php echo $MAC_ADDRESS; ?>"></td>
-                    <td>Definition of MAC address for all containers. Overriding the CSV file settings.</td>
+                    <td>Definition of MAC address for all containers. Ensure you use a valid MAC address - otherwise the containers will not start!</td>
                 </tr>
                 <tr>
                     <td>TIMEZONE:</td>
@@ -442,14 +401,9 @@ if (empty($set_INFOTEXT)) {
                     <td>Define the IQReport templates to be installed (set to "Default" in default case).</td>
                 </tr>
                 <tr>
-                    <td>SSH_SERVER:</td>
-                    <td><input type="checkbox" name="set_SSH_SERVER" value="TRUE" <?php if ($SSH_SERVER) echo "checked"; ?>></td>
-                    <td>If checked, all containers have the SSH server enabled, otherwise FALSE. This setting always overrides information in the CSV file.</td>
-                </tr>
-                <tr>
                     <td>IQRTOOLS_COMPLIANCE:</td>
-                    <td><input type="checkbox" name="set_IQRTOOLS_COMPLIANCE" value="TRUE" <?php if ($IQRTOOLS_COMPLIANCE) echo "checked"; ?>></td>
-                    <td>If checked, all containers use compliance mode in IQR Tools, otherwise FALSE. This setting always overrides information in the CSV file.</td>
+                    <td><input type="checkbox" name="set_IQRTOOLS_COMPLIANCE" value="TRUE" <?php if ($IQRTOOLS_COMPLIANCE=="TRUE") echo "checked"; ?>></td>
+                    <td>If checked, all containers use compliance mode in IQR Tools, otherwise FALSE.</td>
                 </tr>
                 <tr>
                     <td>NONMEM_LICENSE_KEY:</td>
@@ -460,6 +414,46 @@ if (empty($set_INFOTEXT)) {
                     <td>MONOLIX_LICENSE_KEY:</td>
                     <td><textarea form="form1" name="set_MONOLIX_LICENSE_KEY" rows="5" cols="30" wrap="soft"><?php echo $MONOLIX_LICENSE_KEY; ?></textarea></td>
                     <td>Sets the MONOLIX license key for all containers. Copy the true license file. \n will be exchanged to ::: and " to &&&</td>
+                </tr>
+                <tr>
+                    <td>ALLOW_SUDO:</td>
+                    <td><input type="checkbox" name="set_ALLOW_SUDO" value="TRUE" <?php if ($ALLOW_SUDO=="TRUE") echo "checked"; ?>></td>
+                    <td>If checked then container users are allowed sudo rights.</td>
+                </tr>
+                <tr>
+                    <td>SSH_SERVER:</td>
+                    <td><input type="checkbox" name="set_SSH_SERVER" value="TRUE" <?php if ($SSH_SERVER=="TRUE") echo "checked"; ?>></td>
+                    <td>If checked then ssh access to container is allowed.</td>
+                </tr>
+                <tr>
+                    <td>ALLOW_SHINY_SERVER:</td>
+                    <td><input type="checkbox" name="set_ALLOW_SHINY_SERVER" value="TRUE" <?php if ($ALLOW_SHINY_SERVER=="TRUE") echo "checked"; ?>></td>
+                    <td>If checked then container users can start a shiny server.</td>
+                </tr>
+                <tr>
+                    <td>THEME:</td>
+                    <td>
+                        <select name="set_THEME">
+                        <option value="dark" <?php if ($THEME == "dark") echo "selected"; ?>>dark</option>
+                        <option value="light" <?php if ($THEME == "light") echo "selected"; ?>>light</option>
+                        </select>
+                    </td>
+                    <td>Sets the MONOLIX license key for all containers. Copy the true license file. \n will be exchanged to ::: and " to &&&</td>
+                </tr>
+                <tr>
+                    <td>SHM_SIZE_GB:</td>
+                    <td><input type="text" name="set_SHM_SIZE_GB" size="10" value="<?php echo $SHM_SIZE_GB; ?>"></td>
+                    <td>Sets the shared memory size of a container (2 is good).</td>
+                </tr>
+                <tr>
+                    <td>NR_CORES:</td>
+                    <td><input type="text" name="set_NR_CORES" size="10" value="<?php echo $NR_CORES; ?>"></td>
+                    <td>Sets the default number of cores for a container.</td>
+                </tr>
+                <tr>
+                    <td>MEMORY_GB:</td>
+                    <td><input type="text" name="set_MEMORY_GB" size="10" value="<?php echo $MEMORY_GB; ?>"></td>
+                    <td>Sets the default memory [GB] of a container.</td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>

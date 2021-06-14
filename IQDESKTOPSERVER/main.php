@@ -1,5 +1,5 @@
 <?php
-// Load settings (also includes max cores and max memory)
+// Load settings 
 if (file_exists("settings/settings.inc")) {
     include("settings/settings.inc");
 } else {
@@ -30,7 +30,7 @@ $ALLOW_SHINY_SERVER_TH_TEXT = "Shiny Server";
 $USER_ID_TH_TEXT = "User ID";
 $THEME_TH_TEXT = "Theme";
 $MAC_TH_TEXT = "MAC Address";
-$SHM_SIZE_GB_TH_TEXT = "Swap Size";
+$SHM_SIZE_GB_TH_TEXT = "Shared Mem Size";
 $NR_CORES_TH_TEXT = "Nr Cores";
 $MEMORY_GB_TH_TEXT = "Memory [GB]";
 $TIMEZONE_TH_TEXT = "Timezone";
@@ -47,16 +47,6 @@ $image = $_GET["image"];
 $nrcores = $_GET["nrcores"];
 $memgb = $_GET["memgb"];
 $theme = $_GET["theme"];
-if ($ALLOW_SUDO_CHOICE) {
-    $allow_sudo = $_GET["allow_sudo"];
-} else {
-    # If sudo choice not allowed then override anything with FALSE!
-    # Otherwise its a security risk. So in this web interface the 
-    # Setting of the CSV file is only taken as default if choice allowed.
-    # And its always FALSE is choice not allowed!
-    $allow_sudo = "FALSE";
-}
-
 $safety_check = $_GET["safety_check"];
 $safety_check_required = $_GET["safety_check_required"];
 
@@ -151,25 +141,37 @@ $path = "run/"
         # Safety check entry is a component to ensure that only the person with the safety check password can start a container
         if ($action == "start") {
             if (trim($safety_check_required) == trim($safety_check) || empty($safety_check_required)) {
-                // Handle setting flags that do override CSV
+                // Handle setting flags
                 $privileged = "FALSE"; if ($PRIVILEGED) $privileged = "TRUE";
                 $mountbasename = "FALSE"; if ($MOUNT_BASENAME) $mountbasename = "TRUE";
-                $iqrtoolscompliance = "FALSE"; if ($IQRTOOLS_COMPLIANCE) $mountbasename = "TRUE";
-                $sshserver = "FALSE"; if ($SSH_SERVER) $mountbasename = "TRUE";
-                $macaddress = $MAC_ADDRESS;
-                $timezone = $TIMEZONE;
-                $iqreporttemplate = $IQREPORT_TEMPLATE;
-                $nonmemlicensekey = $NONMEM_LICENSE_KEY;
-                $monolixlicensekey = $MONOLIX_LICENSE_KEY;
+                $iqrtoolscompliance = "FALSE"; if ($IQRTOOLS_COMPLIANCE) $iqrtoolscompliance = "TRUE";
+                $sshserver = "FALSE"; if ($SSH_SERVER) $sshserver = "TRUE";
 
+                // echo $user."user<br>";
+                // echo $csvfile."csvfile<br>";
+                // echo $image."image<br>";
+                // echo $nrcores."nrcores<br>";
+                // echo $memgb."memgb<br>";
+                // echo $theme."theme<br>";
+                // echo $ALLOW_SUDO."ALLOW_SUDO<br>";
+                // echo $PRIVILEGED."PRIVILEGED<br>";
+                // echo $MOUNT_BASENAME."MOUNT_BASENAME<br>";
+                // echo $IQRTOOLS_COMPLIANCE."IQRTOOLS_COMPLIANCE<br>";
+                // echo $SSH_SERVER."SSH_SERVER<br>";
+                // echo $MAC_ADDRESS."MAC_ADDRESS<br>";
+                // echo $TIMEZONE."TIMEZONE<br>";
+                // echo $IQREPORT_TEMPLATE."IQREPORT_TEMPLATE<br>";
+                // echo $NONMEM_LICENSE_KEY."NONMEM_LICENSE_KEY<br>";
+                // echo $MONOLIX_LICENSE_KEY."MONOLIX_LICENSE_KEY<br>";
+      
                 # Construct iqdesktop.sh call
-                $command = "./iqdesktop.sh start " . $user . " " . $csvfile . " " . $image . " " . $nrcores . " " . $memgb . " ";
-                $command .= $theme . " " . $allow_sudo . " " . $privileged . " " . $mountbasename . " ";
-                $command .= $iqrtoolscompliance . " " . $sshserver . " " . $macaddress . " " . $timezone . " " . $iqreporttemplate . " ";
-                $command .= $nonmemlicensekey . " \"" . $monolixlicensekey . "\" ";
-                $command .= " &> iqdesktop.log &";
+                $command = "./iqdesktop.sh start " . $user . " " . $csvfile . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " " . $SHM_SIZE_GB . " ";
+                $command .= $ALLOW_SUDO . " " . $PRIVILEGED . " " . $MOUNT_BASENAME . " ";
+                $command .= $IQRTOOLS_COMPLIANCE . " " . $SSH_SERVER . " " . $ALLOW_SHINY_SERVER . " " . $MAC_ADDRESS . " " . $TIMEZONE . " " . $IQREPORT_TEMPLATE . " ";
+                $command .= $NONMEM_LICENSE_KEY . " \"" . $MONOLIX_LICENSE_KEY . "\" ";
+                $command .= " > iqdesktop.log &";
 
-//				echo $command."<br>";
+				//echo $command."<br>";
             } else {
                 header("Location: safetycheck.html");
             }
@@ -195,8 +197,9 @@ $path = "run/"
     //print_r($content);
     preg_match_all('/intiquan\/iqdesktop[ ]+([0-9.]+)/', $content, $m);
     //print_r($m[0]);
-    $versions = $m[0];
-    //print_r($versions);
+    $IMAGE_VERSIONS = $m[0];
+    // Define default image as the latest one
+    $IMAGE = str_replace("   ", ":", $IMAGE_VERSIONS[0]);
 
     // -----------------------------------------------------------------------------
     // Read CSV if filename defined and build table
@@ -255,61 +258,42 @@ $path = "run/"
         echo "<table>";
         $header = 1;
         foreach ($csvinfo as $value) {
-
             // print_r($value);
             // echo "<p>";
             $NAME = $value[0];
             $USER = $value[1];
             $SAFETY_CHECK = $value[2];
             $PASSWORD = $value[3];
-            $IMAGE = $value[4];
-            $VOLUME_MAP = $value[5];
-            $VNCPORT = $value[6];
-            $SSHPORT = $value[7];
-            $SHINY_SERVER_PORT = $value[8];
-            $ALLOW_SUDO = $value[9];
-            if (!$ALLOW_SUDO_CHOICE) {
-                # If choice is not allowed then simply disable it. 
-                # Otherwise it would be possible to start a container with sudo rights 
-                # even if choice is disabled.
-                $ALLOW_SUDO = "FALSE"; 
-            } 
-            $SSH_SERVER = $value[10];
-            $ALLOW_SHINY_SERVER = $value[11];
-            $USER_ID = $value[12];
-            $THEME = $value[13];
-            $MAC = $value[14];
-            $SHM_SIZE_GB = $value[15];
-            $NR_CORES = $value[16];
-            $MEMORY_GB = $value[17];
-            $TIMEZONE = $value[18];
-            $IQRTOOLS_COMPLIANCE = $value[19];
-            $IQREPORT_TEMPLATE = $value[20];
+            $VOLUME_MAP = $value[4];
+            $VNCPORT = $value[5];
+            $SSHPORT = $value[6];
+            $SHINY_SERVER_PORT = $value[7];
+            $USER_ID = $value[8];
 
-            $MOUNT_1_LABEL = $value[28];
-            $MOUNT_1_SERVER_IP = $value[29];
-            $MOUNT_1_SERVER_FOLDER = $value[30]; 
-            $MOUNT_1_OPTIONS = $value[31];
+            $MOUNT_1_LABEL = $value[12];
+            $MOUNT_1_SERVER_IP = $value[13];
+            $MOUNT_1_SERVER_FOLDER = $value[14]; 
+            $MOUNT_1_OPTIONS = $value[15];
             
-            $MOUNT_2_LABEL = $value[32]; 
-            $MOUNT_2_SERVER_IP = $value[33]; 
-            $MOUNT_2_SERVER_FOLDER = $value[34]; 
-            $MOUNT_2_OPTIONS = $value[35]; 
+            $MOUNT_2_LABEL = $value[16]; 
+            $MOUNT_2_SERVER_IP = $value[17]; 
+            $MOUNT_2_SERVER_FOLDER = $value[18]; 
+            $MOUNT_2_OPTIONS = $value[19]; 
             
-            $MOUNT_3_LABEL = $value[36];  
-            $MOUNT_3_SERVER_IP = $value[37];  
-            $MOUNT_3_SERVER_FOLDER = $value[38];  
-            $MOUNT_3_OPTIONS = $value[39]; 
+            $MOUNT_3_LABEL = $value[20];  
+            $MOUNT_3_SERVER_IP = $value[21];  
+            $MOUNT_3_SERVER_FOLDER = $value[22];  
+            $MOUNT_3_OPTIONS = $value[23]; 
             
-            $MOUNT_4_LABEL = $value[40]; 
-            $MOUNT_4_SERVER_IP = $value[41];  
-            $MOUNT_4_SERVER_FOLDER = $value[42];  
-            $MOUNT_4_OPTIONS = $value[43]; 
+            $MOUNT_4_LABEL = $value[24]; 
+            $MOUNT_4_SERVER_IP = $value[25];  
+            $MOUNT_4_SERVER_FOLDER = $value[26];  
+            $MOUNT_4_OPTIONS = $value[27]; 
             
-            $MOUNT_5_LABEL = $value[44];  
-            $MOUNT_5_SERVER_IP = $value[45];  
-            $MOUNT_5_SERVER_FOLDER = $value[46];  
-            $MOUNT_5_OPTIONS = $value[47]; 
+            $MOUNT_5_LABEL = $value[28];  
+            $MOUNT_5_SERVER_IP = $value[29];  
+            $MOUNT_5_SERVER_FOLDER = $value[30];  
+            $MOUNT_5_OPTIONS = $value[31]; 
 
             if (!empty($USER)) {
 
@@ -360,27 +344,25 @@ $path = "run/"
                         $content = file_get_contents($path . "yml_custom/" . $USER . "/docker-compose.yml");
                         // Parse the image information
                         preg_match_all('/intiquan\/iqdesktop:([0-9\.]+)/', $content, $m);
-                        $IMAGE = $m[0][0];
+                        $IMAGEuser = $m[0][0];
                         // Parse the ncores information
                         preg_match_all('/cpus: ([0-9]+)/', $content, $m);
-                        $NR_CORES = $m[1][0];
+                        $NR_CORESuser = $m[1][0];
                         // Parse the memory information
                         preg_match_all('/mem_limit: (["0-9]+)/', $content, $m);
-                        $MEMORY_GB = str_replace('"', '', $m[1][0]);
+                        $MEMORY_GBuser = str_replace('"', '', $m[1][0]);
                         // Parse theme information
                         preg_match_all('/THEME=(["a-zA-z0-9]+)/', $content, $m);
                         if ($m[1][0] != "") {
-                            $THEME = $m[1][0];
+                            $THEMEuser = $m[1][0];
                         } else {
-                            $THEME = $THEME;
+                            $THEMEuser = $THEME;
                         }
-                        // Parse allow_sudo information
-                        preg_match_all('/ALLOW_SUDO=(["a-zA-z0-9]+)/', $content, $m);
-                        if ($m[1][0] != "") {
-                            $ALLOW_SUDO = strtoupper($m[1][0]);
-                        } else {
-                            $ALLOW_SUDO = $ALLOW_SUDO;
-                        }
+                    } else {
+                        $IMAGEuser = $IMAGE;
+                        $NR_CORESuser = $NR_CORES;
+                        $MEMORY_GBuser = $MEMORY_GB;
+                        $THEMEuser = $THEME;
                     }
                     
                     echo "<tr>" . '<td class="control">';
@@ -396,7 +378,6 @@ $path = "run/"
                     if ($container_running) {
                         $buttonText = "STOP";
                         $buttonStyle = "buttonGreen";
-                        $PASSWORD = "-";
                         $action = "stop";
                     }
                     echo '<input type="hidden" name="user" value="' . $USER . '">';
@@ -421,192 +402,163 @@ $path = "run/"
                     // Selection of image
                     if ($IMAGE_SHOW) {
                         echo '<td><select name="image">';
-                        foreach ($versions as $version) {
+                        foreach ($IMAGE_VERSIONS as $version) {
                             $version = str_replace("   ", ":", $version);
                             echo '  <option value="' . $version . '" ';
-                            if ($IMAGE == $version) echo "selected";
+                            if ($IMAGEuser == $version) echo "selected";
                             echo '>' . $version . '</option>';
                         }
                         echo '</td></select>';
                     } else {
-						# Important to have default - if not shown - take default from CSV file
-						echo '<input type="hidden" name="image" value="' . $IMAGE . '">';
+						# Important to have default - if not shown - take default 
+						echo '<input type="hidden" name="image" value="' . $IMAGEuser . '">';
 					}
 
                     if ($THEME_SHOW) {
                         // Selection of theme
                         echo '<td><select name="theme">';
                         echo '  <option value="light" ';
-                        if ($THEME == "light") echo "selected";
+                        if ($THEMEuser == "light") echo "selected";
                         echo '>light</option>';
                         echo '  <option value="dark" ';
-                        if ($THEME == "dark") echo "selected";
+                        if ($THEMEuser == "dark") echo "selected";
                         echo '>dark</option>';
                         echo '</select></td>';
                     }  else {
-						# Important to have default - if not shown - take default from CSV file
-						echo '<input type="hidden" name="theme" value="' . $THEME . '">';
+						# Important to have default - if not shown - take default 
+						echo '<input type="hidden" name="theme" value="' . $THEMEuser . '">';
 					}
 						
 
                     if ($NR_CORES_SHOW) { // Selection of nr cores
                         echo '<td><select name="nrcores">';
                         echo '  <option value="1" ';
-                        if ($NR_CORES == 1) echo "selected";
+                        if ($NR_CORESuser == 1) echo "selected";
                         echo '>1</option>';
                         if ($MAX_CORES >= 2) {
                             echo '  <option value="2" ';
-                            if ($NR_CORES == 2) echo "selected";
+                            if ($NR_CORESuser == 2) echo "selected";
                             echo '>2</option>';
-                        }
-                        if ($MAX_CORES >= 3) {
-                            echo '  <option value="3" ';
-                            if ($NR_CORES == 3) echo "selected";
-                            echo '>3</option>';
                         }
                         if ($MAX_CORES >= 4) {
                             echo '  <option value="4" ';
-                            if ($NR_CORES == 4) echo "selected";
+                            if ($NR_CORESuser == 4) echo "selected";
                             echo '>4</option>';
-                        }
-                        if ($MAX_CORES >= 6) {
-                            echo '  <option value="6" ';
-                            if ($NR_CORES == 6) echo "selected";
-                            echo '>6</option>';
                         }
                         if ($MAX_CORES >= 8) {
                             echo '  <option value="8" ';
-                            if ($NR_CORES == 8) echo "selected";
+                            if ($NR_CORESuser == 8) echo "selected";
                             echo '>8</option>';
                         }
                         if ($MAX_CORES >= 12) {
                             echo '  <option value="12" ';
-                            if ($NR_CORES == 12) echo "selected";
+                            if ($NR_CORESuser == 12) echo "selected";
                             echo '>12</option>';
                         }
                         if ($MAX_CORES >= 16) {
                             echo '  <option value="16" ';
-                            if ($NR_CORES == 16) echo "selected";
+                            if ($NR_CORESuser == 16) echo "selected";
                             echo '>16</option>';
                         }
                         if ($MAX_CORES >= 24) {
                             echo '  <option value="24" ';
-                            if ($NR_CORES == 24) echo "selected";
+                            if ($NR_CORESuser == 24) echo "selected";
                             echo '>24</option>';
                         }
                         if ($MAX_CORES >= 32) {
                             echo '  <option value="32" ';
-                            if ($NR_CORES == 32) echo "selected";
+                            if ($NR_CORESuser == 32) echo "selected";
                             echo '>32</option>';
                         }
                         if ($MAX_CORES >= 64) {
                             echo '  <option value="64" ';
-                            if ($NR_CORES == 64) echo "selected";
+                            if ($NR_CORESuser == 64) echo "selected";
                             echo '>64</option>';
                         }
                         if ($MAX_CORES >= 72) {
                             echo '  <option value="72" ';
-                            if ($NR_CORES == 72) echo "selected";
+                            if ($NR_CORESuser == 72) echo "selected";
                             echo '>72</option>';
                         }
                         if ($MAX_CORES >= 96) {
                             echo '  <option value="96" ';
-                            if ($NR_CORES == 96) echo "selected";
+                            if ($NR_CORESuser == 96) echo "selected";
                             echo '>96</option>';
                         }
                         echo '</select></td>';
                     } else {
-						# Important to have default - if not shown - take default from CSV file
-						echo '<input type="hidden" name="nrcores" value="' . $NR_CORES . '">';
+						# Important to have default - if not shown 
+						echo '<input type="hidden" name="nrcores" value="' . $NR_CORESuser . '">';
 					}
 
                     // Selection of memory
                     if ($MEMORY_GB_SHOW) {
                         echo '<td><select name="memgb">';
                         echo '  <option value="8" ';
-                        if ($MEMORY_GB == 8) echo "selected";
+                        if ($MEMORY_GBuser == 8) echo "selected";
                         echo '>8</option>';
 
                         if ($MAX_MEM >= 12) {
                             echo '  <option value="12" ';
-                            if ($MEMORY_GB == 12) echo "selected";
+                            if ($MEMORY_GBuser == 12) echo "selected";
                             echo '>12</option>';
                         }
 
                         if ($MAX_MEM >= 16) {
                             echo '  <option value="16" ';
-                            if ($MEMORY_GB == 16) echo "selected";
+                            if ($MEMORY_GBuser == 16) echo "selected";
                             echo '>16</option>';
                         }
 
                         if ($MAX_MEM >= 24) {
                             echo '  <option value="24" ';
-                            if ($MEMORY_GB == 24) echo "selected";
+                            if ($MEMORY_GBuser == 24) echo "selected";
                             echo '>24</option>';
                         }
 
                         if ($MAX_MEM >= 32) {
                             echo '  <option value="32" ';
-                            if ($MEMORY_GB == 32) echo "selected";
+                            if ($MEMORY_GBuser == 32) echo "selected";
                             echo '>32</option>';
                         }
 
                         if ($MAX_MEM >= 48) {
                             echo '  <option value="48" ';
-                            if ($MEMORY_GB == 48) echo "selected";
+                            if ($MEMORY_GBuser == 48) echo "selected";
                             echo '>48</option>';
                         }
 
                         if ($MAX_MEM >= 64) {
                             echo '  <option value="64" ';
-                            if ($MEMORY_GB == 64) echo "selected";
+                            if ($MEMORY_GBuser == 64) echo "selected";
                             echo '>64</option>';
                         }
 
                         if ($MAX_MEM >= 128) {
                             echo '  <option value="128" ';
-                            if ($MEMORY_GB == 128) echo "selected";
+                            if ($MEMORY_GBuser == 128) echo "selected";
                             echo '>128</option>';
                         }
 
                         if ($MAX_MEM >= 196) {
                             echo '  <option value="196" ';
-                            if ($MEMORY_GB == 196) echo "selected";
+                            if ($MEMORY_GBuser == 196) echo "selected";
                             echo '>196</option>';
                         }
 
                         if ($MAX_MEM >= 256) {
                             echo '  <option value="256" ';
-                            if ($MEMORY_GB == 256) echo "selected";
+                            if ($MEMORY_GBuser == 256) echo "selected";
                             echo '>256</option>';
                         }
 
                         echo '</select></td>';
                     } else {
-						# Important to have default - if not shown - take default from CSV file
-						echo '<input type="hidden" name="memgb" value="' . $MEMORY_GB . '">';
+						# Important to have default - if not shown 
+						echo '<input type="hidden" name="memgb" value="' . $MEMORY_GBuser . '">';
 					}
 
-                    if ($ALLOW_SUDO_SHOW) {
-                        if (!$ALLOW_SUDO_CHOICE) {
-                            echo "<td class='blue'>" . $ALLOW_SUDO . "</td>";
-                            echo '<input type="hidden" name="allow_sudo" value="' . $ALLOW_SUDO . '">';
-                        } else {
-                            // Selection of theme
-                            echo '<td><select name="allow_sudo">';
-                            echo '  <option value="FALSE" ';
-                            if ($ALLOW_SUDO == "FALSE") echo "selected";
-                            echo '>FALSE</option>';
-                            echo '  <option value="TRUE" ';
-                            if ($ALLOW_SUDO == "TRUE") echo "selected";
-                            echo '>TRUE</option>';
-                            echo '</select></td>';
-                        }
-                    } else {
-						# Important to have default - if not shown - take default from CSV file
-						echo '<input type="hidden" name="allow_sudo" value="' . $ALLOW_SUDO . '">';
-					}
-
+                    if ($ALLOW_SUDO_SHOW) echo "<td class='blue'>" . $ALLOW_SUDO . "</td>";
                     if ($SHM_SIZE_GB_SHOW) echo "<td class='blue'>" . $SHM_SIZE_GB . "</td>";
                     if ($VOLUME_MAP_SHOW) echo "<td class='blue'>" . $VOLUME_MAP . "</td>";
                     
@@ -614,7 +566,7 @@ $path = "run/"
                     if ($ALLOW_SHINY_SERVER_SHOW) echo "<td class='blue'>" . $ALLOW_SHINY_SERVER . "</td>";
                     if ($USER_ID_SHOW) echo "<td class='blue'>" . $USER_ID . "</td>";
 
-                    if ($MAC_SHOW) echo "<td class='blue'>" . $MAC . "</td>";
+                    if ($MAC_SHOW) echo "<td class='blue'>" . $MAC_ADDRESS . "</td>";
 
                     if ($TIMEZONE_SHOW) echo "<td class='blue'>" . $TIMEZONE . "</td>";
                     if ($IQRTOOLS_COMPLIANCE_SHOW) echo "<td class='blue'>" . $IQRTOOLS_COMPLIANCE . "</td>";
