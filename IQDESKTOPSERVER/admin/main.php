@@ -146,7 +146,7 @@ if (empty($set_INFOTEXT)) {
 </head>
 
 <body>
-    <h1><?php echo "Multi-User Admin Interface" ?></h1>
+    <h1><?php echo "Admin - ".$SERVER_NAME." (".$SERVER_ADDRESS.")" ?></h1>
     <h2>
         <a href="index.php">Home</a>
         |
