@@ -3,10 +3,6 @@
 # ==============================================================================
 
 version: '2.4'
-networks:
-  default:
-    external: true
-    name: iqdesktop
 services:
   IQdesktop_%USER%:
     image: %IMAGE%

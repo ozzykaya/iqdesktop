@@ -4,11 +4,12 @@
 #  test stop all|username 
 # ------------------------------------------------------------------------------------------------
 
-# ------------------------------------------------------------------------
-# Create the network - if not present yet
-# ------------------------------------------------------------------------
+# # ------------------------------------------------------------------------
+# # Create the network - if not present yet
+# AVOID FOR NOW!
+# # ------------------------------------------------------------------------
 
-./create_network.sh
+# ./create_network.sh
 
 # ------------------------------------------------------------------------
 # Input argument checks
@@ -214,10 +215,9 @@ if [[ $COMMAND = "stop" ]]; then
         echo "==> Removing $USERS's IQdesktop"
         docker container rm $X
 
-        ## Disable removal of networks as same network is going to be used
-        # # Remove all custom networks
-        # echo -e "\n==> Removing $USERS's custom networks"
-        # docker network prune -f
+        # Remove all custom networks
+        echo -e "\n==> Removing $USERS's custom networks"
+        docker network prune -f
 
         # Remove the custom yml folder
         echo -e "\n==> Removing $USERS's custom yml files"

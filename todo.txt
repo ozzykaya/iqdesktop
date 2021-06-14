@@ -6,5 +6,10 @@
 - Allow to purge containers
 - Allow to stop all containers
 - Remove selected yml files 
+
+Networks:
+=========
+
+- look into them - but avoid before that (see uyuni vnc ...)
 	
 

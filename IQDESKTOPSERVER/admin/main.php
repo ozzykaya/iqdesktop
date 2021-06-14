@@ -339,7 +339,7 @@ if (empty($set_INFOTEXT)) {
                 <tr>
                     <td>SHOW_INFOTEXT:</td>
                     <td><input type="checkbox" name="set_SHOW_INFOTEXT" value="TRUE" <?php if ($SHOW_INFOTEXT) echo "checked"; ?>></td>
-                    <td>Show Info Text on user page</td>
+                    <td>Show Info Text on user page (enter in the text area at the bottom of this page)</td>
                 </tr>
                 <tr>
                     <td>SHOW_ADMINLINK:</td>
@@ -378,37 +378,37 @@ if (empty($set_INFOTEXT)) {
                 <tr>
                     <td>PRIVILEGED:</td>
                     <td><input type="checkbox" name="set_PRIVILEGED" value="TRUE" <?php if ($PRIVILEGED=="TRUE") echo "checked"; ?>></td>
-                    <td>If checked, containers are run in <a href="https://docs.docker.com/engine/reference/run/" target="new">privileged mode</a>. This allows mounting of external file systems (AWS S3, CIFS/SMB). If unchecked containers will run without privileged rights and external filesystems cannot be mounted (except: Docker volumes).</td>
+                    <td>If checked, containers are run in <a href="https://docs.docker.com/engine/reference/run/" target="new">privileged mode</a>. This allows mounting of external file systems (AWS S3, CIFS/SMB). If unchecked containers will run without privileged rights and external filesystems cannot be mounted (except: Docker volumes)</td>
                 </tr>
                 <tr>
                     <td>MOUNT_BASENAME:</td>
                     <td><input type="checkbox" name="set_MOUNT_BASENAME" value="TRUE" <?php if ($MOUNT_BASENAME=="TRUE") echo "checked"; ?>></td>
-                    <td>If checked, external folders are mounted to /IQDESKTOP/MOUNT/"basename of file server folder". Otherwise, instead of the basename the full path on the file server is used.</td>
+                    <td>If checked, external folders are mounted to /IQDESKTOP/MOUNT/"basename of file server folder". Otherwise, instead of the basename the full path on the file server is used</td>
                 </tr>
                 <tr>
                     <td>MAC_ADDRESS:</td>
                     <td><input type="text" name="set_MAC_ADDRESS" size="20" value="<?php echo $MAC_ADDRESS; ?>"></td>
-                    <td>Definition of MAC address for all containers. Ensure you use a valid MAC address - otherwise the containers will not start!</td>
+                    <td>Definition of MAC address for all containers. Ensure you use a valid MAC address - otherwise the containers will not start! Default one is: "00:00:28:06:19:71"</td>
                 </tr>
                 <tr>
                     <td>TIMEZONE:</td>
                     <td><input type="text" name="set_TIMEZONE" size="20" value="<?php echo $TIMEZONE; ?>"></td>
-                    <td>Define time zone (<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="tz">see here</a>).</td>
+                    <td>Define time zone (<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="tz">see here</a>)</td>
                 </tr>
                 <tr>
                     <td>IQREPORT_TEMPLATE:</td>
                     <td><input type="text" name="set_IQREPORT_TEMPLATE" size="20" value="<?php echo $IQREPORT_TEMPLATE; ?>"></td>
-                    <td>Define the IQReport templates to be installed (set to "Default" in default case).</td>
+                    <td>Define the IQReport templates to be installed (set to "default" in default case)</td>
                 </tr>
                 <tr>
                     <td>IQRTOOLS_COMPLIANCE:</td>
                     <td><input type="checkbox" name="set_IQRTOOLS_COMPLIANCE" value="TRUE" <?php if ($IQRTOOLS_COMPLIANCE=="TRUE") echo "checked"; ?>></td>
-                    <td>If checked, all containers use compliance mode in IQR Tools, otherwise FALSE.</td>
+                    <td>If checked, all containers use compliance mode in IQR Tools, otherwise FALSE</td>
                 </tr>
                 <tr>
                     <td>NONMEM_LICENSE_KEY:</td>
                     <td><input type="text" name="set_NONMEM_LICENSE_KEY" size="30" value="<?php echo $NONMEM_LICENSE_KEY; ?>"></td>
-                    <td>Sets the NONMEM license key for all containers.</td>
+                    <td>Sets the NONMEM license key for all containers</td>
                 </tr>
                 <tr>
                     <td>MONOLIX_LICENSE_KEY:</td>
@@ -418,17 +418,17 @@ if (empty($set_INFOTEXT)) {
                 <tr>
                     <td>ALLOW_SUDO:</td>
                     <td><input type="checkbox" name="set_ALLOW_SUDO" value="TRUE" <?php if ($ALLOW_SUDO=="TRUE") echo "checked"; ?>></td>
-                    <td>If checked then container users are allowed sudo rights.</td>
+                    <td>If checked then container users are allowed sudo rights</td>
                 </tr>
                 <tr>
                     <td>SSH_SERVER:</td>
                     <td><input type="checkbox" name="set_SSH_SERVER" value="TRUE" <?php if ($SSH_SERVER=="TRUE") echo "checked"; ?>></td>
-                    <td>If checked then ssh access to container is allowed.</td>
+                    <td>If checked then ssh access to container is allowed</td>
                 </tr>
                 <tr>
                     <td>ALLOW_SHINY_SERVER:</td>
                     <td><input type="checkbox" name="set_ALLOW_SHINY_SERVER" value="TRUE" <?php if ($ALLOW_SHINY_SERVER=="TRUE") echo "checked"; ?>></td>
-                    <td>If checked then container users can start a shiny server.</td>
+                    <td>If checked then container users can start a shiny server</td>
                 </tr>
                 <tr>
                     <td>THEME:</td>
@@ -438,22 +438,22 @@ if (empty($set_INFOTEXT)) {
                         <option value="light" <?php if ($THEME == "light") echo "selected"; ?>>light</option>
                         </select>
                     </td>
-                    <td>Sets the MONOLIX license key for all containers. Copy the true license file. \n will be exchanged to ::: and " to &&&</td>
+                    <td>Selects the default theme (user can choose on user page)</td>
                 </tr>
                 <tr>
                     <td>SHM_SIZE_GB:</td>
                     <td><input type="text" name="set_SHM_SIZE_GB" size="10" value="<?php echo $SHM_SIZE_GB; ?>"></td>
-                    <td>Sets the shared memory size of a container (2 is good).</td>
+                    <td>Sets the shared memory size of a container (2 is good)</td>
                 </tr>
                 <tr>
                     <td>NR_CORES:</td>
                     <td><input type="text" name="set_NR_CORES" size="10" value="<?php echo $NR_CORES; ?>"></td>
-                    <td>Sets the default number of cores for a container.</td>
+                    <td>Sets the default number of cores for a container</td>
                 </tr>
                 <tr>
                     <td>MEMORY_GB:</td>
                     <td><input type="text" name="set_MEMORY_GB" size="10" value="<?php echo $MEMORY_GB; ?>"></td>
-                    <td>Sets the default memory [GB] of a container.</td>
+                    <td>Sets the default memory [GB] of a container</td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>
