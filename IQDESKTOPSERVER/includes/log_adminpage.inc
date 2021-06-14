@@ -1,6 +1,6 @@
 <?php
 // Generation of simple log file on admin page
-include("../functions/getIPAddress.php");
+include("../includes/getIPAddress.php");
 
 // Collecting information 
 $IP_ADDRESS = getIPAddress();

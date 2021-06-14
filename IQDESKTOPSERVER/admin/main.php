@@ -1,11 +1,10 @@
 <?php
 // Log all activity on user page
-include("../logs/log_adminpage.php");
+include("../includes/log_adminpage.inc");
 
 // Get passed GET variables
 $do = $_GET["do"]; if (empty($do)) $do = "showsettings";
 $action = $_GET["action"];
-
 
 $C_vnccert = $_GET["C_vnccert"]; if (empty($C_vnccert)) $C_vnccert = "CH";
 $ST_vnccert = $_GET["ST_vnccert"]; if (empty($ST_vnccert)) $ST_vnccert = "BS";

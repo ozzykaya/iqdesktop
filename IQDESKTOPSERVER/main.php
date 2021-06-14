@@ -12,7 +12,7 @@ if (file_exists("settings/infotext.inc")) {
 }
 
 // Log all activity on user page
-include("logs/log_userpage.php");
+include("includes/log_userpage.inc");
 
 // Define displayed column names in table
 $NAME_TH_TEXT = "Name";

@@ -1,4 +1,3 @@
-- Show start/stop passwords in admin console ... and maybe allow to edit them
 - Show disk memory on admin page ...
 - Show CPU load on admin page
 - Show Swap Load on admin page
@@ -6,6 +5,7 @@
 - Allow to purge containers
 - Allow to stop all containers
 - Remove selected yml files 
+- More extensive $_GET in admin page log
 
 Networks:
 =========

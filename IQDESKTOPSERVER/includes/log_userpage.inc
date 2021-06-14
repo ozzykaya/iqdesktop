@@ -1,6 +1,6 @@
 <?php
 // Generation of simple log file for activity on user page
-include("functions/getIPAddress.php");
+include("includes/getIPAddress.php");
 
 // Collecting information 
 $IP_ADDRESS = getIPAddress();
