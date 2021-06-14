@@ -1,4 +1,4 @@
 AuthType Basic
 AuthName "Restricted access"
-AuthUserFile /home/iqdocker/IQDESKTOP/IQDESKTOPSERVER/admin/.htpasswd
+AuthUserFile /home/iqdesktop/IQDESKTOP/IQDESKTOPSERVER/admin/.htpasswd
 require valid-user
