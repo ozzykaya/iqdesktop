@@ -130,8 +130,8 @@ if [[ $COMMAND == "start" ]]; then
             # Modify Monolix Server License key file content 
             # \n replaced by ::: in CSV file => setting to " " is OK
             # " replaced by &&& in CSV file
-            MONOLIX_LICENSE_KEY="$(sed s!:::!\ !g <<<$MONOLIX_LICENSE_KEY)"
-            MONOLIX_LICENSE_KEY="$(sed s!\&\&\&!\\\\\\\"!g <<<$MONOLIX_LICENSE_KEY)"
+            ARGmonolixlicensekey="$(sed s!:::!\ !g <<<$ARGmonolixlicensekey)"
+            ARGmonolixlicensekey="$(sed s!\&\&\&!\\\\\\\"!g <<<$ARGmonolixlicensekey)"
             # -----------------------------------------------------
 
             # -----------------------------------------------------
