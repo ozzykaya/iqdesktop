@@ -1,2 +1,4 @@
-order deny,allow
-deny from all
+AuthType Basic
+AuthName "Restricted access"
+Order Deny,Allow
+Deny from all
