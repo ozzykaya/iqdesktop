@@ -59,6 +59,7 @@ $pathCSV = "settings/";
 <head>
     <title><?php echo $SERVER_NAME; ?></title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favIQ.png">
 </head>
 
 <body>

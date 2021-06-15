@@ -101,6 +101,7 @@ if (empty($set_INFOTEXT)) {
 <head>
     <title>IQdesktopServer Admin</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favIQ.png">
 </head>
 
 <body>
