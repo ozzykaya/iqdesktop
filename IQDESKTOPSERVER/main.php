@@ -1,67 +1,19 @@
 <?php
-// Load settings 
-if (file_exists("settings/settings.inc")) {
-    include("settings/settings.inc");
-} else {
-    include("settings/settings_default.inc");
-}
-if (file_exists("settings/infotext.inc")) {
-    $INFOTEXT = file_get_contents("settings/infotext.inc");
-} else {
-    $INFOTEXT = file_get_contents("settings/infotext_default.inc");
-}
-
-// Log all activity on user page
-include("includes/log_userpage.inc");
-
-// Define displayed column names in table
-$NAME_TH_TEXT = "Name";
-$USER_TH_TEXT = "Username";
-$SAFETY_CHECK_TH_TEXT = "Start Password";
-$PASSWORD_TH_TEXT = "Password";
-$IMAGE_TH_TEXT = "IQdesktop Version";
-$VOLUME_MAP_TH_TEXT = "Mapped Drive";
-$VNCPORT_TH_TEXT = "VNC Port";
-$SSHPORT_TH_TEXT = "SSH Port";
-$SHINY_SERVER_PORT_TH_TEXT = "Shiny Server Port";
-$ALLOW_SUDO_TH_TEXT = "Sudo Rights";
-$SSH_SERVER_TH_TEXT = "SSH Server";
-$ALLOW_SHINY_SERVER_TH_TEXT = "Shiny Server";
-$USER_ID_TH_TEXT = "User ID";
-$THEME_TH_TEXT = "Theme";
-$MAC_TH_TEXT = "MAC Address";
-$SHM_SIZE_GB_TH_TEXT = "Shared Mem Size";
-$NR_CORES_TH_TEXT = "Nr Cores";
-$MEMORY_GB_TH_TEXT = "Memory [GB]";
-$TIMEZONE_TH_TEXT = "Timezone";
-$IQRTOOLS_COMPLIANCE_TH_TEXT = "IQR Tools Compliance";
-$IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
-
-// Get passed GET variables
-$do = $_GET["do"];
-$csvfile = $_GET["csvfile"];
-$control = $_GET["control"];
-$user = $_GET["user"];
-$action = $_GET["action"];
-$image = $_GET["image"];
-$nrcores = $_GET["nrcores"];
-$memgb = $_GET["memgb"];
-$theme = $_GET["theme"];
-$safety_check = $_GET["safety_check"];
-$safety_check_required = $_GET["safety_check_required"];
-
+include("includes/load_settings.inc"); // Load settings 
+include("includes/load_infotext.inc"); // Load infotext
+include("includes/log_userpage.inc");  // Create logs
+include("includes/getvars_userpage.inc");  // Create logs
+include("includes/defcolnames_userpage.inc");  // Create logs
 $path = "run/";
 $pathCSV = "settings/";
 ?>
 
 <html>
-
 <head>
     <title><?php echo $SERVER_NAME; ?></title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/favIQ.png">
 </head>
-
 <body>
     <h1><?php echo $SERVER_NAME." (".$SERVER_ADDRESS.")" ?></h1>
     <h2>
@@ -79,7 +31,7 @@ $pathCSV = "settings/";
         }
         ?>
     </h2>
-
+	
     <?php
 
     if ($do == "") {
@@ -137,6 +89,19 @@ $pathCSV = "settings/";
             } else {
                 header("Location: safetycheck.html");
             }
+			?>
+				<div id="floatingBarsG">
+					<div class="blockG" id="rotateG_01"></div>
+					<div class="blockG" id="rotateG_02"></div>
+					<div class="blockG" id="rotateG_03"></div>
+					<div class="blockG" id="rotateG_04"></div>
+					<div class="blockG" id="rotateG_05"></div>
+					<div class="blockG" id="rotateG_06"></div>
+					<div class="blockG" id="rotateG_07"></div>
+					<div class="blockG" id="rotateG_08"></div>
+				</div>
+			<?php
+	        header( "Refresh:2; url=main.php?do=control&csvfile=$csvfile", true, 303);
         }
 
         # Handle starting with and without safety check
@@ -149,23 +114,6 @@ $pathCSV = "settings/";
                 $iqrtoolscompliance = "FALSE"; if ($IQRTOOLS_COMPLIANCE) $iqrtoolscompliance = "TRUE";
                 $sshserver = "FALSE"; if ($SSH_SERVER) $sshserver = "TRUE";
                 $csvfilepath = "../".$pathCSV.$csvfile;
-
-                // echo $user."user<br>";
-                // echo $csvfile."csvfile<br>";
-                // echo $image."image<br>";
-                // echo $nrcores."nrcores<br>";
-                // echo $memgb."memgb<br>";
-                // echo $theme."theme<br>";
-                // echo $ALLOW_SUDO."ALLOW_SUDO<br>";
-                // echo $PRIVILEGED."PRIVILEGED<br>";
-                // echo $MOUNT_BASENAME."MOUNT_BASENAME<br>";
-                // echo $IQRTOOLS_COMPLIANCE."IQRTOOLS_COMPLIANCE<br>";
-                // echo $SSH_SERVER."SSH_SERVER<br>";
-                // echo $MAC_ADDRESS."MAC_ADDRESS<br>";
-                // echo $TIMEZONE."TIMEZONE<br>";
-                // echo $IQREPORT_TEMPLATE."IQREPORT_TEMPLATE<br>";
-                // echo $NONMEM_LICENSE_KEY."NONMEM_LICENSE_KEY<br>";
-                // echo $MONOLIX_LICENSE_KEY."MONOLIX_LICENSE_KEY<br>";
       
                 # Construct iqdesktop.sh call
                 $command = "./iqdesktop.sh start " . $user . " " . $csvfilepath . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " " . $SHM_SIZE_GB . " ";
@@ -178,6 +126,20 @@ $pathCSV = "settings/";
             } else {
                 header("Location: safetycheck.html");
             }
+			// Spow spinner and then sleep
+			?>
+				<div id="floatingBarsG">
+					<div class="blockG" id="rotateG_01"></div>
+					<div class="blockG" id="rotateG_02"></div>
+					<div class="blockG" id="rotateG_03"></div>
+					<div class="blockG" id="rotateG_04"></div>
+					<div class="blockG" id="rotateG_05"></div>
+					<div class="blockG" id="rotateG_06"></div>
+					<div class="blockG" id="rotateG_07"></div>
+					<div class="blockG" id="rotateG_08"></div>
+				</div>
+			<?php
+	        header( "Refresh:8; url=main.php?do=control&csvfile=$csvfile", true, 303);
         }
 
         echo '<pre>';
@@ -189,7 +151,7 @@ $pathCSV = "settings/";
         echo '</pre>';
 
         // sleep for 5 seconds to let the shell script run
-        sleep(5);
+        //sleep(5);
     }
 
     // -----------------------------------------------------------------------------

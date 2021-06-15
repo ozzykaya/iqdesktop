@@ -11,7 +11,7 @@ if (file_exists("settings/settings.inc")) {
 <head>
 <title><?php echo $SERVER_NAME; ?></title>
     <link rel="icon" href="images/favIQ.png">
-	<frameset cols="100%">
+    <frameset cols="100%">
         <frame src="main.php" frameborder="0">
     </frameset>
 </head>
