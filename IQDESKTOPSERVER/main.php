@@ -30,8 +30,7 @@ $pathCSV = "settings/";
         <?php
         }
         ?>
-    </h2>
-	
+
     <?php
 
     if ($do == "") {
@@ -95,10 +94,6 @@ $pathCSV = "settings/";
 					<div class="blockG" id="rotateG_02"></div>
 					<div class="blockG" id="rotateG_03"></div>
 					<div class="blockG" id="rotateG_04"></div>
-					<div class="blockG" id="rotateG_05"></div>
-					<div class="blockG" id="rotateG_06"></div>
-					<div class="blockG" id="rotateG_07"></div>
-					<div class="blockG" id="rotateG_08"></div>
 				</div>
 			<?php
 	        header( "Refresh:2; url=main.php?do=control&csvfile=$csvfile", true, 303);
@@ -133,10 +128,6 @@ $pathCSV = "settings/";
 					<div class="blockG" id="rotateG_02"></div>
 					<div class="blockG" id="rotateG_03"></div>
 					<div class="blockG" id="rotateG_04"></div>
-					<div class="blockG" id="rotateG_05"></div>
-					<div class="blockG" id="rotateG_06"></div>
-					<div class="blockG" id="rotateG_07"></div>
-					<div class="blockG" id="rotateG_08"></div>
 				</div>
 			<?php
 	        header( "Refresh:8; url=main.php?do=control&csvfile=$csvfile", true, 303);
@@ -190,14 +181,7 @@ $pathCSV = "settings/";
             </ul>
             </div>
             <?php 
-        } else {
-            ?>
-            <div class='help'>
-            <h3>No VNC Certificate</h3>
-            The VNC connection is set up to not be encrypted. 
-            </div>
-            <?php 
-        }
+        } 
 
         echo "<h3>Control Containers</h3>";
         // Add path to filename
