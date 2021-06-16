@@ -9,10 +9,6 @@ $ADMIN_USER = $_SERVER['REMOTE_USER'];
 // Get date
 $DATE = date('Y-m-d H:i:s');
 
-// Collecting variables
-$do = $_GET["do"];
-$action = $_GET["action"];
-
 // Combine in string
 $LOG = "IP_ADDRESS=".$IP_ADDRESS;
 $LOG .= ":::"."DATE=".$DATE;

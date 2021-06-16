@@ -2,13 +2,15 @@
 // User page - Get passed GET variables
 $do = $_GET["do"];
 $csvfile = $_GET["csvfile"];
-$control = $_GET["control"];
-$user = $_GET["user"];
-$action = $_GET["action"];
-$image = $_GET["image"];
-$nrcores = $_GET["nrcores"];
-$memgb = $_GET["memgb"];
-$theme = $_GET["theme"];
-$safety_check = $_GET["safety_check"];
-$safety_check_required = $_GET["safety_check_required"];
+
+// User page - Get passed POST variables
+$control = $_POST["control"];
+$user = $_POST["user"];
+$action = $_POST["action"];
+$image = $_POST["image"];
+$nrcores = $_POST["nrcores"];
+$memgb = $_POST["memgb"];
+$theme = $_POST["theme"];
+$safety_check = $_POST["safety_check"];
+$safety_check_required = $_POST["safety_check_required"];
 ?>

@@ -1,8 +1,8 @@
 <?php
 $prefix_folder = ".."; include("../includes/load_settings.inc"); // Load settings 
-$prefix_folder = ".."; include("../includes/load_infotext.inc"); // Load settings 
-include("../includes/log_adminpage.inc"); // Create logs
-include("../includes/getvars_adminpage.inc"); // Create logs
+$prefix_folder = ".."; include("../includes/load_infotext.inc"); // Load infotext
+include("../includes/getvars_adminpage.inc"); // Get variables 
+include("../includes/log_adminpage.inc"); // Create logs (after get variables)
 ?>
 
 <html>
@@ -142,7 +142,7 @@ include("../includes/getvars_adminpage.inc"); // Create logs
         }
         // Generate button to create or remove certificates
         $form = "form_VNCcert";
-        echo '<form action="main.php" method="get" id="' . $form . '">';
+        echo '<form action="main.php" method="post" id="' . $form . '">';
         echo '<input type="hidden" name="do" value="VNCcert">';
         echo "<table>";
         echo "<tr>" . '<td class="control">';
@@ -221,7 +221,7 @@ include("../includes/getvars_adminpage.inc"); // Create logs
         ?>
 
         <h3>General Settings</h3>
-        <form action="main.php" method="get" id="form1">
+        <form action="main.php" method="post" id="form1">
             <input type="hidden" name="do" value="updateSettings">
             <table>
                 <tr>

@@ -1,8 +1,8 @@
 <?php
 include("includes/load_settings.inc"); // Load settings 
 include("includes/load_infotext.inc"); // Load infotext
-include("includes/log_userpage.inc");  // Create logs
-include("includes/getvars_userpage.inc");  // Create logs
+include("includes/getvars_userpage.inc");  // Get variables
+include("includes/log_userpage.inc");  // Create logs (after get variables)
 include("includes/defcolnames_userpage.inc");  // Create logs
 $path = "run/";
 $pathCSV = "settings/";
@@ -317,7 +317,7 @@ $pathCSV = "settings/";
                     echo "<tr>" . '<td class="control">';
                     // The buttons
                     $form = "form_" . $USER;
-                    echo '<form action="/main.php" method="get" id="' . $form . '">';
+                    echo '<form action="/main.php?do=control&csvfile='.$csvfile.'" method="post" id="' . $form . '">';
                     echo '<input type="hidden" name="safety_check_required" value="' . $SAFETY_CHECK . '">';
                     echo '<input type="hidden" name="do" value="control">';
                     echo '<input type="hidden" name="csvfile" value="' . $csvfile . '">';
