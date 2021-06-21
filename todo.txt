@@ -1,15 +1,14 @@
-- Show disk memory on admin page ...
-- Show CPU load on admin page
-- Show Swap Load on admin page
-- Admin: Show output of docker stats in a reasonable form
-- Allow to purge containers
+- https (as option)
+- Networks (general and later admin)
+- Show disk memory admin
+- Show CPU load admin
+- Show Swap Load admin
+- Swapon/off admin
+- Docker stats
+- Show container status
 - Allow to stop all containers
+- Allow to purge containers
 - Remove selected yml files 
-- More extensive $_GET in admin page log
 
-Networks:
-=========
-
-- look into them - but avoid before that (see uyuni vnc ...)
 	
 
