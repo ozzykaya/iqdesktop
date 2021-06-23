@@ -6,7 +6,7 @@
 - Swapon/off admin
 - Docker stats
 - Show container status
-- Allow to stop all containers
+- Allow to stop all containers 
 - Allow to purge containers
 - Remove selected yml files 
 
