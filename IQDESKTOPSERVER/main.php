@@ -1,8 +1,8 @@
 <?php
 include("includes/load_settings.inc"); // Load settings 
 include("includes/load_infotext.inc"); // Load infotext
-include("includes/log_userpage.inc");  // Create logs
-include("includes/getvars_userpage.inc");  // Create logs
+include("includes/getvars_userpage.inc");  // Get variables
+include("includes/log_userpage.inc");  // Create logs (after get variables)
 include("includes/defcolnames_userpage.inc");  // Create logs
 $path = "run/";
 $pathCSV = "settings/";

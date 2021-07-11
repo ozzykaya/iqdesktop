@@ -1,3 +1,4 @@
+- add stop delay in web as possibility
 - https (as option)
 - Networks (general and later admin)
 - Show disk memory admin
