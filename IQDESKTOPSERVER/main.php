@@ -1,8 +1,8 @@
 <?php
 include("includes/load_settings.inc"); // Load settings 
 include("includes/load_infotext.inc"); // Load infotext
-include("includes/getvars_userpage.inc");  // Get variables
-include("includes/log_userpage.inc");  // Create logs (after get variables)
+include("includes/log_userpage.inc");  // Create logs
+include("includes/getvars_userpage.inc");  // Create logs
 include("includes/defcolnames_userpage.inc");  // Create logs
 $path = "run/";
 $pathCSV = "settings/";
@@ -84,7 +84,9 @@ $pathCSV = "settings/";
         # Safety check entry is a component to ensure that only the person with the safety check password can stop a container
         if ($action == "stop") {
             if (trim($safety_check_required) == trim($safety_check) || empty($safety_check_required)) {
-                $command = "./iqdesktop.sh stop " . $user . " > /dev/null 2>/dev/null &";
+                $command = "./iqdesktop.sh stop " . $user;
+                $command .= " 1>> ../logs/iqdesktop.log 2>>../logs/iqdesktop_error.log &";
+
             } else {
                 header("Location: safetycheck.html");
             }

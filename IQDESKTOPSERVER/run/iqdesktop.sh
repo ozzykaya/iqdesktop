@@ -19,11 +19,11 @@
 NARGS=$#
 
 # Require correct number of input arguments
-if [[ $NARGS != 2 ]] && [[ $NARGS != 19 ]]; then
-    echo "Usage:"
-    echo "        iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey"
-    echo "        iqdesktop stop all|username"
-    exit 0
+if [[ $NARGS != 2 ]] && [[ $NARGS < 19 ]]; then 
+	echo "Usage:"
+	echo "        iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey [timedelaystophours]"
+	echo "        iqdesktop stop username"
+	exit 0
 fi
 
 # Get first ones
@@ -39,8 +39,8 @@ if [[ $COMMAND == "stop" ]];  then
 fi
 
 if [[ $COMMAND == "start" ]]; then
-    if [[ $NARGS != 19 ]]; then
-        echo "start command requires 19 input arguments - not useful for command line ..."
+    if [[ $NARGS < 19 ]]; then
+        echo "start command requires 19 or 20 input arguments - not useful for command line ..."
         exit 0
     fi
 fi
@@ -80,36 +80,18 @@ ARGtimezone=${16}
 ARGiqreporttemplate=${17}
 ARGnonmemlicensekey=${18}
 ARGmonolixlicensekey=${19}
+DELAYHOURS=${20}
 
 if [[ $ARGiqreporttemplate == "default" ]]; then
     ARGiqreporttemplate=
 fi
 
-# COMMAND=start
-# USERS=demo2
-# CSVFILE=01_demo.csv
-# ARGIMAGE=intiquan/iqdesktop:2.2.0
-# ARGNCORES=4
-# ARGMEM=8
-# ARGTHEME=light
-# ARGSWAP=5
-# ARGSUDO=TRUE
-# ARGPRIVILEGED=TRUE
-# ARGMOUNTBASENAME=TRUE
-# ARGiqrtoolscompliance=TRUE
-# ARGsshserver=TRUE
-# ARGshinyserver=TRUE
-# ARGmacaddress=00:00:28:06:19:71
-# ARGtimezone=efwegf
-# ARGiqreporttemplate=all
-# ARGnonmemlicensekey=qefde
-# ARGmonolixlicensekey=qefqe
-
 # ------------------------------------------------------------------------
-# Ensure gen_runs.sh is executable
+# Ensure gen_runs.sh and stop_runs.h are executable
 # ------------------------------------------------------------------------
 
 chmod +x gen_runs.sh
+chmod +x stop_runs.sh
 
 # ------------------------------------------------------------------------
 # Handle "start" of iqdesktop
@@ -170,6 +152,13 @@ if [[ $COMMAND == "start" ]]; then
                     "$MOUNT_3_LABEL" "$MOUNT_3_SERVER_IP" "$MOUNT_3_SERVER_FOLDER" "$MOUNT_3_OPTIONS" \
                     "$MOUNT_4_LABEL" "$MOUNT_4_SERVER_IP" "$MOUNT_4_SERVER_FOLDER" "$MOUNT_4_OPTIONS" \
                     "$MOUNT_5_LABEL" "$MOUNT_5_SERVER_IP" "$MOUNT_5_SERVER_FOLDER" "$MOUNT_5_OPTIONS" 
+					
+				# If defined then start the time delayed stopping of the container
+				if [[ -n $DELAYHOURS ]]; then 
+					echo -e "\nSetting up automatic shut down for $USER in $DELAYHOURS hours\n"
+					./stop_runs.sh $USER $DELAYHOURS
+				fi
+					
             fi
         fi 
     done < $CSVFILE
@@ -182,45 +171,5 @@ fi
 # ------------------------------------------------------------------------
 
 if [[ $COMMAND = "stop" ]]; then 
-
-    if [[ $USERS = "all" ]]; then 
-        # Stop and clean all containers etc
-        echo "==> Stopping all running docker containers"
-        docker container stop $(docker container ls -aq)
-
-        # Remove all containers
-        echo -e "\n==> Removing all running docker containers"
-        docker container rm $(docker container ls -aq)
-
-        # Remove all custom networks
-        echo -e "\n==> Removing all custom networks"
-        docker network prune -f
-
-        # Remove the custom yml folder
-        echo -e "\n==> Removing custom yml files"
-        rm -r -f yml_custom
-    else 
-        # Get running containers for provided user
-        X=$(docker container ls -q -f name="\\_$USERS\\_")
-        if [[ -z $X ]]; then 
-            echo "IQdesktop for $USERS not running"
-            exit 0
-        fi
-        
-        # Stop and clean all containers etc
-        echo "==> Stopping $USERS's IQdesktop"
-        docker container stop $X
-
-        # Remove all running containers
-        echo "==> Removing $USERS's IQdesktop"
-        docker container rm $X
-
-        # Remove all custom networks
-        echo -e "\n==> Removing $USERS's custom networks"
-        docker network prune -f
-
-        # Remove the custom yml folder
-        echo -e "\n==> Removing $USERS's custom yml files"
-        rm -r -f yml_custom/$USERS
-     fi
+	./stop_runs.sh $USERS
 fi
