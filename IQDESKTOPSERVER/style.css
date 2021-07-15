@@ -31,6 +31,13 @@ h2 {
     text-align: right;
 }
 
+h3 {
+    color: #fff;
+    padding: 5 20 5 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 a {
     color: #B1DFE1;
     text-decoration: none;
@@ -40,14 +47,24 @@ table {
     margin: 0 0 0 42;
 }
 
-table,
-th,
-td {
+
+table.shaded {
     border: 1px solid;
     border-color: #19283B;
     border-collapse: collapse;
-    background: rgba(50, 50, 50, 0.33);
-    /*background: rgba(202, 202, 202, 0.5);*/
+    background: rgba(50, 50, 50, 0.4);
+    width: 100%
+}
+
+table.control {
+    border: 1px solid;
+    border-color: #19283B;
+    border-collapse: collapse;
+    background: rgba(50, 50, 50, 0.4);
+}
+
+td.top {
+    vertical-align: top;
 }
 
 td,
@@ -100,17 +117,6 @@ td.control {
 li {
     margin: 2px;
     font-size: 12px;
-}
-
-div.help {
-    background: rgba(50, 50, 50, 0.6);
-    color: #fff;
-    padding-left: 20px;
-    margin-left: -20;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-weight: normal;
-    text-align: left;
 }
 
 input,

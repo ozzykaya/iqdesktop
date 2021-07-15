@@ -30,7 +30,8 @@ $pathCSV = "settings/";
         <?php
         }
         ?>
-
+    </h2>
+    <br>
     <?php
 
     if ($do == "") {
@@ -117,7 +118,11 @@ $pathCSV = "settings/";
                 $command .= $ALLOW_SUDO . " " . $PRIVILEGED . " " . $MOUNT_BASENAME . " ";
                 $command .= $IQRTOOLS_COMPLIANCE . " " . $SSH_SERVER . " " . $ALLOW_SHINY_SERVER . " " . $MAC_ADDRESS . " " . $TIMEZONE . " " . $IQREPORT_TEMPLATE . " ";
                 $command .= $NONMEM_LICENSE_KEY . " \"" . $MONOLIX_LICENSE_KEY . "\" ";
-                $command .= " 1>> ../logs/iqdesktop.log 2>>../logs/iqdesktop_error.log &";
+
+                # Check if demo mode and then add the stop time
+                if ($csvfile=="01_demo.csv") $command .= $MAX_TIME_HOURS_DEMO . " ";
+
+                $command .= "1>> ../logs/iqdesktop.log 2>>../logs/iqdesktop_error.log &";
 
 				#echo $command."<br>";
             } else {
@@ -164,15 +169,13 @@ $pathCSV = "settings/";
     // -----------------------------------------------------------------------------
     if (!empty($csvfile)) {
         if ($SHOW_INFOTEXT) {
-            echo "<div class='help'>";
-            echo $INFOTEXT;
-            echo "</div>&nbsp;<br>";
+            echo $INFOTEXT."<br>";
         }
 
         # Write out information in case of general VNC certificates active
         if (file_exists("iqdesktop_VNC_cert.pem")) {
             ?>
-            <div class='help'>
+            <table class="shaded"><tr><td>
             <h3>VNC Certificate</h3>
             The VNC connection is set up to be encrypted. Do the following:
             <ul>
@@ -181,11 +184,23 @@ $pathCSV = "settings/";
                 <li>Or call Tiger VNC from command line: "vncviewer -SecurityTypes X509Vnc -X509CA iqdesktop_VNC_cert.pem <?php echo $SERVER_ADDRESS; ?>:VNCPORT"
                 <li>When working on multiple IQdesktop servers it is recommended to use different file names for the VNC certificates!
             </ul>
-            </div>
+            </td></tr></table>
+            <br>
             <?php 
         } 
 
-        echo "<h3>Control Containers</h3>";
+        if ($csvfile=="01_demo.csv") {
+            ?>
+            <table class="shaded"><tr><td>
+            <h3>Time Limit</h3>
+            The demo system is set up with a time limit on how long a container can run. When the runtime exceeds this time limit the container 
+            is stopped automatically without prior warning. The time limit is set to: <span style="font-size: 20px"><?php echo $MAX_TIME_HOURS_DEMO; ?> hours</span>.
+            </td></tr></table>
+            <br>
+            <?php 
+
+        }
+ 
         // Add path to filename
         $fullfilename = $pathCSV . $csvfile;
 
@@ -206,7 +221,7 @@ $pathCSV = "settings/";
         //print_r($csvinfo);
 
         // Build a table with form
-        echo "<table>";
+        echo '<table class="control">';
         $header = 1;
         foreach ($csvinfo as $value) {
             // print_r($value);

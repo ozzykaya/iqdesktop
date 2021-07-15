@@ -43,6 +43,7 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "$" . "MAX_CORES = " . $set_MAX_CORES . ";\n";
         $settingsText .= "$" . "MAX_MEM = " . $set_MAX_MEM . ";\n";
+        $settingsText .= "$" . "MAX_TIME_HOURS_DEMO = " . $set_MAX_TIME_HOURS_DEMO . ";\n";
         $settingsText .= "$" . "PRIVILEGED = \"" . $set_PRIVILEGED . "\";\n";
         $settingsText .= "$" . "MOUNT_BASENAME = \"" . $set_MOUNT_BASENAME . "\";\n";
         $settingsText .= "$" . "MAC_ADDRESS = \"" . $set_MAC_ADDRESS . "\";\n";
@@ -281,6 +282,11 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
                     <td>MAX_MEM:</td>
                     <td><input type="text" name="set_MAX_MEM" size="10" value="<?php echo $MAX_MEM; ?>"></td>
                     <td>[GB] Set the maximum amount of memory a user should be able to request (8GB minimum)</td>
+                </tr>
+                <tr>
+                    <td>MAX_TIME_HOURS_DEMO:</td>
+                    <td><input type="text" name="set_MAX_TIME_HOURS_DEMO" size="10" value="<?php echo $MAX_TIME_HOURS_DEMO; ?>"></td>
+                    <td>[Hours] Set the maximum runtime of containers in demo mode (01_demo.csv). Containers will then stop automatically after that time. Cannot be disabled except by high values</td>
                 </tr>
                 <tr>
                     <td>PRIVILEGED:</td>
