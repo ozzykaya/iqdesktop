@@ -192,9 +192,15 @@ $pathCSV = "settings/";
         if ($csvfile=="01_demo.csv") {
             ?>
             <table class="shaded"><tr><td>
-            <h3>Time Limit</h3>
-            The demo system is set up with a time limit on how long a container can run. When the runtime exceeds this time limit the container 
-            is stopped automatically without prior warning. The time limit is set to: <span style="font-size: 20px"><?php echo $MAX_TIME_HOURS_DEMO; ?> hours</span>.
+            <h3>Demo System Settings and Agreements</h3>
+            <ul>
+                <li><b>Time limit:</b> <span style="color:#f4A033; font-weight:bold;">The time limit is set to: <?php echo $MAX_TIME_HOURS_DEMO; ?> hours</span>. The demo system is set up with a time limit on how long IQdesktop can run. When the runtime exceeds this time limit IQdesktop
+                    is stopped automatically <b>without prior warning</b>.
+                    <li><b>VNC Encryption:</b> For the purpose of this demo server the VNC connection encryption is disabled. 
+                    <li><b>Start Password:</b> For the purpose of this demo server the 'Start Password' is the same as the 'Username' in the table below. 
+            </ul>
+            <b>By starting IQdesktop through the use of this webpage you certify that you have read, understood, and aggree to the information on this webpage,
+            specifically the "Disclaimer" section and the "Demo System Settings and Agreements" section.</b>
             </td></tr></table>
             <br>
             <?php 

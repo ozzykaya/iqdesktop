@@ -4,7 +4,7 @@ body {
     background-image: url("images/background.jpg");
     background-size: cover;
     background-attachment: fixed;
-    margin: 0 0 0 20;
+    margin: 0 20 0 20;
     color: #fff;
 }
 
@@ -12,7 +12,7 @@ h1 {
     background: rgba(42, 42, 42, 0);
     color: #fff;
     padding: 20px;
-    margin: 0 0 0 -20;
+    margin: 0 -20 0 -20;
     font-weight: normal;
     text-align: right;
     background-image: url("images/logo.png");
@@ -25,7 +25,7 @@ h2 {
     background: rgba(50, 50, 50, 0.6);
     color: #fff;
     padding: 5 20 5 0;
-    margin: 0 0 0 -20;
+    margin: 0 -20 0 -20;
     font-size: 18px;
     font-weight: normal;
     text-align: right;
@@ -42,11 +42,6 @@ a {
     color: #B1DFE1;
     text-decoration: none;
 }
-
-table {
-    margin: 0 0 0 42;
-}
-
 
 table.shaded {
     border: 1px solid;
@@ -260,162 +255,156 @@ select {
 }
 
 
-/* SPINNER */ 
+/* SPINNER */
 
-#floatingBarsG{
-	position:fixed;
-	width:248px;
-	height:308px;
-	top:50%;
-	left:50%;
-	margin-top:-154px;
-	margin-left:-124px;
+#floatingBarsG {
+    position: fixed;
+    width: 248px;
+    height: 308px;
+    top: 50%;
+    left: 50%;
+    margin-top: -154px;
+    margin-left: -124px;
 }
 
-.blockG{
-	position:absolute;
-	background-color:rgb(255,255,255,0.2);
-	width:60px;
-	height:132px;
-	border-radius:20px 20px 20px 20px;
-		-o-border-radius:20px 20px 20px 20px;
-		-ms-border-radius:20px 20px 20px 20px;
-		-webkit-border-radius:20px 20px 20px 20px;
-		-moz-border-radius:20px 20px 20px 20px;
-	transform:scale(0.4);
-		-o-transform:scale(0.4);
-		-ms-transform:scale(0.4);
-		-webkit-transform:scale(0.4);
-		-moz-transform:scale(0.4);
-	animation-name:fadeG;
-		-o-animation-name:fadeG;
-		-ms-animation-name:fadeG;
-		-webkit-animation-name:fadeG;
-		-moz-animation-name:fadeG;
-	animation-duration:1.2s;
-		-o-animation-duration:1.2s;
-		-ms-animation-duration:1.2s;
-		-webkit-animation-duration:1.2s;
-		-moz-animation-duration:1.2s;
-	animation-iteration-count:infinite;
-		-o-animation-iteration-count:infinite;
-		-ms-animation-iteration-count:infinite;
-		-webkit-animation-iteration-count:infinite;
-		-moz-animation-iteration-count:infinite;
-	animation-direction:normal;
-		-o-animation-direction:normal;
-		-ms-animation-direction:normal;
-		-webkit-animation-direction:normal;
-		-moz-animation-direction:normal;
+.blockG {
+    position: absolute;
+    background-color: rgb(255, 255, 255, 0.2);
+    width: 60px;
+    height: 132px;
+    border-radius: 20px 20px 20px 20px;
+    -o-border-radius: 20px 20px 20px 20px;
+    -ms-border-radius: 20px 20px 20px 20px;
+    -webkit-border-radius: 20px 20px 20px 20px;
+    -moz-border-radius: 20px 20px 20px 20px;
+    transform: scale(0.4);
+    -o-transform: scale(0.4);
+    -ms-transform: scale(0.4);
+    -webkit-transform: scale(0.4);
+    -moz-transform: scale(0.4);
+    animation-name: fadeG;
+    -o-animation-name: fadeG;
+    -ms-animation-name: fadeG;
+    -webkit-animation-name: fadeG;
+    -moz-animation-name: fadeG;
+    animation-duration: 1.2s;
+    -o-animation-duration: 1.2s;
+    -ms-animation-duration: 1.2s;
+    -webkit-animation-duration: 1.2s;
+    -moz-animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    animation-direction: normal;
+    -o-animation-direction: normal;
+    -ms-animation-direction: normal;
+    -webkit-animation-direction: normal;
+    -moz-animation-direction: normal;
 }
 
-#rotateG_01{
-	left:0;
-	top:94px;
-	animation-delay:0.25s;
-		-o-animation-delay:0.25s;
-		-ms-animation-delay:0.25s;
-		-webkit-animation-delay:0.25s;
-		-moz-animation-delay:0.25s;
-	transform:rotate(-90deg);
-		-o-transform:rotate(-90deg);
-		-ms-transform:rotate(-90deg);
-		-webkit-transform:rotate(-90deg);
-		-moz-transform:rotate(-90deg);
+#rotateG_01 {
+    left: 0;
+    top: 94px;
+    animation-delay: 0.25s;
+    -o-animation-delay: 0.25s;
+    -ms-animation-delay: 0.25s;
+    -webkit-animation-delay: 0.25s;
+    -moz-animation-delay: 0.25s;
+    transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
 }
 
-#rotateG_02{
-	left:94px;
-	top:02px;
-	animation-delay:0.5s;
-		-o-animation-delay:0.5s;
-		-ms-animation-delay:0.5s;
-		-webkit-animation-delay:0.5s;
-		-moz-animation-delay:0.5s;
-	transform:rotate(0deg);
-		-o-transform:rotate(0deg);
-		-ms-transform:rotate(0deg);
-		-webkit-transform:rotate(0deg);
-		-moz-transform:rotate(0deg);
+#rotateG_02 {
+    left: 94px;
+    top: 02px;
+    animation-delay: 0.5s;
+    -o-animation-delay: 0.5s;
+    -ms-animation-delay: 0.5s;
+    -webkit-animation-delay: 0.5s;
+    -moz-animation-delay: 0.5s;
+    transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
 }
 
-#rotateG_03{
-	right:0;
-	top:94px;
-	animation-delay:0.75s;
-		-o-animation-delay:0.75s;
-		-ms-animation-delay:0.75s;
-		-webkit-animation-delay:0.75s;
-		-moz-animation-delay:0.75s;
-	transform:rotate(90deg);
-		-o-transform:rotate(90deg);
-		-ms-transform:rotate(90deg);
-		-webkit-transform:rotate(90deg);
-		-moz-transform:rotate(90deg);
+#rotateG_03 {
+    right: 0;
+    top: 94px;
+    animation-delay: 0.75s;
+    -o-animation-delay: 0.75s;
+    -ms-animation-delay: 0.75s;
+    -webkit-animation-delay: 0.75s;
+    -moz-animation-delay: 0.75s;
+    transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
 }
 
-#rotateG_04{
-	bottom:-10px;
-	left:94px;
-	animation-delay:1.0s;
-		-o-animation-delay:1.0s;
-		-ms-animation-delay:1.0s;
-		-webkit-animation-delay:1.0s;
-		-moz-animation-delay:1.0s;
-	transform:rotate(180deg);
-		-o-transform:rotate(180deg);
-		-ms-transform:rotate(180deg);
-		-webkit-transform:rotate(180deg);
-		-moz-transform:rotate(180deg);
+#rotateG_04 {
+    bottom: -10px;
+    left: 94px;
+    animation-delay: 1.0s;
+    -o-animation-delay: 1.0s;
+    -ms-animation-delay: 1.0s;
+    -webkit-animation-delay: 1.0s;
+    -moz-animation-delay: 1.0s;
+    transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
 }
 
-
-@keyframes fadeG{
-	0%{
-		background-color:rgb(0,0,0,0.2);
-	}
-
-	100%{
-		background-color:rgb(255,255,255,0.2);
-	}
+@keyframes fadeG {
+    0% {
+        background-color: rgb(0, 0, 0, 0.2);
+    }
+    100% {
+        background-color: rgb(255, 255, 255, 0.2);
+    }
 }
 
-@-o-keyframes fadeG{
-	0%{
-		background-color:rgb(0,0,0,0.2);
-	}
-
-	100%{
-		background-color:rgb(255,255,255,0.2);
-	}
+@-o-keyframes fadeG {
+    0% {
+        background-color: rgb(0, 0, 0, 0.2);
+    }
+    100% {
+        background-color: rgb(255, 255, 255, 0.2);
+    }
 }
 
-@-ms-keyframes fadeG{
-	0%{
-		background-color:rgb(0,0,0,0.2);
-	}
-
-	100%{
-		background-color:rgb(255,255,255,0.2);
-	}
+@-ms-keyframes fadeG {
+    0% {
+        background-color: rgb(0, 0, 0, 0.2);
+    }
+    100% {
+        background-color: rgb(255, 255, 255, 0.2);
+    }
 }
 
-@-webkit-keyframes fadeG{
-	0%{
-		background-color:rgb(0,0,0,0.2);
-	}
-
-	100%{
-		background-color:rgb(255,255,255,0.2);
-	}
+@-webkit-keyframes fadeG {
+    0% {
+        background-color: rgb(0, 0, 0, 0.2);
+    }
+    100% {
+        background-color: rgb(255, 255, 255, 0.2);
+    }
 }
 
-@-moz-keyframes fadeG{
-	0%{
-		background-color:rgb(0,0,0,0.2);
-	}
-
-	100%{
-		background-color:rgb(255,255,255,0.2);
-	}
+@-moz-keyframes fadeG {
+    0% {
+        background-color: rgb(0, 0, 0, 0.2);
+    }
+    100% {
+        background-color: rgb(255, 255, 255, 0.2);
+    }
 }
