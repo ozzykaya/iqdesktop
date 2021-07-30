@@ -63,6 +63,9 @@ MOUNT_5_SERVER_IP=${46}
 MOUNT_5_SERVER_FOLDER=${47}  
 MOUNT_5_OPTIONS=${48} 
 
+ORGANIZATION=${49} 
+LICENSEKEY=${50} 
+
 # ------------------------------------------------------------------------
 # Fix MOUNT_n_OPTIONS Replace ::: by ,
 # ------------------------------------------------------------------------
@@ -97,6 +100,9 @@ cp docker-compose_template.yml $CUSTOM_YML_FILE
 # Customize docker-compose file
 # Handle all with exception of VOLUME_MAP!
 # ------------------------------------------------------------------------
+
+sed -i "s#%ORGANIZATION%#$ORGANIZATION#g" $CUSTOM_YML_FILE
+sed -i "s#%LICENSEKEY%#$LICENSEKEY#g" $CUSTOM_YML_FILE
 
 sed -i "s#%PRIVILEGED%#$PRIVILEGED#g" $CUSTOM_YML_FILE
 sed -i "s#%MOUNT_BASENAME%#$MOUNTBASENAME#g" $CUSTOM_YML_FILE

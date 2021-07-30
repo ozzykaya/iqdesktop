@@ -38,6 +38,12 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
         $settingsText .= "$" . "IGNORE_DEMO_CSV = " . $set_IGNORE_DEMO_CSV . ";\n";
         $settingsText .= "\n";
         $settingsText .= "///////////////////////////\n";
+        $settingsText .= "// Other settings\n";
+        $settingsText .= "///////////////////////////\n";
+        $settingsText .= "$" . "ORGANIZATION = \"" . $set_ORGANIZATION . "\";\n";
+        $settingsText .= "$" . "LICENSEKEY = \"" . $set_LICENSEKEY . "\";\n";
+        $settingsText .= "\n";
+        $settingsText .= "///////////////////////////\n";
         $settingsText .= "// Container settings\n";
         $settingsText .= "// - logicals in on purpose\n";
         $settingsText .= "///////////////////////////\n";
@@ -266,7 +272,23 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
                 </tr>
                 <tr>
                     <td colspan="3"></td>
-                </tr>                
+                </tr>             
+                <!------------------------------------------------------------------
+                  Other Settings
+                ------------------------------------------------------------------->
+                <tr>
+                    <th colspan="3">Other Settings</th>
+                </tr>
+                <tr>
+                    <td>ORGANIZATION:</td>
+                    <td><input type="text" name="set_ORGANIZATION" size="40" value="<?php echo $ORGANIZATION; ?>"></td>
+                    <td>Define your organization name. Note: unused with PUBLIC IQdesktop version. Used for display and license key in controlled version.</td>
+                </tr>
+                <tr>
+                    <td>LICENSEKEY:</td>
+                    <td><input type="text" name="set_LICENSEKEY" size="40" value="<?php echo $LICENSEKEY; ?>"></td>
+                    <td>Provide the IQdesktop license key for your organization. Note: THIS IS NOT NEEDED FOR THE PUBLIC VERSION!</td>
+                </tr>
                 <!------------------------------------------------------------------
                   Container Settings
                 ------------------------------------------------------------------->

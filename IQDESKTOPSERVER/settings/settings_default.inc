@@ -10,6 +10,12 @@ $START_PASSWORD_HIDDEN = TRUE;
 $IGNORE_DEMO_CSV = FALSE;
 
 ///////////////////////////
+// Other settings
+///////////////////////////
+$ORGANIZATION = "My Organization";
+$LICENSEKEY = "No license key";
+
+///////////////////////////
 // Container settings
 // - logicals in "" on purpose
 ///////////////////////////

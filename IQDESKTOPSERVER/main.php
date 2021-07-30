@@ -118,6 +118,8 @@ $pathCSV = "settings/";
                 $command .= $ALLOW_SUDO . " " . $PRIVILEGED . " " . $MOUNT_BASENAME . " ";
                 $command .= $IQRTOOLS_COMPLIANCE . " " . $SSH_SERVER . " " . $ALLOW_SHINY_SERVER . " " . $MAC_ADDRESS . " " . $TIMEZONE . " " . $IQREPORT_TEMPLATE . " ";
                 $command .= $NONMEM_LICENSE_KEY . " \"" . $MONOLIX_LICENSE_KEY . "\" ";
+                $command .= " \"" . $ORGANIZATION . "\" ";
+                $command .= " \"" . $LICENSEKEY . "\" ";
 
                 # Check if demo mode and then add the stop time
                 if ($csvfile=="01_demo.csv") $command .= $MAX_TIME_HOURS_DEMO . " ";

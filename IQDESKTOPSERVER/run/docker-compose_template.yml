@@ -16,6 +16,8 @@ services:
       - "%SSHPORT%:22"
       - "%SHINY_SERVER_PORT%:3838"
     environment:
+      - ORGANIZATION=%ORGANIZATION%
+      - LICENSEKEY=%LICENSEKEY%
       - TIMEZONE=%TIMEZONE%
       - USER=%USER%  
       - PASSWORD=%PASSWORD%

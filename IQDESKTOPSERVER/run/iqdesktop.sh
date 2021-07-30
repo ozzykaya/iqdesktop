@@ -1,6 +1,6 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------------------------
-#  iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey
+#  iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey [timedelaystophours]
 #  test stop all|username 
 # ------------------------------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ NARGS=$#
 # Require correct number of input arguments
 if [[ $NARGS != 2 ]] && [[ $NARGS < 19 ]]; then 
 	echo "Usage:"
-	echo "        iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey [timedelaystophours]"
+	echo "        iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey [timedelaystophours]"
 	echo "        iqdesktop stop username"
 	exit 0
 fi
@@ -39,8 +39,8 @@ if [[ $COMMAND == "stop" ]];  then
 fi
 
 if [[ $COMMAND == "start" ]]; then
-    if [[ $NARGS < 19 ]]; then
-        echo "start command requires 19 or 20 input arguments - not useful for command line ..."
+    if [[ $NARGS < 21 ]]; then
+        echo "start command requires 21 or 22 input arguments - not useful for command line ..."
         exit 0
     fi
 fi
@@ -80,7 +80,9 @@ ARGtimezone=${16}
 ARGiqreporttemplate=${17}
 ARGnonmemlicensekey=${18}
 ARGmonolixlicensekey=${19}
-DELAYHOURS=${20}
+ARGorganization=${20}
+ARGlicensekey=${21}
+DELAYHOURS=${22}
 
 if [[ $ARGiqreporttemplate == "default" ]]; then
     ARGiqreporttemplate=
@@ -151,7 +153,8 @@ if [[ $COMMAND == "start" ]]; then
                     "$MOUNT_2_LABEL" "$MOUNT_2_SERVER_IP" "$MOUNT_2_SERVER_FOLDER" "$MOUNT_2_OPTIONS" \
                     "$MOUNT_3_LABEL" "$MOUNT_3_SERVER_IP" "$MOUNT_3_SERVER_FOLDER" "$MOUNT_3_OPTIONS" \
                     "$MOUNT_4_LABEL" "$MOUNT_4_SERVER_IP" "$MOUNT_4_SERVER_FOLDER" "$MOUNT_4_OPTIONS" \
-                    "$MOUNT_5_LABEL" "$MOUNT_5_SERVER_IP" "$MOUNT_5_SERVER_FOLDER" "$MOUNT_5_OPTIONS" 
+                    "$MOUNT_5_LABEL" "$MOUNT_5_SERVER_IP" "$MOUNT_5_SERVER_FOLDER" "$MOUNT_5_OPTIONS" \
+                    "$ARGorganization" "$ARGlicensekey"
 					
 				# If defined then start the time delayed stopping of the container
 				if [[ -n $DELAYHOURS ]]; then 
