@@ -380,7 +380,9 @@ $pathCSV = "settings/";
                             $version = str_replace("   ", ":", $version);
                             echo '  <option value="' . $version . '" ';
                             if ($IMAGEuser == $version) echo "selected";
-                            echo '>' . $version . '</option>';
+                            $version_show = $version;
+                            if ($version_show=="intiquan/iqdesktop:0.0.0") $version_show = "PUBLIC Version";
+                            echo '>' . $version_show . '</option>';
                         }
                         echo '</td></select>';
                     } else {

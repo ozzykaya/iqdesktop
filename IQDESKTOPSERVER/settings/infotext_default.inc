@@ -15,7 +15,11 @@
             <li><a href='https://iqdesktop.intiquan.com/book/vnc.html' target='new'>Get and execute TigerVNC Viewer (explained here)</a>
             <li>Enter: <span style="color:#f4A033; font-weight:bold; font-family:monospace;">iqdesktop.intiquan.com:THE_NUMBER_IN_THE_VNC_Port</span> column below
             <li>Click 'Connect'
-            <li>Enter the password that was provided to you (for demo purposes same as the 'Start Password')
+            <li>Enter the password that was provided to you. Or on the Demo system:
+                <ul>
+                    <li>PUBLIC version: 'password'
+                    <li>Controlled version: Same as the 'Start Password'
+                </ul>
             <li>Click 'OK'
         </ul>
     <li><b>Stopping IQdesktop</b>
