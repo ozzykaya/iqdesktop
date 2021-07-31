@@ -157,7 +157,7 @@ $pathCSV = "settings/";
     // -----------------------------------------------------------------------------
     // Find available iqdesktop versions
     // -----------------------------------------------------------------------------
-    system('docker images --filter=reference=intiquan/iqdesktop:*.*.* > temp');
+    system('docker images --filter=reference=intiquan/iqdesktop:*.* > temp');
     $content = file_get_contents(temp);
     //print_r($content);
     preg_match_all('/intiquan\/iqdesktop[ ]+([0-9.]+)/', $content, $m);
